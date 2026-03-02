@@ -4,13 +4,38 @@ using PsjLib.Transport;
 
 namespace PsjLib.Base;
 
+/// <summary>
+/// Base class for all supported piezo amplifier devices.
+/// </summary>
+/// <remarks>
+/// This type encapsulates transport setup, command serialization, response parsing,
+/// command caching, and channel discovery for derived device implementations.
+/// <para><b>Notes:</b> Discovery behavior and channel topology are device-family specific and are implemented by derived classes.</para>
+/// </remarks>
 public abstract class PiezoDevice : IAsyncDisposable
 {
+    /// <summary>
+    /// Command response cache used to optimize repeated reads.
+    /// </summary>
     protected readonly CommandCache Cache;
+    /// <summary>
+    /// Synchronizes transport access so command/response pairs remain ordered.
+    /// </summary>
     protected readonly SemaphoreSlim DeviceLock = new(1, 1);
+    /// <summary>
+    /// Active transport used to communicate with the physical device.
+    /// </summary>
     protected readonly TransportProtocol Transport;
+    /// <summary>
+    /// Mutable channel map filled during connection and discovery.
+    /// </summary>
     protected readonly Dictionary<int, PiezoChannel> ChannelsInternal = new();
 
+    /// <summary>
+    /// Initializes a new device abstraction bound to a transport endpoint.
+    /// </summary>
+    /// <param name="transportType">Transport backend to use.</param>
+    /// <param name="identifier">Transport-specific address (for example COM port or IP/MAC).</param>
     protected PiezoDevice(TransportType transportType, string identifier)
     {
         Transport = TransportFactory.FromTransportType(transportType, identifier);
@@ -18,18 +43,51 @@ public abstract class PiezoDevice : IAsyncDisposable
         Transport.RxDelimiter = FrameDelimiterRead;
     }
 
+    /// <summary>
+    /// Gets the model identifier for this device type.
+    /// </summary>
     public virtual string? DeviceId => null;
+    /// <summary>
+    /// Gets whether this model exposes exactly one logical channel.
+    /// </summary>
     public virtual bool SingleChannel => false;
+    /// <summary>
+    /// Gets commands that may be cached between reads.
+    /// </summary>
     protected virtual ISet<string> CacheableCommands => new HashSet<string>();
+    /// <summary>
+    /// Gets global (device-level) commands included in backup operations.
+    /// </summary>
     protected virtual ISet<string> BackupCommands => new HashSet<string>();
+    /// <summary>
+    /// Gets default command timeout in seconds.
+    /// </summary>
     protected virtual double DefaultTimeoutSecs => 0.6;
+    /// <summary>
+    /// Gets delimiter bytes appended to outgoing command frames.
+    /// </summary>
     protected virtual byte[] FrameDelimiterWrite => TransportProtocol.Crlf;
+    /// <summary>
+    /// Gets delimiter bytes expected for incoming device frames.
+    /// </summary>
     protected virtual byte[] FrameDelimiterRead => TransportProtocol.Crlf;
 
+    /// <summary>
+    /// Gets discovered channels keyed by channel identifier.
+    /// </summary>
     public IReadOnlyDictionary<int, PiezoChannel> Channels => ChannelsInternal;
 
+    /// <summary>
+    /// Gets current transport and model metadata for this device instance.
+    /// </summary>
     public DeviceInfo DeviceInfo => new(Transport.GetInfo(), DeviceId);
 
+    /// <summary>
+    /// Discovers connected devices compatible with <typeparamref name="TDevice"/>.
+    /// </summary>
+    /// <typeparam name="TDevice">Concrete or abstract device base type to discover.</typeparam>
+    /// <param name="flags">Transport discovery options.</param>
+    /// <returns>Instantiated device wrappers for discovered devices.</returns>
     public static async Task<IReadOnlyList<TDevice>> DiscoverDevicesAsync<TDevice>(
         DiscoverFlags flags = DiscoverFlags.AllInterfaces) where TDevice : PiezoDevice
     {
@@ -47,6 +105,12 @@ public abstract class PiezoDevice : IAsyncDisposable
             .ToList();
     }
 
+    /// <summary>
+    /// Discovers all non-abstract subclasses of an abstract device base type.
+    /// </summary>
+    /// <typeparam name="TDevice">Abstract base type whose concrete descendants should be discovered.</typeparam>
+    /// <param name="flags">Transport discovery options.</param>
+    /// <returns>Aggregated discovered devices for all matching concrete subtypes.</returns>
     public static async Task<IReadOnlyList<TDevice>> DiscoverDevicesAbstractClassAsync<TDevice>(
         DiscoverFlags flags = DiscoverFlags.AllInterfaces) where TDevice : PiezoDevice
     {
@@ -91,6 +155,13 @@ public abstract class PiezoDevice : IAsyncDisposable
         return results;
     }
 
+    /// <summary>
+    /// Connects transport, verifies device type, and discovers channels.
+    /// </summary>
+    /// <param name="autoAdjustCommParams">When <see langword="true"/>, transport-specific communication tuning may be applied.</param>
+    /// <remarks>
+    /// <para><b>Notes:</b> Automatic communication-parameter adjustment may increase connection time for some network transports.</para>
+    /// </remarks>
     public virtual async Task ConnectAsync(bool autoAdjustCommParams = true)
     {
         if (Transport.IsConnected)
@@ -109,6 +180,11 @@ public abstract class PiezoDevice : IAsyncDisposable
         await DiscoverChannelsAsync().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Checks whether the connected transport matches any registered device type.
+    /// </summary>
+    /// <param name="transport">Connected transport instance.</param>
+    /// <returns>Matching device identifier, or <see langword="null"/> when no type matches.</returns>
     protected static async Task<string?> IsAnyRegisteredTypeAsync(TransportProtocol transport)
     {
         foreach (var kv in DeviceModelRegistry.Registry)
@@ -124,14 +200,28 @@ public abstract class PiezoDevice : IAsyncDisposable
         return null;
     }
 
+    /// <summary>
+    /// Determines whether a transport endpoint matches this concrete device type.
+    /// </summary>
+    /// <param name="transport">Connected transport to probe.</param>
+    /// <returns>Model identifier when matched; otherwise <see langword="null"/>.</returns>
     protected virtual Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
         Console.WriteLine($"HERE");
         return Task.FromResult<string?>(null);
     }
  
+    /// <summary>
+    /// Discovers and initializes channel objects for this model.
+    /// </summary>
     protected abstract Task DiscoverChannelsAsync();
 
+    /// <summary>
+    /// Parses a raw device response into value tokens.
+    /// </summary>
+    /// <param name="response">Raw response frame without transport delimiter.</param>
+    /// <returns>Parsed response values.</returns>
+    /// <exception cref="DeviceError">Raised when response indicates a device error.</exception>
     protected virtual IReadOnlyList<string> ParseResponse(string response)
     {
         if (response.StartsWith("error", StringComparison.OrdinalIgnoreCase))
@@ -151,6 +241,10 @@ public abstract class PiezoDevice : IAsyncDisposable
             .ToList();
     }
 
+            /// <summary>
+            /// Parses a device error response and throws a typed exception.
+            /// </summary>
+            /// <param name="response">Raw error response.</param>
     protected virtual void RaiseError(string response)
     {
         var parts = response.Split(',', 2);
@@ -171,6 +265,13 @@ public abstract class PiezoDevice : IAsyncDisposable
         mapped.RaiseError(response);
     }
 
+    /// <summary>
+    /// Writes a command scoped to a channel and normalizes channel-prefixed responses.
+    /// </summary>
+    /// <param name="channelId">Channel index or <see langword="null"/> for global commands.</param>
+    /// <param name="cmd">Command token or command with fixed parameters.</param>
+    /// <param name="parameters">Additional command parameters.</param>
+    /// <returns>Parsed response values, without echoed channel number when present.</returns>
     internal virtual async Task<IReadOnlyList<string>> WriteChannelAsync(int? channelId, string cmd, IReadOnlyList<object?>? parameters = null)
     {
         var cmdParts = cmd.Split(',');
@@ -200,6 +301,13 @@ public abstract class PiezoDevice : IAsyncDisposable
         return result;
     }
 
+    /// <summary>
+    /// Resolves a capability command token to a protocol command and executes it.
+    /// </summary>
+    /// <param name="deviceCommands">Capability command map.</param>
+    /// <param name="command">Capability command token.</param>
+    /// <param name="parameters">Optional command arguments.</param>
+    /// <returns>Parsed response values, or an empty list if command is unmapped.</returns>
     internal async Task<IReadOnlyList<string>> CapabilityWriteAsync(
         IReadOnlyDictionary<string, string> deviceCommands,
         string command,
@@ -213,6 +321,13 @@ public abstract class PiezoDevice : IAsyncDisposable
         return await WriteAsync(mapped, parameters).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Executes a command with optional arguments and returns parsed values.
+    /// </summary>
+    /// <param name="cmd">Base command name.</param>
+    /// <param name="parameters">Optional write values. If <see langword="null"/>, a read command is assumed.</param>
+    /// <param name="timeoutSecs">Optional custom timeout in seconds.</param>
+    /// <returns>Parsed response values.</returns>
     public async Task<IReadOnlyList<string>> WriteAsync(string cmd, IReadOnlyList<object?>? parameters = null, double? timeoutSecs = null)
     {
         if (parameters is null)
@@ -252,12 +367,25 @@ public abstract class PiezoDevice : IAsyncDisposable
         return response;
     }
 
+    /// <summary>
+    /// Sends a command frame and parses the response.
+    /// </summary>
+    /// <param name="cmd">Fully serialized command frame without transport delimiter.</param>
+    /// <param name="timeoutSecs">Read timeout in seconds.</param>
+    /// <returns>Parsed response values.</returns>
     protected async Task<IReadOnlyList<string>> WriteAndParseAsync(string cmd, double timeoutSecs)
     {
         var response = await WriteRawAsync(cmd, timeoutSecs).ConfigureAwait(false);
         return ParseResponse(response);
     }
 
+    /// <summary>
+    /// Sends a raw command to the transport and returns the unparsed response payload.
+    /// </summary>
+    /// <param name="cmd">Command body to send (without line/frame delimiter).</param>
+    /// <param name="timeoutSecs">Optional timeout override in seconds.</param>
+    /// <param name="rxDelimiter">Optional response delimiter override.</param>
+    /// <returns>Raw response payload returned by the transport.</returns>
     public virtual async Task<string> WriteRawAsync(string cmd, double? timeoutSecs = null, byte[]? rxDelimiter = null)
     {
         if (!Transport.IsConnected)
@@ -282,6 +410,12 @@ public abstract class PiezoDevice : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// Reads and returns a backup snapshot of global and optionally per-channel command values.
+    /// </summary>
+    /// <param name="backupList">Optional explicit list of global commands to backup.</param>
+    /// <param name="backupChannels">Whether to include channel command snapshots.</param>
+    /// <returns>Dictionary mapping command identifiers to captured values.</returns>
     public async Task<Dictionary<string, IReadOnlyList<string>>> BackupAsync(
         IReadOnlyCollection<string>? backupList = null,
         bool backupChannels = true)
@@ -312,6 +446,10 @@ public abstract class PiezoDevice : IAsyncDisposable
         return backup;
     }
 
+    /// <summary>
+    /// Restores command values from a backup snapshot.
+    /// </summary>
+    /// <param name="backup">Backup dictionary previously produced by <see cref="BackupAsync(IReadOnlyCollection{string}?, bool)"/>.</param>
     public async Task RestoreAsync(IReadOnlyDictionary<string, IReadOnlyList<string>> backup)
     {
         foreach (var kv in backup)
@@ -320,8 +458,15 @@ public abstract class PiezoDevice : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// Clears all cached command responses.
+    /// </summary>
     public void ClearCommandCache() => Cache.Clear();
 
+    /// <summary>
+    /// Enables or disables command response caching.
+    /// </summary>
+    /// <param name="enable">New cache state.</param>
     public void EnableCommandCache(bool enable)
     {
         Cache.Enabled = enable;
@@ -331,12 +476,18 @@ public abstract class PiezoDevice : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// Closes transport connection and clears command cache.
+    /// </summary>
     public virtual async Task CloseAsync()
     {
         await Transport.CloseAsync().ConfigureAwait(false);
         ClearCommandCache();
     }
 
+    /// <summary>
+    /// Asynchronously disposes the device and underlying synchronization resources.
+    /// </summary>
     public async ValueTask DisposeAsync()
     {
         await CloseAsync().ConfigureAwait(false);

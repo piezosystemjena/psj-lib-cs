@@ -4,10 +4,24 @@ using PsjLib.DDriveFamily.Capabilities;
 
 namespace PsjLib.DDriveFamily;
 
+/// <summary>
+/// Channel implementation for d-Drive family devices with pre-wired capability objects.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> d-Drive family channels operate with a 20µs control period (50kHz) used by control, waveform, trigger, and recorder features.</para>
+/// <para><b>Notes:</b> Capability instances are model-specific and exposed as strongly typed properties on this class.</para>
+/// </remarks>
 public class DDriveFamilyChannel : PiezoChannel
 {
+    /// <summary>
+    /// Control sample period in microseconds for this family.
+    /// </summary>
+    /// <remarks>
+    /// <para><b>Notes:</b> 20µs corresponds to a nominal 50kHz loop/update rate.</para>
+    /// </remarks>
     public const int SamplePeriod = 20;
 
+    /// <inheritdoc/>
     public override ISet<string> BackupCommands { get; } = new HashSet<string>
     {
         "modon", "monsrc", "cl", "sr", "pcf", "errlpf", "elpor", "kp", "ki", "kd", "tf",
@@ -16,6 +30,14 @@ public class DDriveFamilyChannel : PiezoChannel
         "goswe", "gtswe", "sct", "trgss", "trgse", "trgsi", "trglen", "trgedge", "trgsrc", "trgos",
     };
 
+    /// <summary>
+    /// Initializes a d-Drive family channel and all supported capabilities.
+    /// </summary>
+    /// <param name="id">Channel identifier.</param>
+    /// <param name="writeCallback">Callback used to execute channel commands.</param>
+    /// <remarks>
+    /// <para><b>Notes:</b> Backup command coverage includes persistent configuration commands; dynamic run-time state is not treated as backup configuration.</para>
+    /// </remarks>
     public DDriveFamilyChannel(int id, ChannelWriteCallback writeCallback)
         : base(id, writeCallback)
     {
@@ -147,25 +169,44 @@ public class DDriveFamilyChannel : PiezoChannel
         });
     }
 
+    /// <summary>Typed status capability.</summary>
     public Status<DDriveStatusRegister> StatusRegister { get; }
+    /// <summary>Actuator description capability.</summary>
     public ActuatorDescription ActuatorDescription { get; }
+    /// <summary>Setpoint capability with d-Drive cache semantics.</summary>
     public DDriveSetpoint Setpoint { get; }
+    /// <summary>Measured position capability.</summary>
     public Position Position { get; }
+    /// <summary>Temperature capability.</summary>
     public Temperature Temperature { get; }
+    /// <summary>Fan control capability.</summary>
     public Fan Fan { get; }
+    /// <summary>Modulation source capability.</summary>
     public ModulationSource ModulationSource { get; }
+    /// <summary>Monitor output source capability.</summary>
     public MonitorOutput MonitorOutput { get; }
+    /// <summary>Closed-loop controller capability.</summary>
     public DDriveClosedLoopController ClosedLoopController { get; }
+    /// <summary>Slew-rate capability.</summary>
     public SlewRate SlewRate { get; }
+    /// <summary>Pre-control factor capability.</summary>
     public PreControlFactor Pcf { get; }
+    /// <summary>Error low-pass filter capability.</summary>
     public ErrorLowPassFilter ErrorLpf { get; }
+    /// <summary>PID controller capability.</summary>
     public PIDController PidController { get; }
+    /// <summary>Notch filter capability.</summary>
     public NotchFilter Notch { get; }
+    /// <summary>Low-pass filter capability.</summary>
     public LowPassFilter Lpf { get; }
+    /// <summary>Trigger output capability.</summary>
     public DDriveTriggerOut TriggerOut { get; }
+    /// <summary>Data recorder capability.</summary>
     public DDriveDataRecorder DataRecorder { get; }
+    /// <summary>Waveform generator capability.</summary>
     public DDriveWaveformGenerator WaveformGenerator { get; }
 
+    /// <inheritdoc/>
     public override async Task<Dictionary<string, IReadOnlyList<string>>> BackupAsync()
     {
         var data = await base.BackupAsync().ConfigureAwait(false);

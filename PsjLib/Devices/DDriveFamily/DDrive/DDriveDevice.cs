@@ -3,6 +3,12 @@ using PsjLib.Transport;
 
 namespace PsjLib.DDriveFamily;
 
+/// <summary>
+/// Concrete implementation for d-Drive multi-channel devices.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> Hardware may expose between one and six channels depending on module population.</para>
+/// </remarks>
 public sealed class DDriveDevice(TransportType transportType, string identifier)
     : DDriveFamilyDevice(transportType, identifier)
 {
@@ -11,9 +17,12 @@ public sealed class DDriveDevice(TransportType transportType, string identifier)
         DeviceModelRegistry.Registry["d-Drive"] = static (transport, id) => new DDriveDevice(transport, id);
     }
 
+    /// <inheritdoc/>
     public override string? DeviceId => "d-Drive";
+    /// <inheritdoc/>
     protected override string DDriveIdentifier => "DSM";
 
+    /// <inheritdoc/>
     protected override async Task DiscoverChannelsAsync()
     {
         var response = await WriteRawAsync("stat").ConfigureAwait(false);
@@ -45,5 +54,11 @@ public sealed class DDriveDevice(TransportType transportType, string identifier)
         }
     }
 
+    /// <summary>
+    /// Gets typed d-Drive channels keyed by channel identifier.
+    /// </summary>
+    /// <remarks>
+    /// <para><b>Notes:</b> Only discovered channel slots are present; callers should not assume contiguous keys.</para>
+    /// </remarks>
     public new IReadOnlyDictionary<int, DDriveChannel> Channels => ChannelsInternal.ToDictionary(kv => kv.Key, kv => (DDriveChannel)kv.Value);
 }

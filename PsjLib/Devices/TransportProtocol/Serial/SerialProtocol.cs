@@ -3,22 +3,37 @@ using System.Text;
 
 namespace PsjLib.Transport;
 
+/// <summary>
+/// Serial/USB transport implementation for piezo devices.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> Discovery and communication require OS-level access to serial ports and may fail when ports are already occupied by other applications.</para>
+/// </remarks>
 public sealed class SerialProtocol : TransportProtocol
 {
     private readonly string _port;
     private readonly int _baudrate;
     private SerialPort? _serial;
 
+    /// <summary>
+    /// Initializes a serial transport endpoint.
+    /// </summary>
+    /// <param name="identifier">Serial port name (for example <c>COM3</c>).</param>
+    /// <param name="baudrate">Serial baud rate used for communication.</param>
     public SerialProtocol(string identifier, int baudrate = 115200)
     {
         _port = identifier;
         _baudrate = baudrate;
     }
 
+    /// <inheritdoc/>
     public override TransportType TransportType => TransportType.Serial;
+    /// <inheritdoc/>
     public override bool IsConnected => _serial?.IsOpen == true;
+    /// <inheritdoc/>
     public override string Identifier => _port;
 
+    /// <inheritdoc/>
     public override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
     {
         var ports = SerialPort.GetPortNames();
@@ -45,6 +60,7 @@ public sealed class SerialProtocol : TransportProtocol
         return results.Where(static x => x is not null).Cast<DetectedDevice>().ToList();
     }
 
+    /// <inheritdoc/>
     public override Task ConnectAsync(bool autoAdjustCommParams = true)
     {
         if (IsConnected)
@@ -73,12 +89,14 @@ public sealed class SerialProtocol : TransportProtocol
         }
     }
 
+    /// <inheritdoc/>
     public override Task FlushInputAsync()
     {
         _serial?.DiscardInBuffer();
         return Task.CompletedTask;
     }
 
+    /// <inheritdoc/>
     public override async Task WriteAsync(string cmd)
     {
         if (_serial is null || !_serial.IsOpen)
@@ -90,6 +108,7 @@ public sealed class SerialProtocol : TransportProtocol
         await Task.Run(() => _serial.Write(cmd)).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
     {
         if (_serial is null || !_serial.IsOpen)
@@ -132,8 +151,10 @@ public sealed class SerialProtocol : TransportProtocol
         }
     }
 
+    /// <inheritdoc/>
     public override TransportProtocolInfo GetInfo() => new(TransportType.Serial, _port);
 
+    /// <inheritdoc/>
     public override Task CloseAsync()
     {
         if (_serial?.IsOpen == true)

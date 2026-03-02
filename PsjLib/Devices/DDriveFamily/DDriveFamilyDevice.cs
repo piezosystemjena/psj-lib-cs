@@ -3,13 +3,25 @@ using PsjLib.Transport;
 
 namespace PsjLib.DDriveFamily;
 
+/// <summary>
+/// Base class for piezosystem jena d-Drive family devices.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> Family variants share protocol behavior but differ in channel topology (multi-channel d-Drive versus single-channel PSJ 30DV).</para>
+/// <para><b>Notes:</b> Channel IDs use the same numeric namespace even when not all indices are populated in hardware.</para>
+/// </remarks>
 public abstract class DDriveFamilyDevice(TransportType transportType, string identifier)
     : PiezoDevice(transportType, identifier)
 {
+    /// <summary>
+    /// Gets the identifier fragment expected in startup banner for this model.
+    /// </summary>
     protected abstract string DDriveIdentifier { get; }
 
+    /// <inheritdoc/>
     public override string? DeviceId => "d-Drive Family Device";
 
+    /// <inheritdoc/>
     protected override ISet<string> CacheableCommands { get; } = new HashSet<string>
     {
         "acdescr", "acolmas", "acclmas", "set", "fan", "modon", "monsrc", "cl", "sr", "pcf", "errlpf",
@@ -19,7 +31,9 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
         "trgos", "recstride", "bright",
     };
 
+    /// <inheritdoc/>
     protected override double DefaultTimeoutSecs => 0.5;
+    /// <inheritdoc/>
     protected override byte[] FrameDelimiterRead => TransportProtocol.Xon;
 
     private static readonly Dictionary<string, ErrorCode> ErrorMap = new(StringComparer.OrdinalIgnoreCase)
@@ -77,6 +91,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
         ["trgos"] = TransportProtocol.Cr,
     };
 
+    /// <inheritdoc/>
     protected override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
         try
@@ -91,6 +106,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
         }
     }
 
+    /// <inheritdoc/>
     protected override IReadOnlyList<string> ParseResponse(string response)
     {
         foreach (var kv in ErrorMap)
@@ -104,6 +120,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
         return base.ParseResponse(response);
     }
 
+    /// <inheritdoc/>
     public override async Task<string> WriteRawAsync(string cmd, double? timeoutSecs = null, byte[]? rxDelimiter = null)
     {
         var isRead = (SingleChannel && cmd.Count(c => c == ',') == 0) 
@@ -122,5 +139,11 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
         return await base.WriteRawAsync(cmd, timeoutSecs, rxDelimiter).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets typed d-Drive family channels keyed by channel identifier.
+    /// </summary>
+    /// <remarks>
+    /// <para><b>Notes:</b> Consumers should iterate available keys instead of assuming all possible channel IDs exist.</para>
+    /// </remarks>
     public new IReadOnlyDictionary<int, DDriveFamilyChannel> Channels => ChannelsInternal.ToDictionary(kv => kv.Key, kv => (DDriveFamilyChannel)kv.Value);
 }

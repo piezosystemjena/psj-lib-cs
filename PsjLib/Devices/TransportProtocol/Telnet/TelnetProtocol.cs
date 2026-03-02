@@ -6,6 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace PsjLib.Transport;
 
+/// <summary>
+/// Telnet/TCP transport implementation used for Ethernet-connected controllers.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> Endpoints can be addressed either directly by IP address or indirectly via Lantronix MAC address discovery.</para>
+/// <para><b>Notes:</b> Network discovery depends on UDP broadcast support and firewall/network policy.</para>
+/// </remarks>
 public sealed class TelnetProtocol : TransportProtocol
 {
     private const string BroadcastIp = "255.255.255.255";
@@ -29,6 +36,13 @@ public sealed class TelnetProtocol : TransportProtocol
 
     private sealed record NetworkEndpoint(string Mac, string Ip);
 
+    /// <summary>
+    /// Initializes a telnet transport endpoint.
+    /// </summary>
+    /// <param name="identifier">
+    /// Target host identifier. This can be an IP address or a Lantronix MAC address.
+    /// </param>
+    /// <param name="port">TCP port used for device communication.</param>
     public TelnetProtocol(string identifier = "", int port = 23)
     {
         _port = port;
@@ -43,10 +57,14 @@ public sealed class TelnetProtocol : TransportProtocol
         }
     }
 
+    /// <inheritdoc/>
     public override TransportType TransportType => TransportType.Telnet;
+    /// <inheritdoc/>
     public override bool IsConnected => _client?.Connected == true;
+    /// <inheritdoc/>
     public override string Identifier => string.IsNullOrWhiteSpace(_host) ? (_mac ?? string.Empty) : _host;
 
+    /// <inheritdoc/>
     public override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
     {
         var devices = new List<DetectedDevice>();
@@ -76,6 +94,11 @@ public sealed class TelnetProtocol : TransportProtocol
         return devices;
     }
 
+    /// <inheritdoc/>
+    /// <remarks>
+    /// <para><b>Notes:</b> When MAC addressing is used, connection performs an additional discovery phase to resolve the current IP.</para>
+    /// <para><b>Notes:</b> Optional communication-parameter adjustment can trigger a device-side reboot delay before regular Telnet communication resumes.</para>
+    /// </remarks>
     public override async Task ConnectAsync(bool autoAdjustCommParams = true)
     {
         if (IsConnected)
@@ -114,6 +137,7 @@ public sealed class TelnetProtocol : TransportProtocol
         _stream = _client.GetStream();
     }
 
+    /// <inheritdoc/>
     public override async Task FlushInputAsync()
     {
         if (_stream is null)
@@ -128,6 +152,7 @@ public sealed class TelnetProtocol : TransportProtocol
         }
     }
 
+    /// <inheritdoc/>
     public override async Task WriteAsync(string cmd)
     {
         if (_stream is null)
@@ -141,6 +166,7 @@ public sealed class TelnetProtocol : TransportProtocol
         await _stream.FlushAsync().ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
     {
         if (_stream is null)
@@ -151,8 +177,10 @@ public sealed class TelnetProtocol : TransportProtocol
         return await ReadUntilStreamAsync(_stream, expected, timeoutSecs).ConfigureAwait(false);
     }
 
+    /// <inheritdoc/>
     public override TransportProtocolInfo GetInfo() => new(TransportType.Telnet, _host, _mac);
 
+    /// <inheritdoc/>
     public override Task CloseAsync()
     {
         _stream?.Dispose();
