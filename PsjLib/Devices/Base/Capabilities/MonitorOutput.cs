@@ -6,7 +6,7 @@ namespace PsjLib.Base.Capabilities;
 /// <remarks>
 /// <para><b>Notes:</b> Monitor output is typically an analog 0-10V signal, scaling depends on device model and selected source, and available source enum members are device-specific.</para>
 /// </remarks>
-public sealed class MonitorOutput(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands, Type enumType)
+public class MonitorOutput(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands, Type enumType)
     : PiezoCapability(writeCb, commands)
 {
     /// <summary>
@@ -22,7 +22,7 @@ public sealed class MonitorOutput(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <remarks>
     /// <para><b>Notes:</b> The source value must belong to the enum type supplied to the constructor; output routing updates in real time on supporting hardware.</para>
     /// </remarks>
-    public async Task SetAsync(Enum source)
+    public virtual async Task SetAsync(Enum source)
         => _ = await WriteAsync(CmdOutputSrc, [source]).ConfigureAwait(false);
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed class MonitorOutput(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <remarks>
     /// <para><b>Notes:</b> If the device returns a value that is not defined in the configured enum type, this method falls back to enum value 0.</para>
     /// </remarks>
-    public async Task<Enum> GetAsync()
+    public virtual async Task<Enum> GetAsync()
     {
         var value = int.Parse((await WriteAsync(CmdOutputSrc).ConfigureAwait(false))[0]);
         return Enum.IsDefined(_enumType, value)

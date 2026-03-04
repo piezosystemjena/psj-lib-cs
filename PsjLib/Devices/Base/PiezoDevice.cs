@@ -41,6 +41,8 @@ public abstract class PiezoDevice : IAsyncDisposable
         Transport = TransportFactory.FromTransportType(transportType, identifier);
         Cache = new CommandCache(CacheableCommands);
         Transport.RxDelimiter = FrameDelimiterRead;
+
+        Transport.SetProperty("baudrate", SerialBaudrate);
     }
 
     /// <summary>
@@ -63,6 +65,10 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// Gets default command timeout in seconds.
     /// </summary>
     protected virtual double DefaultTimeoutSecs => 0.6;
+    /// <summary>
+    /// The default Serial baudrate.
+    /// </summary>
+    protected virtual int SerialBaudrate => 115200;
     /// <summary>
     /// Gets delimiter bytes appended to outgoing command frames.
     /// </summary>
@@ -207,7 +213,6 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <returns>Model identifier when matched; otherwise <see langword="null"/>.</returns>
     protected virtual Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
-        Console.WriteLine($"HERE");
         return Task.FromResult<string?>(null);
     }
  
@@ -224,11 +229,8 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <exception cref="DeviceError">Raised when response indicates a device error.</exception>
     protected virtual IReadOnlyList<string> ParseResponse(string response)
     {
-        if (response.StartsWith("error", StringComparison.OrdinalIgnoreCase))
-        {
-            RaiseError(response);
-        }
-
+        HandleError(response);
+        
         var parts = response.Split(',', 2);
         if (parts.Length <= 1)
         {
@@ -241,10 +243,18 @@ public abstract class PiezoDevice : IAsyncDisposable
             .ToList();
     }
 
-            /// <summary>
-            /// Parses a device error response and throws a typed exception.
-            /// </summary>
-            /// <param name="response">Raw error response.</param>
+    protected virtual void HandleError(string response)
+    {
+        if (response.StartsWith("error", StringComparison.OrdinalIgnoreCase))
+        {
+            RaiseError(response);
+        }
+    }
+
+    /// <summary>
+    /// Parses a device error response and throws a typed exception.
+    /// </summary>
+    /// <param name="response">Raw error response.</param>
     protected virtual void RaiseError(string response)
     {
         var parts = response.Split(',', 2);

@@ -99,6 +99,25 @@ public abstract class TransportProtocol
     public abstract Task CloseAsync();
 
     /// <summary>
+    /// Sets an optional transport-specific property.
+    /// </summary>
+    /// <param name="name">Property name.</param>
+    /// <param name="value">Property value.</param>
+    public virtual void SetProperty(string name, object value)
+    {
+    }
+
+    /// <summary>
+    /// Gets an optional transport-specific property.
+    /// </summary>
+    /// <param name="name">Property name.</param>
+    /// <returns>Property value or <see langword="null"/> if unsupported.</returns>
+    public virtual object? GetProperty(string name)
+    {
+        return null;
+    }
+
+    /// <summary>
     /// Reads one complete protocol message using <see cref="RxDelimiter"/>.
     /// </summary>
     /// <param name="timeoutSecs">Read timeout in seconds.</param>

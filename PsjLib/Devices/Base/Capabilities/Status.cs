@@ -7,7 +7,7 @@ namespace PsjLib.Base.Capabilities;
 /// <para><b>Notes:</b> Status payload layout is device-specific; this type materializes responses into the configured status-register type.</para>
 /// </remarks>
 /// <typeparam name="TStatusRegister">Concrete status register type with a constructor taking raw response values.</typeparam>
-public sealed class Status<TStatusRegister>(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands)
+public sealed class Status<TStatusRegister>(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands, int? channelId = null)
     : PiezoCapability(writeCb, commands)
     where TStatusRegister : StatusRegister
 {
@@ -26,6 +26,12 @@ public sealed class Status<TStatusRegister>(CapabilityWriteCallback writeCb, IRe
     public async Task<TStatusRegister> GetAsync()
     {
         var raw = await WriteAsync(CmdStatus).ConfigureAwait(false);
+        var ctor = typeof(TStatusRegister).GetConstructor([typeof(IReadOnlyList<string>), typeof(int?)]);
+        if (ctor is not null)
+        {
+            return (TStatusRegister)ctor.Invoke([raw, channelId]);
+        }
+
         return (TStatusRegister)Activator.CreateInstance(typeof(TStatusRegister), raw)!;
     }
 }

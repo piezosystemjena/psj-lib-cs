@@ -21,7 +21,7 @@ public class ClosedLoopController(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <summary>
     /// Gets controller sample rate in hertz.
     /// </summary>
-    public double SampleRate => 1000000.0 / SamplePeriod;
+    public double SampleRate => SamplePeriod > 0 ? 1000000.0 / SamplePeriod : double.NaN;
 
     /// <summary>
     /// Enables or disables closed-loop control.

@@ -9,12 +9,13 @@ var examples = new Dictionary<string, Func<Task>>(StringComparer.OrdinalIgnoreCa
     ["05"] = Example05WaveformGenerationBasics.RunAsync,
     ["06"] = Example06FilterConfiguration.RunAsync,
     ["07"] = Example07BackupAndRestoreConfiguration.RunAsync,
+    ["08"] = Example08NV403CLECapabilitiesOverview.RunAsync,
 };
 
 if (args.Length == 0 || !examples.TryGetValue(args[0], out var selected))
 {
     Console.WriteLine("Usage: dotnet run --project cs-src/examples -- <example-number>");
-    Console.WriteLine("Available examples: 01, 02, 03, 04, 05, 06, 07");
+    Console.WriteLine("Available examples: 01, 02, 03, 04, 05, 06, 07, 08");
     return;
 }
 

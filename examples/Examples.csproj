@@ -8,6 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\PsjLib\PsjLib.csproj" />
+    <ProjectReference Include="..\PsjLib\PsjLib.csproj" />
   </ItemGroup>
 </Project>

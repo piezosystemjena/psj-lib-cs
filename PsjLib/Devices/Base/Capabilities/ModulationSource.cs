@@ -6,7 +6,7 @@ namespace PsjLib.Base.Capabilities;
 /// <remarks>
 /// <para><b>Notes:</b> Source enums are device-specific and unknown values returned by the device map to enum value 0 when no explicit member exists.</para>
 /// </remarks>
-public sealed class ModulationSource(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands, Type enumType)
+public class ModulationSource(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, string> commands, Type enumType)
     : PiezoCapability(writeCb, commands)
 {
     /// <summary>
@@ -22,7 +22,7 @@ public sealed class ModulationSource(CapabilityWriteCallback writeCb, IReadOnlyD
     /// <remarks>
     /// <para><b>Notes:</b> The provided enum should match the device-specific source type configured for this capability instance.</para>
     /// </remarks>
-    public async Task SetAsync(Enum source)
+    public virtual async Task SetAsync(Enum source)
         => _ = await WriteAsync(CmdSource, [source]).ConfigureAwait(false);
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed class ModulationSource(CapabilityWriteCallback writeCb, IReadOnlyD
     /// <remarks>
     /// <para><b>Notes:</b> Unrecognized device values are mapped to enum value 0 when the value is not defined in the supplied enum type.</para>
     /// </remarks>
-    public async Task<Enum> GetAsync()
+    public virtual async Task<Enum> GetAsync()
     {
         var value = int.Parse((await WriteAsync(CmdSource).ConfigureAwait(false))[0]);
         return Enum.IsDefined(_enumType, value)

@@ -107,7 +107,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     }
 
     /// <inheritdoc/>
-    protected override IReadOnlyList<string> ParseResponse(string response)
+    protected override void HandleError(string response)
     {
         foreach (var kv in ErrorMap)
         {
@@ -116,8 +116,6 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
                 kv.Value.RaiseError(response);
             }
         }
-
-        return base.ParseResponse(response);
     }
 
     /// <inheritdoc/>

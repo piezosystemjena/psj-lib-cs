@@ -12,7 +12,7 @@ namespace PsjLib.Transport;
 public sealed class SerialProtocol : TransportProtocol
 {
     private readonly string _port;
-    private readonly int _baudrate;
+    private int _baudrate;
     private SerialPort? _serial;
 
     /// <summary>
@@ -77,7 +77,7 @@ public sealed class SerialProtocol : TransportProtocol
                 StopBits = StopBits.One,
                 Handshake = Handshake.None,
                 Encoding = Encoding.Latin1,
-                ReadTimeout = 200,
+                ReadTimeout = 100,
                 WriteTimeout = 200,
             };
             _serial.Open();
@@ -116,25 +116,38 @@ public sealed class SerialProtocol : TransportProtocol
             throw new DeviceUnavailableException("Serial device not connected");
         }
 
+        if (timeoutSecs <= 0)
+        {
+            throw new TimeoutException($"Serial read timeout after {timeoutSecs:F3}s");
+        }
+
         var buffer = new List<byte>(256);
         var window = new Queue<byte>(expected.Length);
-        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSecs));
+        var deadline = DateTime.UtcNow.AddSeconds(timeoutSecs);
 
         while (true)
         {
-            byte one;
+            int raw;
             try
             {
-                one = await Task.Run(_serial.ReadByte, cts.Token).ConfigureAwait(false) switch
-                {
-                    < 0 => throw new DeviceUnavailableException("Serial disconnected while reading"),
-                    var x => (byte)x,
-                };
+                raw = await Task.Run(_serial.ReadByte).ConfigureAwait(false);
             }
-            catch (OperationCanceledException ex)
+            catch (System.TimeoutException ex)
             {
-                throw new TimeoutException($"Serial read timeout after {timeoutSecs:F3}s", ex);
+                if (DateTime.UtcNow >= deadline)
+                {
+                    throw new TimeoutException($"Serial read timeout after {timeoutSecs:F3}s", ex);
+                }
+
+                continue;
             }
+
+            if (raw < 0)
+            {
+                throw new DeviceUnavailableException("Serial disconnected while reading");
+            }
+
+            var one = (byte)raw;
 
             buffer.Add(one);
             window.Enqueue(one);
@@ -153,6 +166,37 @@ public sealed class SerialProtocol : TransportProtocol
 
     /// <inheritdoc/>
     public override TransportProtocolInfo GetInfo() => new(TransportType.Serial, _port);
+
+    /// <inheritdoc/>
+    public override void SetProperty(string name, object value)
+    {
+        if (name.Equals("baudrate", StringComparison.OrdinalIgnoreCase))
+        {
+            var parsed = value switch
+            {
+                int baudrate => baudrate,
+                _ => Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture),
+            };
+
+            _baudrate = parsed;
+
+            if (_serial is not null)
+            {
+                _serial.BaudRate = _baudrate;
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    public override object? GetProperty(string name)
+    {
+        if (name.Equals("baudrate", StringComparison.OrdinalIgnoreCase))
+        {
+            return _baudrate;
+        }
+
+        return null;
+    }
 
     /// <inheritdoc/>
     public override Task CloseAsync()
