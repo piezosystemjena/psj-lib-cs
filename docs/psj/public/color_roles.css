@@ -1,0 +1,43 @@
+.black { color: black; }
+.gray { color: gray; }
+.grey { color: gray; }
+.silver { color: silver; }
+.white { color: white; }
+.maroon { color: maroon; }
+.red { color: red; }
+.magenta { color: magenta; }
+.fuchsia { color: fuchsia; }
+.pink { color: pink; }
+.orange { color: orange; }
+.yellow { color: yellow; }
+.lime { color: lime; }
+.green { color: green; }
+.olive { color: olive; }
+.teal { color: teal; }
+.cyan { color: cyan; }
+.aqua { color: aqua; }
+.blue { color: blue; }
+.navy { color: navy; }
+.purple { color: purple; }
+
+.red-bg,
+.yellow-bg,
+.blue-bg,
+.yellow-marker,
+.green-marker,
+.blue-marker,
+.pink-marker,
+.red-marker {
+  padding: 4px;
+  font-weight: bold;
+}
+
+.red-bg { background-color: #ff00006f; }
+.yellow-bg { background-color: #ffff006f; }
+.blue-bg { background-color: #0000ff6f; }
+
+.yellow-marker { background-color: #ffc000; }
+.green-marker { background-color: #92d050; }
+.blue-marker { background-color: #00b0f0; }
+.pink-marker { background-color: #ff6699; }
+.red-marker { background-color: #eb5627; }

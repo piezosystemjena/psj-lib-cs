@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": [
+            "PsjLib/PsjLib.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "toc.yml"
+        ]
+      },
+      {
+        "files": [
+          "docs/**/*.md",
+          "docs/**/toc.yml"
+        ]
+      },
+      {
+        "files": [
+          "api/**/*.md",
+          "api/**/*.yml"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**",
+          "docs/images/**"
+        ]
+      },
+      {
+        "src": ".",
+        "files": [
+          "styles/**"
+        ]
+      },
+      {
+        "src": ".",
+        "files": [
+          "index.html"
+        ]
+      }
+    ],
+    "overwrite": [],
+    "dest": "_docs/site",
+    "globalMetadata": {
+      "_appTitle": "psj-lib C# Library",
+      "_appFooter": "piezosystem jena GmbH",
+      "_enableSearch": true,
+      "_appFaviconPath": "images/favicon.png",
+      "_appLogoPath": "images/favicon.png"
+    },
+    "template": [
+      "default",
+      "modern",
+      "psj"
+    ]
+  }
+}

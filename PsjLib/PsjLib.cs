@@ -10,5 +10,5 @@ public static class LibraryVersion
     /// <summary>
     /// Semantic version of this library build.
     /// </summary>
-    public const string Version = "0.1.0";
+    public const string Version = "1.0.0";
 }
