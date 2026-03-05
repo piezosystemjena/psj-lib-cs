@@ -2,7 +2,7 @@
 
 ![image](images/psj-lib-header.png)
 
-**psj-lib** is a comprehensive Python library for controlling
+**psj-lib** is a comprehensive C# library for controlling
 piezoelectric amplifiers and control devices manufactured by
 [piezosystem jena GmbH](https://www.piezosystem.com). The library
 provides an intuitive, asynchronous interface for precision position
@@ -11,7 +11,7 @@ system configuration.
 
 **Key Features:**
 
-- **Asynchronous Architecture**: Built on Python's asyncio for
+- **Asynchronous Architecture**: Built on .NET async/await for
   efficient, non-blocking device communication
 - **Multi-Device Support**: Extensible framework supporting d-Drive,
   30DV50/300, and selected NV-series devices
@@ -40,44 +40,23 @@ system configuration.
 
 **Quick Start:**
 
-``` python
-import asyncio
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def main():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
 
-    async with device:
-        channel = device.channels[0]
-        await channel.closed_loop_controller.set(True)
-        await channel.setpoint.set(50.0)
-        print(f"Position: {await channel.position.get():.2f} µm")
-
-asyncio.run(main())
+try
+{
+  var channel = device.Channels[0];
+  await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+  await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+  var position = await channel.Position.GetAsync().ConfigureAwait(false);
+  Console.WriteLine($"Position: {position:F2} µm");
+}
+finally
+{
+  await device.CloseAsync().ConfigureAwait(false);
+}
 ```
-
-## Documentation
-
-<div class="toctree" maxdepth="2" caption="Getting Started:">
-
-intro installation connecting getting_started
-
-</div>
-
-<div class="toctree" maxdepth="2" caption="Device Documentation:">
-
-d_drive nv_series base_capabilities
-
-</div>
-
-<div class="toctree" maxdepth="2" caption="Reference:">
-
-api examples developer_guide
-
-</div>
-
-## Indices and Tables
-
-- `genindex`
-- `modindex`
-- `search`

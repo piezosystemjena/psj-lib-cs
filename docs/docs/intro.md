@@ -4,23 +4,25 @@
 
 ## Welcome to psj-lib
 
-**psj-lib** is a comprehensive Python library for controlling
+**psj-lib** is a comprehensive C# library for controlling
 piezoelectric amplifiers and control devices manufactured by
 [piezosystem jena GmbH](https://www.piezosystem.com). The library
 provides an intuitive, asynchronous interface for precise position
 control, waveform generation, data acquisition, and advanced control
 system configuration.
 
+For a Python port of psj-lib, see [psj-lib Python GitHub](https://github.com/piezosystemjena/psj-lib)
+
 ## What is psj-lib?
 
 psj-lib is designed to provide researchers, engineers, and developers
-with a powerful yet easy-to-use Python interface for piezosystem jena
+with a powerful yet easy-to-use C# interface for piezosystem jena
 devices. The library abstracts the complexity of low-level device
 communication while exposing the full capabilities of the hardware.
 
 **Key Features:**
 
-- **Asynchronous Architecture**: Built on Python's asyncio for
+- **Asynchronous Architecture**: Built on .NET async/await for
   efficient, non-blocking device communication
 - **Multi-Device Support**: Extensible framework supporting d-Drive,
   30DV50/300, and selected NV-series devices
@@ -50,14 +52,14 @@ amplifier family, offering:
   channel
 - **Hardware Triggers**: Precise timing and synchronization
 
-30DV50/300 Standalone Amplifier ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### 30DV50/300 Standalone Amplifier 
 
 The **30DV50/300** is a single-channel amplifier designed for compact
 setups that only require one axis. It supports the same command set and
 capabilities as d-Drive channels, including PID control, waveform
 generation, and data recording.
 
-NV40/3(CLE) and NV120/1(CLE) Amplifiers ^^^^^^^^^^^^^^^^^^^^
+### NV40/3(CLE) and NV120/1(CLE) Amplifiers
 
 Piezo amplifiers with 1 or 3 channels, available in open-loop and
 closed-loop variants. They include features such as:
@@ -111,11 +113,10 @@ Instead of a monolithic device class, psj-lib uses **capabilities** to
 represent hardware features. Each capability is a focused module that
 encapsulates related functionality:
 
-``` python
-# Access capabilities as channel attributes
-await channel.closed_loop_controller.set(True)
-await channel.setpoint.set(50.0)
-await channel.pid_controller.set(p=0.5, i=0.1, d=0.05)
+``` csharp
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+await channel.PidController.SetAsync(p: 0.5, i: 0.1, d: 0.05).ConfigureAwait(false);
 ```
 
 This design provides:
@@ -130,19 +131,18 @@ This design provides:
 
 All device communication is asynchronous, enabling:
 
-- **Concurrent Operations**: Control multiple channels simultaneously
+- **Concurrent Operations**: Control multiple devices simultaneously
 - **Non-blocking**: Keep UI responsive while waiting for device
   responses
 - **Efficient**: Minimize idle time in complex sequences
 - **Scalable**: Handle multiple devices without threading complexity
 
-``` python
-# Concurrent channel control
-await asyncio.gather(
-    channel1.setpoint.set(30.0),
-    channel2.setpoint.set(60.0),
-    channel3.setpoint.set(90.0)
-)
+``` csharp
+await Task.WhenAll(
+  channel1.Setpoint.SetAsync(30.0),
+  channel2.Setpoint.SetAsync(60.0),
+  channel3.Setpoint.SetAsync(90.0)
+).ConfigureAwait(false);
 ```
 
 ### Transport Abstraction
@@ -150,12 +150,12 @@ await asyncio.gather(
 The library abstracts transport protocols, allowing seamless switching
 between Serial and Telnet:
 
-``` python
-# Serial connection
-device = DDriveDevice(TransportType.SERIAL, "COM3")
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-# Or Telnet connection
-device = DDriveDevice(TransportType.TELNET, "192.168.1.100")
+var serialDevice = new DDriveDevice(TransportType.Serial, "COM3");
+var telnetDevice = new DDriveDevice(TransportType.Telnet, "192.168.1.100");
 ```
 
 The same API works regardless of transport type.
@@ -164,25 +164,25 @@ The same API works regardless of transport type.
 
 Ready to start using psj-lib? Here's what to do next:
 
-1.  **Installation**: See `installation` for setup instructions
-2.  **Connecting**: Learn how to connect to your device in `connecting`
-3.  **Basic Usage**: Follow the tutorial in `getting_started`
-4.  **Examples**: Explore practical examples in `examples`
-5.  **API Reference**: Browse the complete API in `api`
+1.  **Installation**: See [Installation](installation.md) for setup instructions
+2.  **Connecting**: Learn how to connect to your device in [Connecting](connecting.md)
+3.  **Basic Usage**: Follow the tutorial in [Getting Started](getting_started.md)
+4.  **Examples**: Explore practical examples in [Examples](examples.md)
+5.  **API Reference**: Browse the complete API in [API Reference](api.md)
 
 ## Community and Support
 
 **Documentation**: You're reading it! This documentation covers
 everything from basic usage to advanced topics.
 
-**Examples**: The library includes 10+ working examples demonstrating
+**Examples**: The library includes multiple examples demonstrating
 common tasks.
 
-**Developer Guide**: See `developer_guide` if you want to extend the
+**Developer Guide**: See [Developer Guide](developer_guide.md) if you want to extend the
 library or add support for new devices.
 
 **Contact**: For support, contact [piezosystem jena
-GmbH](https://www.piezosystem.com).
+GmbH](https://www.piezosystem.com) or [create an issue on GitHub](https://github.com/piezosystemjena/psj-lib-cs/issues/new)
 
 ## License and Attribution
 
@@ -190,11 +190,9 @@ psj-lib is developed and maintained by piezosystem jena GmbH.
 
 **Authors**: piezosystem jena GmbH
 
-**Version**: 0.0.1
-
-**Python Version**: 3.12+
+**.NET Target Framework**: .NET 8+
 
 ## What's Next?
 
-Continue to `installation` to set up psj-lib and start controlling your
+Continue to [Installation](installation.md) to set up psj-lib and start controlling your
 piezosystem jena devices.

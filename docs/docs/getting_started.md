@@ -7,35 +7,29 @@ piezosystem jena devices.
 
 Let's start with a complete, minimal example:
 
-``` python
-import asyncio
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def main():
-    # Connect to device
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($"Current position: {position:F2} µm");
 
-    async with device:
-        # Get first channel
-        channel = device.channels[0]
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    Console.WriteLine("Moved to 50.0 µm");
 
-        # Read current position
-        position = await channel.position.get()
-        print(f"Current position: {position:.2f} µm")
-
-        # Enable closed-loop control
-        await channel.closed_loop_controller.set(True)
-
-        # Move to target position
-        await channel.setpoint.set(50.0)
-        print("Moved to 50.0 µm")
-
-        # Read final position
-        final_pos = await channel.position.get()
-        print(f"Final position: {final_pos:.2f} µm")
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    var finalPos = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($"Final position: {finalPos:F2} µm");
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 **What This Does:**
@@ -60,18 +54,18 @@ Use the class matching your hardware model:
 
 ### Async/Await Pattern
 
-psj-lib uses Python's `asyncio` for non-blocking operations. Key points:
+psj-lib uses .NET `Task`-based async/await for non-blocking operations. Key points:
 
 - All device operations are `async` functions
 - Use `await` when calling device methods
-- Run your async code with `asyncio.run()`
+- Run your async code from an `async Task Main(...)` entry point
 
-``` python
-# ✓ Correct
-position = await channel.position.get()
+``` csharp
+// ✓ Correct
+var position = await channel.Position.GetAsync().ConfigureAwait(false);
 
-# ✗ Wrong - missing await
-position = channel.position.get()  # Returns coroutine, not value
+// ✗ Wrong - missing await
+var pending = channel.Position.GetAsync();
 ```
 
 ### Device Hierarchy
@@ -80,18 +74,18 @@ psj-lib uses a three-level structure:
 
 ``` text
 Device (DDriveDevice)
-└── Channels (DDriveChannel)
-    └── Capabilities (Position, Status, PID, etc.)
+└── Channels (DDriveChannel / DDriveFamilyChannel)
+    └── Capabilities (Position, StatusRegister, PidController, etc.)
 ```
 
-``` python
-# Access pattern
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-channel = device.channels[0]  # First channel
-position_capability = channel.position
+``` csharp
+// Access pattern
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+var channel = device.Channels[0];
 
-# Use capability
-value = await position_capability.get()
+// Use "Position" capability
+var value = await channel.Position.GetAsync().ConfigureAwait(false);
 ```
 
 ## Working with Channels
@@ -100,36 +94,35 @@ value = await position_capability.get()
 
 Devices may have multiple channels:
 
-``` python
-async with device:
-    # Get all channels
-    channels = device.channels
-    print(f"Device has {len(channels)} channels")
+``` csharp
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($"Device has {device.Channels.Count} channels");
+    var channel0 = device.Channels[0];
 
-    # Access by index
-    channel0 = device.channels[0]
-    channel1 = device.channels[1]
-
-    # Iterate over channels
-    for channel in device.channels:
-        print(f"Channel {channel.channel_id}")
+    foreach (var (channelId, _) in device.Channels)
+    {
+        Console.WriteLine($"Channel {channelId}");
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ### Channel Information
 
 Each channel provides identification and status:
 
-``` python
-channel = device.channels[0]
-
-# Channel ID
-print(f"Channel ID: {channel.channel_id}")
-
-# Read status register
-status = await channel.status_register.read()
-print(f"Closed-loop enabled: {status.closed_loop_state}")
-print(f"No overload: {status.no_overload}")
-print(f"Setpoint reached: {status.setpoint_reached}")
+``` csharp
+var channel = device.Channels[0];
+Console.WriteLine($"Channel ID: {channel.Id}");
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Closed-loop enabled: {status.ClosedLoop}");
+Console.WriteLine($"No overload: {status.NoOverload}");
+Console.WriteLine($"Setpoint reached: {status.SetpointReached}");
 ```
 
 ## Position Control
@@ -138,14 +131,10 @@ print(f"Setpoint reached: {status.setpoint_reached}")
 
 Open-loop control sets output voltage directly:
 
-``` python
-# Disable closed-loop for open-loop control
-await channel.closed_loop_controller.set(False)
-
-# Set output voltage (0-100V for typical piezo)
-await channel.setpoint.set(50.0)  # 50V
-
-# Note: For d-Drive, you can read back via channel.setpoint.get() (returns cached value)
+``` csharp
+await channel.ClosedLoopController.SetAsync(false).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false); // cached value
 ```
 
 **Use Cases:**
@@ -159,16 +148,11 @@ await channel.setpoint.set(50.0)  # 50V
 Depending on the amplifier and connected actuator, closed-loop control
 might be available. It uses sensor feedback for precise positioning:
 
-``` python
-# Enable closed-loop control
-await channel.closed_loop_controller.set(True)
-
-# Move to target position (in µm)
-await channel.setpoint.set(30.0)
-
-# Read actual position
-actual_pos = await channel.position.get()
-print(f"Position: {actual_pos:.2f} µm")
+``` csharp
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(30.0).ConfigureAwait(false);
+var actualPos = await channel.Position.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Position: {actualPos:F2} µm");
 ```
 
 **Advantages:**
@@ -181,31 +165,20 @@ print(f"Position: {actual_pos:.2f} µm")
 
 Complete example with error checking:
 
-``` python
-async def move_to_position(channel, target: float, tolerance: float = 0.5):
-    """Move to target position and verify arrival."""
-    # Enable closed-loop
-    await channel.closed_loop_controller.set(True)
+``` csharp
+static async Task<bool> MoveToPositionAsync(DDriveChannel channel, double target, double tolerance = 0.5)
+{
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+    await Task.Delay(1000).ConfigureAwait(false);
 
-    # Set target
-    await channel.setpoint.set(target)
-
-    # Wait briefly for settling
-    await asyncio.sleep(1)
-
-    # Verify position
-    actual = await channel.position.get()
-    error = abs(actual - target)
-
-    if error < tolerance:
-        print(f"✓ Reached {target:.2f} µm (error: {error:.3f} µm)")
-        return True
-    else:
-        print(f"✗ Position error: {error:.3f} µm")
-        return False
-
-# Use it
-success = await move_to_position(channel, 50.0)
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+    var error = Math.Abs(actual - target);
+    Console.WriteLine(error < tolerance
+        ? $"✓ Reached {target:F2} µm (error: {error:F3} µm)"
+        : $"✗ Position error: {error:F3} µm");
+    return error < tolerance;
+}
 ```
 
 ## Reading Status
@@ -215,40 +188,36 @@ success = await move_to_position(channel, 50.0)
 Depending on the device, a status register might be available. The
 status register provides real-time device state:
 
-``` python
-status = await channel.status_register.get()
+``` csharp
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
 
 # Check individual flags
-print(f"Closed-loop: {status.closed_loop}")
-print(f"Actor plugged: {status.actor_plugged}")
-print(f"Actor type: {status.actor_type}")
-print(f"Sensor type: {status.sensor_type}")
+Console.WriteLine($"Closed-loop: {status.ClosedLoop}");
+Console.WriteLine($"Actor plugged: {status.ActorPlugged}");
+Console.WriteLine($"Actor type: {status.ActorType}");
+Console.WriteLine($"Sensor type: {status.SensorType}");
 ```
 
 ### Temperature Monitoring
 
 Monitor amplifier temperature:
 
-``` python
-# Read temperature
-temp = await channel.temperature.get()
-print(f"Temperature: {temp:.1f}°C")
-
-# Check if overheating
-if temp > 60.0:
-    print("Warning: High temperature!")
-    # Take action (reduce duty cycle, enable cooling, etc.)
+``` csharp
+var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Temperature: {temp:F1}°C");
+if (temp > 60.0)
+{
+    Console.WriteLine("Warning: High temperature!");
+}
 ```
 
 ### Actuator Information
 
 Read actuator description string:
 
-``` python
-# Get actuator description
-actuator = await channel.actuator_description.get()
-
-print(f"Actuator description: {actuator}")
+``` csharp
+var actuator = await channel.ActuatorDescription.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Actuator description: {actuator}");
 ```
 
 ## Basic Control Patterns
@@ -257,105 +226,71 @@ print(f"Actuator description: {actuator}")
 
 Move through a sequence of positions:
 
-``` python
-async def sequential_scan():
-    channel = device.channels[0]
-    await channel.closed_loop_controller.set(True)
-
-    positions = [10.0, 30.0, 50.0, 70.0, 90.0]
-
-    for pos in positions:
-        await channel.setpoint.set(pos)
-        await asyncio.sleep(0.2)  # Dwell time
-
-        actual = await channel.position.get()
-        print(f"Position: {actual:.2f} µm")
+``` csharp
+var positions = new[] { 10.0, 30.0, 50.0, 70.0, 90.0 };
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+foreach (var pos in positions)
+{
+    await channel.Setpoint.SetAsync(pos).ConfigureAwait(false);
+    await Task.Delay(200).ConfigureAwait(false);
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($"Position: {actual:F2} µm");
+}
 ```
 
 ### Parallel Channel Control
 
 Control multiple channels simultaneously:
 
-``` python
-async def move_all_channels():
-    channels = device.channels
-
-    # Enable closed-loop on all channels
-    await asyncio.gather(*[
-        ch.closed_loop_controller.set(True)
-        for ch in channels
-    ])
-
-    # Move all channels to different positions
-    targets = [30.0, 50.0, 70.0]
-    await asyncio.gather(*[
-        ch.setpoint.set(target)
-        for ch, target in zip(channels, targets)
-    ])
+``` csharp
+var channels = device.Channels.Values.ToList();
+await Task.WhenAll(channels.Select(ch => ch.ClosedLoopController.SetAsync(true))).ConfigureAwait(false);
+var targets = new[] { 30.0, 50.0, 70.0 };
+await Task.WhenAll(channels.Zip(targets).Select(x => x.First.Setpoint.SetAsync(x.Second))).ConfigureAwait(false);
 ```
 
 ### Continuous Monitoring
 
 Monitor position over time:
 
-``` python
-async def monitor_position(duration: float = 5.0, interval: float = 0.1):
-    """Monitor position for specified duration."""
-    channel = device.channels[0]
-
-    end_time = asyncio.get_event_loop().time() + duration
-
-    while asyncio.get_event_loop().time() < end_time:
-        pos = await channel.position.get()
-        temp = await channel.temperature.get()
-
-        print(f"Position: {pos:.2f} µm, Temp: {temp:.1f}°C")
-
-        await asyncio.sleep(interval)
+``` csharp
+var endTime = DateTime.UtcNow + TimeSpan.FromSeconds(5);
+while (DateTime.UtcNow < endTime)
+{
+    var pos = await channel.Position.GetAsync().ConfigureAwait(false);
+    var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($"Position: {pos:F2} µm, Temp: {temp:F1}°C");
+    await Task.Delay(100).ConfigureAwait(false);
+}
 ```
 
-## Error Handling
-
-### Handling Device Errors
+## Handling Device Errors
 
 Always handle potential errors:
 
-``` python
-from psj_lib import DeviceError, DeviceUnavailableException
-
-async def safe_operation():
-    try:
-        device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-        async with device:
-            channel = device.channels[0]
-            await channel.setpoint.set(50.0)
-
-    except DeviceUnavailableException as e:
-        print(f"Connection failed: {e}")
-
-    except DeviceError as e:
-        print(f"Device error: {e}")
-
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-```
-
-### Timeout Protection
-
-Protect against hanging operations:
-
-``` python
-async def safe_move_with_timeout(channel, target: float, timeout: float = 5.0):
-    """Move with timeout protection."""
-    try:
-        async with asyncio.timeout(timeout):
-            await channel.setpoint.set(target)
-            print(f"Moved to {target:.2f} µm")
-
-    except asyncio.TimeoutError:
-        print(f"Move timeout after {timeout}s")
-        # Could implement recovery here
+``` csharp
+try
+{
+    var device = new DDriveDevice(TransportType.Serial, "COM3");
+    await device.ConnectAsync().ConfigureAwait(false);
+    try
+    {
+        var channel = device.Channels[0];
+        await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    }
+    finally
+    {
+        await device.CloseAsync().ConfigureAwait(false);
+    }
+}
+catch (DeviceUnavailableException ex)
+{
+    Console.WriteLine($"Connection failed: {ex.Message}");
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($"Device error: {ex.Message}");
+}
 ```
 
 ## Common Patterns
@@ -364,128 +299,113 @@ async def safe_move_with_timeout(channel, target: float, timeout: float = 5.0):
 
 Standard initialization pattern:
 
-``` python
-async def initialize_channel(channel):
-    """Initialize channel for operation."""
-    # Read and display current state
-    status = await channel.status_register.get()
-    print(f"Initial status: {status}")
-
-    # Enable closed-loop
-    await channel.closed_loop_controller.set(True)
-    print("Closed-loop enabled")
-
-    # Move to zero position
-    await channel.setpoint.set(0.0)
-    print("Homed to 0.0 µm")
-
-    return True
+``` csharp
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Initial status: {status}");
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(0.0).ConfigureAwait(false);
+Console.WriteLine("Homed to 0.0 µm");
 ```
 
 ## Complete Example
 
 Here's a complete application template:
 
-``` python
-import asyncio
-from psj_lib import DDriveDevice, TransportType
-from psj_lib import DeviceError
+``` csharp
+using PsjLib.Base;
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def main():
-    # Configuration
-    port = "COM3"
-    target_positions = [20.0, 40.0, 60.0, 80.0]
+var port = "COM3";
+var targetPositions = new[] { 20.0, 40.0, 60.0, 80.0 };
+var device = new DDriveDevice(TransportType.Serial, port);
 
-    try:
-        # Connect
-        device = DDriveDevice(TransportType.SERIAL, port)
-        print(f"Connecting to {port}...")
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    var channel = device.Channels[0];
 
-        async with device:
-            print(f"Connected to {device.device_id}")
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($"Temperature: {temp:F1}°C");
 
-            # Get channel
-            channel = device.channels[0]
+    foreach (var target in targetPositions)
+    {
+        await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+        await Task.Delay(1000).ConfigureAwait(false);
+        var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+        var error = Math.Abs(actual - target);
+        Console.WriteLine($"Target: {target:F1} µm, Actual: {actual:F2} µm, Error: {error:F3} µm");
+    }
 
-            # Initialize
-            await channel.closed_loop_controller.set(True)
-            temp = await channel.temperature.get()
-            print(f"Temperature: {temp:.1f}°C")
-
-            # Execute movement sequence
-            for target in target_positions:
-                await channel.setpoint.set(target)
-                await asyncio.sleep(1)  # Settling time
-
-                actual = await channel.position.get()
-                error = abs(actual - target)
-                print(f"Target: {target:.1f} µm, Actual: {actual:.2f} µm, "
-                      f"Error: {error:.3f} µm")
-
-            # Return to zero
-            await channel.setpoint.set(0.0)
-            print("Returned to zero")
-
-    except DeviceError as e:
-        print(f"Device error: {e}")
-        return 1
-
-    except Exception as e:
-        print(f"Error: {e}")
-        return 1
-
-    print("Completed successfully")
-    return 0
-
-if __name__ == "__main__":
-    exit_code = asyncio.run(main())
-    exit(exit_code)
+    await channel.Setpoint.SetAsync(0.0).ConfigureAwait(false);
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($"Device error: {ex.Message}");
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Best Practices
 
-1.  **Always Use Context Managers**
+1.  **Always Use `try/finally`**
 
-    ``` python
-    async with device:
-        # Device operations here
-    # Automatically closes
+    ``` csharp
+    await device.ConnectAsync().ConfigureAwait(false);
+    try
+    {
+        // Device operations here
+    }
+    finally
+    {
+        await device.CloseAsync().ConfigureAwait(false);
+    }
     ```
 
 2.  **Enable Closed-Loop for Precision**
 
-    ``` python
-    await channel.closed_loop_controller.set(True)
+    ``` csharp
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
     ```
 
 3.  **Check Status After Critical Operations**
 
-    ``` python
-    await channel.setpoint.set(50.0)
-    actual = await channel.position.get()
+    ``` csharp
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
     ```
 
 4.  **Handle Errors Appropriately**
 
-    ``` python
-    try:
-        await channel.setpoint.set(target)
-    except DeviceError as e:
-        # Handle error
+    ``` csharp
+    try
+    {
+        await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+    }
+    catch (DeviceError)
+    {
+        // Handle error
+    }
     ```
 
 5.  **Monitor Temperature Under Load**
 
-    ``` python
-    temp = await channel.temperature.get()
-    if temp > 60.0:
-        # Reduce duty cycle or wait
+    ``` csharp
+    var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+    if (temp > 60.0)
+    {
+        // Reduce duty cycle or wait
+    }
     ```
 
 ## Next Steps
 
 Now that you understand the basics:
 
-- Learn about d-Drive specific features: `d_drive`
-- Explore base capabilities: `base_capabilities`
-- See complete examples: `examples`
+- Learn about d-Drive specific features: [d-Drive](d_drive.md)
+- Explore base capabilities: [Base Capabilities](base_capabilities.md)
+- See complete examples: [Examples](examples.md)

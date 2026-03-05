@@ -1,670 +1,473 @@
 # Base Capabilities
 
-This page documents the base capabilities that are available across each
-piezo device in psj-lib. These capabilities provide the core
-functionality for position control, signal processing, data acquisition,
-and system configuration.
+This page documents the base capabilities that are available across
+piezo devices in psj-lib. These capabilities provide core functionality
+for position control, signal processing, data acquisition, and system
+configuration.
 
 Device-specific implementations may extend these base capabilities with
-additional features or provide specialized versions. Refer to
-device-specific documentation (e.g., `d_drive`) for device-specific
-capabilities and enhancements.
+additional features or specialized behavior. Refer to
+device-specific documentation (for example [d-Drive](d_drive.md)) for details.
 
 ## Overview
 
-Capabilities are modular features accessed as properties of device
-channels. Each capability provides a focused set of operations for a
-specific aspect of device control.
+Capabilities are modular features exposed as properties of devices and channels.
 
-``` python
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-
-    # Access capabilities as channel properties
-    await channel.setpoint.set(50.0)
-    position = await channel.position.get()
-    await channel.pid_controller.set(p=10.0, i=5.0)
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    await channel.PidController.SetAsync(p: 10.0, i: 5.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Position Control
 
 ### Setpoint
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.setpoint.Setpoint`
+**API Reference:** [Setpoint](../api/PsjLib.Base.Capabilities.Setpoint.yml)
 
-The setpoint capability controls the target position or voltage for the
-actuator. In closed-loop mode, the controller drives the actuator to
-match this setpoint. In open-loop mode, the setpoint directly controls
-the output voltage.
+Controls target position or voltage for the actuator.
 
-``` python
-# Set target position
-await channel.setpoint.set(75.5)
-
-# Read current setpoint
-target = await channel.setpoint.get()
-print(f"Target: {target:.2f} µm")
+``` csharp
+await channel.Setpoint.SetAsync(75.5).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false); // cached where applicable
+Console.WriteLine($"Target: {target:F2}");
 ```
 
 **Key Points:**
 
-- Units match position units (typically µm in closed-loop, V in
-  open-loop)
-- Range limited by actuator specifications
-- Movement speed affected by slew rate settings
+- Units depend on control mode and device configuration
+- Range is limited by hardware and firmware constraints
+- Movement dynamics are influenced by slew-rate settings
 
 ### Position
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.position.Position`
+**API Reference:** [Position](../api/PsjLib.Base.Capabilities.Position.yml)
 
-Reads the current position of the actuator. In closed-loop systems, this
-represents the sensor feedback value. In open-loop systems, this may
-represent the output voltage.
+Reads actual position (or corresponding readback quantity on open-loop
+devices).
 
-``` python
-# Get current position
-current_pos = await channel.position.get()
-print(f"Position: {current_pos:.2f} µm")
-
-# Calculate position error
-target = await channel.setpoint.get()
-error = target - current_pos
-print(f"Error: {error:.3f} µm")
+``` csharp
+var currentPos = await channel.Position.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Position: {currentPos:F2}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Read-only capability
-- Update rate depends on device (typically every control loop cycle)
-- Units depend on device configuration
+- Position is a readback value from the device, not a cached command value.
+- Reported units depend on device mode and channel configuration.
 
 ### Closed-Loop Controller
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.closed_loop_controller.ClosedLoopController`
+**API Reference:** [ClosedLoopController](../api/PsjLib.Base.Capabilities.ClosedLoopController.yml)
 
-Enables or disables closed-loop position control. When enabled, the
-controller uses sensor feedback to actively maintain the actuator at the
-desired setpoint, compensating for drift, hysteresis, and external
-loads.
+Enables/disables closed-loop feedback control.
 
-``` python
-# Enable closed-loop control
-await channel.closed_loop_controller.set(True)
-
-# Check control mode
-is_closed_loop = await channel.closed_loop_controller.get_enabled()
-print(f"Mode: {'Closed-loop' if is_closed_loop else 'Open-loop'}")
-
-# Get controller sampling period
-period_us = channel.closed_loop_controller.sample_period
-print(f"Control rate: {1e6/period_us:.0f} Hz")
+``` csharp
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+var enabled = await channel.ClosedLoopController.GetEnabledAsync().ConfigureAwait(false);
+Console.WriteLine($"Mode: {(enabled ? "Closed-loop" : "Open-loop")}");
+Console.WriteLine($"Sample period: {channel.ClosedLoopController.SamplePeriod} µs");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Requires position sensor for feedback
-- Better accuracy and stability than open-loop
-- PID parameters affect closed-loop performance
-- Changing modes may cause position jumps
+- Closed-loop availability depends on hardware and connected actuator/sensor.
+- Controller timing properties are device-defined and read-only.
 
 ### Slew Rate
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.slew_rate.SlewRate`
+**API Reference:** [SlewRate](../api/PsjLib.Base.Capabilities.SlewRate.yml)
 
-Controls the maximum rate of change for actuator movement. Slew rate
-limiting prevents mechanical shock, reduces vibration, and protects
-delicate samples.
+Limits maximum rate-of-change for smoother motion.
 
-``` python
-# Set gentle slew rate for smooth motion
-await channel.slew_rate.set(10.0)
-
-# Query current rate
-rate = await channel.slew_rate.get()
-print(f"Max speed: {rate:.1f} V/ms")
+``` csharp
+await channel.SlewRate.SetAsync(10.0).ConfigureAwait(false);
+var rate = await channel.SlewRate.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Max speed: {rate:F1}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Units typically V/ms or %/ms (device-specific)
-- Lower values = smoother, slower movements
-- Zero or maximum may disable rate limiting (device-specific)
+- Lower slew rates improve smoothness but increase move time.
+- Use conservative limits for fragile setups or high-load conditions.
 
 ## Control System
 
 ### PID Controller
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.pid_controller.PIDController`
+**API Reference:** [PIDController](../api/PsjLib.Base.Capabilities.PIDController.yml)
 
-Configures PID (Proportional-Integral-Derivative) controller parameters
-for closed-loop operation. The PID controller determines how the system
-responds to position errors.
+Configures PID gains and derivative filter (`Tf`).
 
-``` python
-# Set PID parameters
-await channel.pid_controller.set(
-    p=10.0,      # Proportional gain
-    i=5.0,       # Integral gain  
-    d=0.5,       # Derivative gain
-    diff_filter=100.0  # Derivative filter
-)
-
-# Read individual parameters
-p_gain = await channel.pid_controller.get_p()
-i_gain = await channel.pid_controller.get_i()
-print(f"PID: P={p_gain}, I={i_gain}")
+``` csharp
+await channel.PidController.SetAsync(p: 10.0, i: 5.0, d: 0.5, tf: 100.0).ConfigureAwait(false);
+var p = await channel.PidController.GetPAsync().ConfigureAwait(false);
+var i = await channel.PidController.GetIAsync().ConfigureAwait(false);
+var d = await channel.PidController.GetDAsync().ConfigureAwait(false);
+var tf = await channel.PidController.GetTfAsync().ConfigureAwait(false);
+Console.WriteLine($"PID: P={p}, I={i}, D={d}, Tf={tf}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- **P (Proportional):** Response proportional to error. Higher = faster
-  but may overshoot
-- **I (Integral):** Eliminates steady-state error. Too high causes
-  oscillation
-- **D (Derivative):** Dampens oscillation. Higher = more damping but
-  noise sensitive
-- **Diff Filter:** Filters derivative term to reduce noise amplification
-- Only active when closed-loop control is enabled
-- Improper tuning can cause poor performance
+- Tune gains incrementally to avoid oscillation or overshoot.
+- `Tf` smooths derivative behavior and helps reduce noise sensitivity.
 
 ### Pre-Control Factor (PCF)
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.pcf.PreControlFactor`
+**API Reference:** [PreControlFactor](../api/PsjLib.Base.Capabilities.PreControlFactor.yml)
 
-The Pre-Control Factor provides feedforward compensation to improve
-control system response. It anticipates required control action based on
-setpoint changes, reducing settling time and tracking error.
+Feedforward compensation for faster response.
 
-``` python
-# Set moderate feedforward
-await channel.pcf.set(0.5)
-
-# Query current value
-value = await channel.pcf.get()
-print(f"PCF: {value}")
+``` csharp
+await channel.Pcf.SetAsync(0.5).ConfigureAwait(false);
+var value = await channel.Pcf.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"PCF: {value}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Typical range: 0.0 (no feedforward) to 1.0 (full feedforward)
-- Higher values = faster response but potential overshoot
-- Only active in closed-loop mode
-- Tune in conjunction with PID parameters
+- PCF is feedforward and should be tuned together with PID gains.
+- Overly aggressive values can reduce stability margins.
 
 ## Signal Filtering
 
 ### Notch Filter
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.notch_filter.NotchFilter`
+**API Reference:** [NotchFilter](../api/PsjLib.Base.Capabilities.NotchFilter.yml)
 
-Notch filters suppress specific frequency components to eliminate
-mechanical resonances that can cause instability or oscillation in
-closed-loop systems.
+Suppresses resonance frequencies.
 
-``` python
-# Suppress 500 Hz resonance
-await channel.notch_filter.set(
-    enabled=True,
-    frequency=500.0,
-    bandwidth=50.0
-)
-
-# Check configuration
-freq = await channel.notch_filter.get_frequency()
-bw = await channel.notch_filter.get_bandwidth()
-enabled = await channel.notch_filter.get_enabled()
-print(f"Notch: {freq}±{bw/2} Hz, {'On' if enabled else 'Off'}")
+``` csharp
+await channel.Notch.SetAsync(enabled: true, frequency: 500.0, bandwidth: 50.0).ConfigureAwait(false);
+var notchFreq = await channel.Notch.GetFrequencyAsync().ConfigureAwait(false);
+var notchBw = await channel.Notch.GetBandwidthAsync().ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Center frequency should match mechanical resonance
-- Narrow bandwidth = precise suppression
-- Wide bandwidth = broader suppression, affects more frequencies
+- Match notch center frequency to measured resonance peaks.
+- Keep bandwidth as narrow as practical to avoid excessive phase impact.
 
 ### Low-Pass Filter
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.low_pass_filter.LowPassFilter`
+**API Reference:** [LowPassFilter](../api/PsjLib.Base.Capabilities.LowPassFilter.yml)
 
-Low-pass filters attenuate high-frequency noise while allowing
-low-frequency signals to pass. This improves signal quality and reduces
-noise in position measurements or control output.
+Attenuates high-frequency components.
 
-``` python
-# Enable 100 Hz low-pass filter
-await channel.lpf.set(
-    enabled=True,
-    cutoff_frequency=100.0
-)
-
-# Check settings
-freq = await channel.lpf.get_cutoff_frequency()
-enabled = await channel.lpf.get_enabled()
-print(f"LPF: {freq} Hz, {'Active' if enabled else 'Bypassed'}")
+``` csharp
+await channel.Lpf.SetAsync(enabled: true, cutoffFrequency: 100.0).ConfigureAwait(false);
+var lpfCutoff = await channel.Lpf.GetCutoffFrequencyAsync().ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Lower cutoff = more filtering, slower response
-- Higher cutoff = less filtering, faster response
-- Adds phase lag proportional to filtering strength
+- Lower cutoffs improve noise rejection but slow response.
+- Validate closed-loop behavior after major cutoff changes.
 
 ### Error Low-Pass Filter
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.error_low_pass_filter.ErrorLowPassFilter`
+**API Reference:** [ErrorLowPassFilter](../api/PsjLib.Base.Capabilities.ErrorLowPassFilter.yml)
 
-Applies low-pass filtering specifically to the position error signal
-(setpoint - position) before it enters the PID controller. This reduces
-high-frequency noise that could cause unstable control behavior.
+Filters error signal before PID processing.
 
-``` python
-# Configure 2nd-order error filter
-await channel.error_lpf.set(
-    cutoff_frequency=200.0,
-    order=2
-)
-
-# Query settings
-freq = await channel.error_lpf.get_cutoff_frequency()
-order = await channel.error_lpf.get_order()
-print(f"{order}-order error filter at {freq} Hz")
+``` csharp
+await channel.ErrorLpf.SetAsync(cutoffFrequency: 200.0, order: 2).ConfigureAwait(false);
+var order = await channel.ErrorLpf.GetOrderAsync().ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Only affects closed-loop control
-- Higher order = steeper rolloff, more phase lag
-- Helps stabilize noisy systems
-- Coordinate with PID tuning for best stability
+- Error filtering can stabilize noisy systems before PID processing.
+- Higher order filters increase attenuation and phase lag.
 
 ## Data Acquisition
 
 ### Data Recorder
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.data_recorder.DataRecorder`
+**API Reference:** [DataRecorder](../api/PsjLib.Base.Capabilities.DataRecorder.yml)
 
-The data recorder captures device signals (position, setpoint, voltage,
-etc.) at high speed into device memory for later retrieval and analysis.
+Captures high-speed device data to internal memory.
 
-``` python
-recorder = channel.data_recorder
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-# Configure for 10000 samples, no decimation
-await recorder.set(memory_length=10000, stride=1)
+var recorder = channel.DataRecorder;
+await recorder.SetAsync(memoryLength: 10000, stride: 1).ConfigureAwait(false);
 
-# Start recording
-await recorder.start()
+var data = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Position,
+    10000,
+    (current, total) => Console.WriteLine($"Downloaded {current}/{total}")
+).ConfigureAwait(false);
 
-# ... perform motion or measurements ...
-
-# Retrieve data with progress callback
-def progress(current, total):
-    print(f"Downloaded {current}/{total} samples")
-
-from psj_lib import DataRecorderChannel
-data = await recorder.get_all_data(
-    DataRecorderChannel.CHANNEL_1,
-    callback=progress
-)
-print(f"Captured {len(data)} samples")
-
-# Check recorder specifications
-sample_rate = recorder.sample_rate  # Hz
-sample_period = recorder.sample_period  # microseconds
-print(f"Recording at {sample_rate/1000:.0f} kHz")
+Console.WriteLine($"Sample rate: {recorder.SampleRate:F0} Hz");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Multiple channels (device-dependent, typically 2)
-- Memory length limits total capture time
-- Stride (decimation) allows longer time spans at lower data rate
-- Large data transfers may take several seconds
-- Use `sample_rate` property to get base recording frequency
+- Recorder downloads may take noticeable time for large captures.
+- Use progress callbacks for UI feedback during long reads.
 
 ### Trigger Output
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.trigger_out.TriggerOut`
+**API Reference:** [TriggerOut](../api/PsjLib.Base.Capabilities.TriggerOut.yml)
 
-Generates digital trigger pulses when monitored signals cross threshold
-values. Useful for synchronizing external equipment (cameras, data
-acquisition, etc.) with actuator movement.
+Generates trigger pulses based on signal thresholds/ranges.
 
-``` python
-from psj_lib import TriggerEdge, TriggerDataSource
+``` csharp
+using PsjLib.Base.Capabilities;
 
-# Trigger every 10µm from 20µm to 80µm
-await channel.trigger_out.set(
-    start_value=20.0,
-    stop_value=80.0,
-    interval=10.0,
-    length=100,  # Pulse duration in cycles
-    edge=TriggerEdge.BOTH,
-    src=TriggerDataSource.POSITION
-)
-
-# Query configuration
-start = await channel.trigger_out.get_start_value()
-interval = await channel.trigger_out.get_interval()
-print(f"Trigger every {interval}µm from {start}µm")
+await channel.TriggerOut.SetAsync(
+    startValue: 20.0,
+    stopValue: 80.0,
+    interval: 10.0,
+    length: 100,
+    edge: TriggerEdge.Both,
+    src: TriggerDataSource.Position
+).ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Output typically 0V/5V TTL signal
-- Window mode: triggers when signal enters/exits range
-- Interval mode: periodic triggers at fixed spacing
-- Edge sensitivity: rising, falling, or both
+- Trigger polarity/edge behavior is controlled by `TriggerEdge`.
+- Verify electrical compatibility with connected external hardware.
 
 ## Signal Generation
 
 ### Static Waveform Generator
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.static_waveform_generator.StaticWaveformGenerator`
+**API Reference:** [StaticWaveformGenerator](../api/PsjLib.Base.Capabilities.StaticWaveformGenerator.yml)
 
-Generates continuous periodic waveforms (sine, square, triangle, etc.)
-for scanning applications, vibration testing, frequency response
-characterization, and dynamic positioning.
+Base abstraction for periodic waveforms. Device families may expose
+derived capability types with additional waveform options.
 
-``` python
-wfg = channel.waveform_generator
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-# Generate 10 Hz sine wave, 20µm amplitude, centered at 50µm
-await wfg.set(
-    frequency=10.0,
-    amplitude=20.0,
-    offset=50.0
-)
-
-# Create square wave with 30% duty cycle
-await wfg.set(
-    frequency=5.0,
-    duty_cycle=30.0
-)
-
-# Query current settings
-freq = await wfg.get_frequency()
-amp = await wfg.get_amplitude()
-offset = await wfg.get_offset()
-print(f"{freq} Hz, ±{amp/2} µm around {offset} µm")
+await channel.WaveformGenerator.Sine
+    .SetAsync(amplitude: 20.0, offset: 50.0, frequency: 10.0)
+    .ConfigureAwait(false);
+await channel.WaveformGenerator
+    .SetWaveformTypeAsync(DDriveWaveformType.Sine)
+    .ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Configurable frequency, amplitude, offset, and duty cycle
-- May require modulation source selection to use waveform output
-- Frequency limited by device capabilities and actuator resonance
-- Amplitude limited by actuator travel range
-
-> [!NOTE]
-> Device-specific implementations may provide enhanced waveform
-> generators with additional waveform types and features. See
-> device-specific documentation for details.
+- Configure waveform parameters before enabling output waveform type.
+- Ensure amplitude/offset remain within actuator-safe operating range.
 
 ## System Monitoring
 
 ### Status Register
 
-**API Reference:** `~psj_lib.devices.base.capabilities.status.Status`
+**API Reference:** [Status<TRegister>](../api/PsjLib.Base.Capabilities.Status-1.yml)
 
-Queries the device status register to retrieve real-time hardware state
-information, error conditions, and operational flags. The status
-register format is device-specific.
+Reads model-specific status registers.
 
-``` python
-status = await channel.status_register.get()
-
-# Access device-specific status properties
-print(f"Raw status: {status.raw}")
-
-# Device-specific implementations provide interpreted properties
-# (see device-specific documentation)
+``` csharp
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine(status);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Status format is device-specific
-- Provides real-time device state information
-- Device implementations decode raw status into meaningful properties
+- Status fields and bit meanings are model-specific.
+- Polling interval should match your monitoring needs and transport budget.
 
 ### Temperature
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.temperature.Temperature`
+**API Reference:** [Temperature](../api/PsjLib.Base.Capabilities.Temperature.yml)
 
-Monitors the internal temperature of device electronics or power stages.
-Temperature monitoring helps prevent overheating and can be used for
-thermal management.
+Reads internal device temperature.
 
-``` python
-temp = await channel.temperature.get()
-print(f"Device temperature: {temp:.1f}°C")
-
-if temp > 60:
-    print("Warning: High temperature")
+``` csharp
+var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Temperature: {temp:F1}°C");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Temperature typically in degrees Celsius
-- Sensor location varies by device (electronics, power stage)
-- Use for thermal monitoring and diagnostics
+- Use temperature checks during prolonged high-power operation.
+- Add your own thermal safety threshold handling in application logic.
 
 ### Fan Control
 
-**API Reference:** `~psj_lib.devices.base.capabilities.fan.Fan`
+**API Reference:** [Fan](../api/PsjLib.Base.Capabilities.Fan.yml)
 
-Enables or disables the internal cooling fan for thermal management. The
-fan helps dissipate heat from power electronics during operation.
+Controls cooling fan where supported.
 
-``` python
-# Enable cooling fan
-await channel.fan.set(True)
-
-# Check fan status
-is_running = await channel.fan.get_enabled()
-print(f"Fan: {'On' if is_running else 'Off'}")
+``` csharp
+await channel.Fan.SetAsync(true).ConfigureAwait(false);
+var fanEnabled = await channel.Fan.GetEnabledAsync().ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Not all devices have controllable fans
-- Some fans run automatically based on temperature
-- Disabling may cause thermal shutdown under heavy load
+- Fan control availability depends on specific hardware.
+- Enabling active cooling can improve thermal headroom.
 
 ## Device Information
 
 ### Actuator Description
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.actuator_description.ActuatorDescription`
+**API Reference:** [ActuatorDescription](../api/PsjLib.Base.Capabilities.ActuatorDescription.yml)
 
-Retrieves a human-readable description of the piezoelectric actuator
-connected to a channel. This may include model number, specifications,
-or identifying information.
+Returns actuator identification text.
 
-``` python
-desc = await channel.actuator_description.get()
-print(f"Connected actuator: {desc}")
-# Example output: "MIPOS 100"
+``` csharp
+var description = await channel.ActuatorDescription.GetAsync().ConfigureAwait(false);
+Console.WriteLine(description);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Description format is actuator-specific
-- May include model, travel range, resolution
-- Some devices return empty string if not configured
+- Description strings are firmware-provided and model dependent.
+- Use this value for diagnostics and setup validation.
 
 ### Unit
 
-**API Reference:** `~psj_lib.devices.base.capabilities.unit.Unit`
+**API Reference:** [Unit](../api/PsjLib.Base.Capabilities.Unit.yml)
 
-Queries the measurement unit for a specific quantity exposed by the
-mapped command (for example open-loop voltage unit or closed-loop
-position unit).
+Reads unit string for mapped command domains.
 
-``` python
-unit = await channel.openloop_unit.get()
-print(f"Open-loop unit: {unit}")
-# Example output: "V"
+``` csharp
+var unit = await channel.OpenloopUnit.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Open-loop unit: {unit}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Returns a single unit string for the configured command mapping
-- Typical values include `V`, `µm` and `mrad`
+- Unit mapping depends on current control domain and device family.
+- Read units before presenting values in UI/log output.
 
 ### Limits
 
-**API Reference:** `~psj_lib.devices.base.capabilities.limits.Limits`
+**API Reference:** [Limits](../api/PsjLib.Base.Capabilities.Limits.yml)
 
-Reads lower/upper limits for a device quantity (for example voltage or
-position limits).
+Reads lower/upper admissible ranges.
 
-``` python
-lower = await channel.openloop_limits.get_lower()
-upper = await channel.openloop_limits.get_upper()
-print(f"Allowed range: {lower} .. {upper}")
+``` csharp
+var range = await channel.OpenloopLimits.GetRangeAsync().ConfigureAwait(false);
+Console.WriteLine($"Allowed range: {range.Lower} .. {range.Upper}");
 ```
 
-**Key Points:**
+**Notes:**
 
-- Provides read-only range boundaries
-- `get_range()` returns `(lower, upper)`
+- Limits should be checked before issuing movement/output commands.
+- Boundaries can differ between open-loop and closed-loop modes.
 
 ### Display
 
-**API Reference:** `~psj_lib.devices.base.capabilities.display.Display`
+**API Reference:** [Display](../api/PsjLib.Base.Capabilities.Display.yml)
 
-Controls device display brightness (when supported).
+Controls front-panel display brightness where available.
 
-``` python
-await device.display.set(brightness=40.0)
+``` csharp
+await device.Display.SetAsync(40.0).ConfigureAwait(false);
 ```
+
+**Notes:**
+
+- Display capability may be device-level rather than channel-level.
+- Brightness range and behavior are device-specific.
 
 ### Multi-Channel Helpers
 
 **API References:**
 
-- `~psj_lib.devices.base.capabilities.multi_setpoint.MultiSetpoint`
-- `~psj_lib.devices.base.capabilities.multi_position.MultiPosition`
+- [MultiSetpoint](../api/PsjLib.Base.Capabilities.MultiSetpoint.yml)
+- [MultiPosition](../api/PsjLib.Base.Capabilities.MultiPosition.yml)
 
-These capabilities allow setting or reading multiple channels
-synchronously on devices that expose group operations (for example
-NV40/3 variants).
-
-``` python
-await device.multi_setpoint.set([10.0, 20.0, 30.0])
-positions = await device.multi_position.get()
+``` csharp
+await device.MultiSetpoint.SetAsync(new[] { 10.0, 20.0, 30.0 }).ConfigureAwait(false);
+var positions = await device.MultiPosition.GetAsync().ConfigureAwait(false);
 ```
+
+**Notes:**
+
+- Multi-channel helpers are only available on supported multi-axis models.
+- Use these calls for synchronized set/read patterns across channels.
 
 ## Signal Routing
 
 ### Modulation Source
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.modulation_source.ModulationSource`
+**API Reference:** [ModulationSource](../api/PsjLib.Base.Capabilities.ModulationSource.yml)
 
-Configures which signal source is used to modulate the actuator position
-or voltage. Common sources include external analog input, internal
-waveform generator, or serial commands.
+Configures modulation source using device-specific enums.
 
-``` python
-# Device-specific enum (example for d-Drive)
-from psj_lib import DDriveModulationSourceTypes
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-# Use internal waveform generator
-await channel.modulation_source.set_source(
-    DDriveModulationSourceTypes.INTERNAL_WAVEFORM
-)
-
-# Check current source
-source = await channel.modulation_source.get_source()
-print(f"Modulation from: {source.name}")
+await channel.ModulationSource
+    .SetAsync(DDriveModulationSourceTypes.SerialEncoder)
+    .ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Source enum is device-specific
-- External input typically 0-10V
-- May need to enable modulation mode separately
+- Available source enums are family/model specific.
+- Some modulation sources require additional external wiring or mode setup.
 
 ### Monitor Output
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.monitor_output.MonitorOutput`
+**API Reference:** [MonitorOutput](../api/PsjLib.Base.Capabilities.MonitorOutput.yml)
 
-Configures which internal signal is routed to the device's analog
-monitor output connector. This allows real-time observation using an
-oscilloscope or data acquisition system.
+Routes internal signals to monitor output.
 
-``` python
-# Device-specific enum (example for d-Drive)
-from psj_lib import DDriveMonitorOutputSource
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-# Route position to monitor output
-await channel.monitor_output.set_source(
-    DDriveMonitorOutputSource.POSITION
-)
-
-# Check current source
-source = await channel.monitor_output.get_source()
-print(f"Monitoring: {source.name}")
+await channel.MonitorOutput
+    .SetAsync(DDriveMonitorOutputSource.ClosedLoopPosition)
+    .ConfigureAwait(false);
 ```
 
-**Key Points:**
+**Notes:**
 
-- Output typically 0-10V
-- Scaling depends on device and selected source
-- Source enum is device-specific
-- Useful for debugging and real-time monitoring
+- Monitor output source enums are family specific.
+- Confirm output scaling before quantitative measurements.
 
 ## Configuration Management
 
 ### Factory Reset
 
-**API Reference:**
-`~psj_lib.devices.base.capabilities.factory_reset.FactoryReset`
+**API Reference:** [FactoryReset](../api/PsjLib.Base.Capabilities.FactoryReset.yml)
 
-Resets the device to factory default settings. This restores all
-parameters (PID, filters, control modes, etc.) to their original values.
+Resets device configuration to factory defaults.
 
-``` python
-# IMPORTANT: Backup first!
-backup = await device.backup()
-
-# Reset to factory defaults
-await device.factory_reset.execute()
-print("Device reset to factory defaults")
+``` csharp
+var backup = await device.BackupAsync().ConfigureAwait(false);
+await device.FactoryReset.ExecuteAsync().ConfigureAwait(false);
 ```
 
 **Key Points:**
 
-- **All custom settings are permanently lost**
-- Use `device.backup()` to save configuration first
-- Cannot be undone
+- All custom settings are permanently lost
+- Use `device.BackupAsync()` to save configuration first
+- Restore with `device.RestoreAsync(backup)` where appropriate
 
 > [!WARNING]
-> Factory reset is irreversible. Always backup your configuration before
-> performing a factory reset.
+> Factory reset is irreversible. Always back up configuration before
+> performing a reset.
 
 ## See Also
 
-- `d_drive` - d-Drive specific capabilities and enhancements
-- `api` - Complete API reference
-- `examples` - Usage examples and tutorials
+- [d-Drive](d_drive.md) - d-Drive specific capabilities and enhancements
+- [API Reference](api.md) - Complete API reference
+- [Examples](examples.md) - Usage examples and tutorials

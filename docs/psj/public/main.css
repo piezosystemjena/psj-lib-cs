@@ -31,3 +31,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   font-style: italic;
 }
+
+h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+}
+
+h5.alert {
+  margin-top: 0rem;
+}

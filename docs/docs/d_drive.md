@@ -1,4 +1,5 @@
-d-Drive and 30DV50/300 ==============
+d-Drive and 30DV50/300
+==============
 
 This page covers the d-Drive modular amplifier family, its features, and
 how to use it with psj-lib.
@@ -36,9 +37,9 @@ Each d-Drive channel provides comprehensive control capabilities:
 ## Position Control
 
 - **Setpoint**: Voltage and position target setting
-- **Position**: Actor position readback
+- **Position**: Actuator position readback
 - **Closed-Loop Controller**: Enable/disable feedback control
-- **Slew Rate**: Maximum rate of change limiting
+- **Slew Rate**: Maximum rate-of-change limiting
 
 ## Control System
 
@@ -50,8 +51,8 @@ Each d-Drive channel provides comprehensive control capabilities:
 
 ## Signal Generation
 
-- **Waveform Generator**: Function generation (sine, triangle, sweep,
-  etc.)
+- **Waveform Generator**: Function generation (sine, triangle, rectangle,
+  noise, sweep)
 - **Modulation Source**: External or internal signal modulation
 - **Monitor Output**: Configurable analog output routing
 
@@ -62,21 +63,27 @@ Each d-Drive channel provides comprehensive control capabilities:
 
 # Accessing Capabilities
 
-All capabilities are accessed as channel attributes. The d-Drive
-provides both standard piezo capabilities and device-specific
-implementations.
+All capabilities are accessed as channel properties. d-Drive channels
+use `PsjLib.DDriveFamily.DDriveChannel` (derived from
+`DDriveFamilyChannel`).
 
-``` python
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-
-    # Access any capability as a channel property
-    status = await channel.status_register.get()
-    position = await channel.position.get()
-    await channel.setpoint.set(50.0)
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Using PSJ 30DV series
@@ -84,14 +91,22 @@ async with device:
 The 30DV50/300 exposes a single channel (ID 0) with the same
 capabilities as a d-Drive channel:
 
-``` python
-from psj_lib import PSJ30DVDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-device = PSJ30DVDevice(TransportType.SERIAL, "COM3")
-async with device:
-  channel = device.channels[0]
-  await channel.closed_loop_controller.set(True)
-  await channel.setpoint.set(10.0)
+var device = new PSJ30DVDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(10.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Channel Capabilities Reference
@@ -100,289 +115,163 @@ All d-Drive channel capabilities with API references:
 
 | Property | API Reference | Description |
 |----|----|----|
-| `status_register` | `~psj_lib.devices.base.capabilities.status.StatusCapability` | Hardware status with d-Drive specific flags (actuator detection, sensor type, waveform status) |
-| `actuator_description` | `~psj_lib.devices.base.capabilities.actuator_description.ActuatorDescription` | Actuator identification and specifications |
-| `setpoint` | `~psj_lib.devices.base.capabilities.setpoint.Setpoint` | Target position control (write-only, readback is cached client-side) |
-| `position` | `~psj_lib.devices.base.capabilities.position.Position` | Actual position readback (read-only, updates every 500ms) |
-| `temperature` | `~psj_lib.devices.base.capabilities.temperature.Temperature` | Amplifier electronics temperature monitoring |
-| `fan` | `~psj_lib.devices.base.capabilities.fan.Fan` | Cooling fan enable/disable control (Presence of fan is hardware dependent) |
-| `closed_loop_controller` | `~psj_lib.devices.base.capabilities.closed_loop_controller.ClosedLoopController` | Feedback control enable/disable |
-| `slew_rate` | `~psj_lib.devices.base.capabilities.slew_rate.SlewRate` | Maximum rate of change limiting |
-| `pcf` | `~psj_lib.devices.base.capabilities.pcf.PreControlFactor` | Pre-control factor (feedforward compensation) |
-| `pid_controller` | `~psj_lib.devices.base.capabilities.pid_controller.PIDController` | PID controller configuration (P, I, D, diff filter) |
-| `notch` | `~psj_lib.devices.base.capabilities.notch_filter.NotchFilter` | Notch filter for resonance suppression |
-| `lpf` | `~psj_lib.devices.base.capabilities.low_pass_filter.LowPassFilter` | Low-pass filter for signal conditioning |
-| `error_lpf` | `~psj_lib.devices.base.capabilities.error_low_pass_filter.ErrorLowPassFilter` | Error signal low-pass filter |
-| `modulation_source` | `~psj_lib.devices.base.capabilities.modulation_source.ModulationSource` | Modulation input source selection (expects `~psj_lib.devices.d_drive_family.capabilities.d_drive_modulation_source.DDriveModulationSourceTypes` enum) |
-| `monitor_output` | `~psj_lib.devices.base.capabilities.monitor_output.MonitorOutput` | Analog monitor output routing (expects `~psj_lib.devices.d_drive_family.capabilities.d_drive_monitor_output.DDriveMonitorOutputSource` enum) |
-| `waveform_generator` | `~psj_lib.devices.d_drive_family.capabilities.d_drive_waveform_generator.DDriveWaveformGenerator` | Multi-waveform generator with 5 types (sine, triangle, rectangle, noise, sweep) and automated scan function |
-| `data_recorder` | `~psj_lib.devices.base.capabilities.data_recorder.DataRecorder` | Two-channel recorder: position + voltage, 500k samples max, 50 kHz sample rate |
-| `trigger_out` | `~psj_lib.devices.d_drive_family.capabilities.d_drive_trigger_out.DDriveTriggerOut` | Hardware trigger output with d-Drive specific offset parameter |
+| `StatusRegister` | [`Status<TRegister>`](../api/PsjLib.Base.Capabilities.Status-1.yml), [`DDriveStatusRegister`](../api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.yml) | Hardware status with d-Drive-specific flags |
+| `ActuatorDescription` | [ActuatorDescription](../api/PsjLib.Base.Capabilities.ActuatorDescription.yml) | Actuator identification and specifications |
+| `Setpoint` | [DDriveSetpoint](../api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.yml) | Target position/voltage setpoint (cached readback) |
+| `Position` | [Position](../api/PsjLib.Base.Capabilities.Position.yml) | Actual position readback |
+| `Temperature` | [Temperature](../api/PsjLib.Base.Capabilities.Temperature.yml) | Amplifier temperature |
+| `Fan` | [Fan](../api/PsjLib.Base.Capabilities.Fan.yml) | Cooling fan enable/disable |
+| `ClosedLoopController` | [DDriveClosedLoopController](../api/PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.yml) | Feedback control enable/disable |
+| `SlewRate` | [SlewRate](../api/PsjLib.Base.Capabilities.SlewRate.yml) | Maximum rate-of-change limiting |
+| `Pcf` | [PreControlFactor](../api/PsjLib.Base.Capabilities.PreControlFactor.yml) | Feedforward compensation |
+| `PidController` | [PIDController](../api/PsjLib.Base.Capabilities.PIDController.yml) | PID configuration (P, I, D, Tf) |
+| `Notch` | [NotchFilter](../api/PsjLib.Base.Capabilities.NotchFilter.yml) | Notch filter for resonance suppression |
+| `Lpf` | [LowPassFilter](../api/PsjLib.Base.Capabilities.LowPassFilter.yml) | Low-pass filter |
+| `ErrorLpf` | [ErrorLowPassFilter](../api/PsjLib.Base.Capabilities.ErrorLowPassFilter.yml) | Error-signal low-pass filter |
+| `ModulationSource` | [ModulationSource](../api/PsjLib.Base.Capabilities.ModulationSource.yml) | Modulation source selection ([DDriveModulationSourceTypes](../api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.yml)) |
+| `MonitorOutput` | [MonitorOutput](../api/PsjLib.Base.Capabilities.MonitorOutput.yml) | Analog monitor source ([DDriveMonitorOutputSource](../api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.yml)) |
+| `WaveformGenerator` | [DDriveWaveformGenerator](../api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.yml) | Multi-waveform generator and scan modes |
+| `DataRecorder` | [DDriveDataRecorder](../api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.yml) | Two-channel recorder (position/voltage) |
+| `TriggerOut` | [DDriveTriggerOut](../api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.yml) | Trigger output with offset support |
 
 ## d-Drive Status Register
 
-The
-`~psj_lib.devices.d_drive_family.capabilities.d_drive_status_register.DDriveStatusRegister`
-provides d-Drive specific hardware state information:
+`DDriveStatusRegister` provides d-Drive-specific hardware state:
 
-``` python
-from psj_lib import DDriveDevice, TransportType
-
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-    status = await channel.status_register.get()
-
-    # d-Drive specific status flags
-    print(f"Actuator plugged: {status.actor_plugged}")
-    print(f"Sensor type: {status.sensor_type.name}")
-    print(f"Voltage enabled: {status.piezo_voltage_enabled}")
-    print(f"Closed-loop: {status.closed_loop}")
-    print(f"Active waveform: {status.waveform_generator_status.name}")
-    print(f"Notch filter: {status.notch_filter_active}")
-    print(f"Low-pass filter: {status.low_pass_filter_active}")
+``` csharp
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($"Actuator plugged: {status.ActorPlugged}");
+Console.WriteLine($"Sensor type: {status.SensorType}");
+Console.WriteLine($"Voltage enabled: {status.PiezoVoltageEnabled}");
+Console.WriteLine($"Closed-loop: {status.ClosedLoop}");
+Console.WriteLine($"Active waveform: {status.WaveformGeneratorStatus}");
+Console.WriteLine($"Notch filter: {status.NotchFilterActive}");
+Console.WriteLine($"Low-pass filter: {status.LowPassFilterActive}");
 ```
 
-**Key d-Drive Status Flags:**
+**Notes:**
 
-- `actor_plugged`: Actuator physically connected and detected
-- `sensor_type`: Position sensor type (`~psj_lib.SensorType` enum)
-- `piezo_voltage_enabled`: High voltage output enabled
-- `closed_loop`: Closed-loop feedback control active
-- `waveform_generator_status`: Active waveform type
-  (`~psj_lib.DDriveWaveformGeneratorStatus` enum)
-- `notch_filter_active`: Notch filter enabled status
-- `low_pass_filter_active`: Low-pass filter enabled status
+- Status values are parsed from firmware register bits and are read-only.
+- Flag naming mirrors the C# API model for predictable diagnostics code.
 
 ## d-Drive Waveform Generator
 
-The
-`~psj_lib.devices.d_drive_family.capabilities.d_drive_waveform_generator.DDriveWaveformGenerator`
-provides 5 waveform types and automated scanning:
-
-**Waveform Types**
-(`~psj_lib.devices.d_drive_family.capabilities.d_drive_waveform_generator.DDriveWaveformType`):
-
-- `SINE`: Sinusoidal waveform
-- `TRIANGLE`: Triangular waveform with adjustable duty cycle
-- `RECTANGLE`: Square/rectangular waveform with duty cycle
-- `NOISE`: Random noise for dithering
-- `SWEEP`: Linear sweep/ramp (time in seconds for full cycle)
+`DDriveWaveformGenerator` supports `DDriveWaveformType.None`,
+`Sine`, `Triangle`, `Rectangle`, `Noise`, and `Sweep`.
 
 **Basic Usage:**
 
-``` python
-from psj_lib import DDriveDevice, DDriveWaveformType, TransportType
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-    wfg = channel.waveform_generator
-
-    # Configure sine wave
-    await wfg.sine.set(
-        amplitude=20.0,   # 20 µm peak-to-peak
-        offset=50.0,      # Center at 50 µm
-        frequency=10.0    # 10 Hz
-    )
-
-    # Activate sine waveform
-    await wfg.set_waveform_type(DDriveWaveformType.SINE)
-
-    # Stop waveform
-    await wfg.set_waveform_type(DDriveWaveformType.NONE)
+var wfg = channel.WaveformGenerator;
+await wfg.Sine.SetAsync(amplitude: 20.0, offset: 50.0, frequency: 10.0).ConfigureAwait(false);
+await wfg.SetWaveformTypeAsync(DDriveWaveformType.Sine).ConfigureAwait(false);
+await wfg.SetWaveformTypeAsync(DDriveWaveformType.None).ConfigureAwait(false);
 ```
 
 **Automated Scan Function:**
 
-The d-Drive supports automated single or double scan cycles:
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-``` python
-from psj_lib import DDriveScanType
-
-# Start automated single triangle scan
-await wfg.start_scan(DDriveScanType.TRIANGLE_ONCE)
-
-# Check if scan is still running
-while await wfg.is_scan_running():
-    await asyncio.sleep(0.1)
-
-print("Scan completed")
+await wfg.StartScanAsync(DDriveScanType.TriangleOnce).ConfigureAwait(false);
+while (await wfg.IsScanRunningAsync().ConfigureAwait(false))
+{
+    await Task.Delay(100).ConfigureAwait(false);
+}
 ```
 
-**Scan Types**
-(`~psj_lib.devices.d_drive_family.capabilities.d_drive_waveform_generator.DDriveScanType`):
+**Notes:**
 
-- `SINE_ONCE`: Single sine cycle
-- `TRIANGLE_ONCE`: Single triangle cycle (up and down)
-- `SINE_TWICE`: Two sine cycles
-- `TRIANGLE_TWICE`: Two triangle cycles
-- `OFF`: No automated scan
-
-See `base_capabilities` for base waveform generator documentation.
+- Always set waveform parameters before activating waveform type.
+- Use `DDriveWaveformType.None` to stop generator output cleanly.
 
 ## d-Drive Data Recorder
 
-The `~psj_lib.devices.base.capabilities.data_recorder.DataRecorder`
-records two channels simultaneously at up to 50 kHz:
-
-**Channel Mapping:**
-
-- **Channel 1**: Position sensor signal
-- **Channel 2**: Actuator voltage
-
-**Key Specifications:**
-
-- Maximum 500,000 samples per channel
-- 50 kHz sample rate (20 µs period)
-- Stride (decimation) support for longer duration at lower rate
-- Both channels always record same length
+`DDriveDataRecorder` records two channels simultaneously.
 
 **Basic Usage:**
 
-``` python
-from psj_lib import DDriveDevice, DDriveDataRecorderChannel, TransportType
+``` csharp
+using PsjLib.DDriveFamily.Capabilities;
 
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-    recorder = channel.data_recorder
+var recorder = channel.DataRecorder;
+await recorder.SetAsync(memoryLength: 50000, stride: 1).ConfigureAwait(false);
 
-    # Configure for 1 second at 50 kHz
-    await recorder.set(
-        memory_length=50000,  # 50k samples at 50 kHz = 1 sec
-        stride=1              # No decimation
-    )
-
-    # Start recording
-    await recorder.start()
-
-    # ... perform motion or waveform ...
-
-    # Retrieve data
-    position_data = await recorder.get_all_data(
-        DDriveDataRecorderChannel.POSITION
-    )
-    voltage_data = await recorder.get_all_data(
-        DDriveDataRecorderChannel.VOLTAGE
-    )
+var positionData = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Position,
+    50000).ConfigureAwait(false);
+var voltageData = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Voltage,
+    50000).ConfigureAwait(false);
 ```
 
-See `base_capabilities` for base data recorder documentation.
+**Notes:**
+
+- Recorder channel mapping is fixed by firmware (position/voltage).
+- Choose `memoryLength`/`stride` based on required capture duration.
 
 **d-Drive Data Format:**
 
-The d-Drive recorder returns data that is automatically parsed by
-`~psj_lib.devices.d_drive_family.capabilities.d_drive_data_recorder.DDriveDataRecorder`:
-
-- **Position Channel**: Returns percentage of full closed-loop motion
-  range (includes ±30% overshoot capability)
-- **Voltage Channel**: Returns output voltage in Volts
-
-**Configuration Notes:**
-
-- `get_memory_length()` returns 500000 (maximum hardware capacity)
-- `get_stride()` returns 0 (d-Drive doesn't support reading this back)
+- **Position channel**: Percent of full closed-loop range
+- **Voltage channel**: Output voltage in volts
 
 ## d-Drive Closed-Loop Controller
 
-The
-`~psj_lib.devices.d_drive_family.capabilities.d_drive_closed_loop_controller.DDriveClosedLoopController`
-extends the base controller with d-Drive specific status reading:
+`DDriveClosedLoopController` extends base closed-loop handling and reads
+status from the d-Drive status register.
 
-``` python
-from psj_lib import DDriveDevice, TransportType
-
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-    controller = channel.closed_loop_controller
-
-    # Enable closed-loop control
-    await controller.set(True)
-
-    # Check status via status register (d-Drive specific)
-    is_enabled = await controller.get_enabled()
-    print(f"Closed-loop active: {is_enabled}")
-
-    # Get control loop frequency
-    period = controller.sample_period  # 20 µs for d-Drive
-    frequency = 1000000 / period  # 50 kHz
-    print(f"Control loop: {frequency:.0f} Hz")
+``` csharp
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+var isEnabled = await channel.ClosedLoopController.GetEnabledAsync().ConfigureAwait(false);
+var samplePeriodUs = channel.ClosedLoopController.SamplePeriod; // 20 µs
+var sampleRateHz = channel.ClosedLoopController.SampleRate;     // 50 kHz
 ```
 
-**Key Features:**
+**Notes:**
 
-- Reads closed-loop state from hardware status register (bit 7)
-- 50 kHz control loop (20 µs sample period)
-- Integrated with PID controller for precise position control
+- Closed-loop state is obtained from the d-Drive status register.
+- Control-loop timing is fixed by hardware and exposed as read-only properties.
 
 ## d-Drive Setpoint
 
-The
-`~psj_lib.devices.d_drive_family.capabilities.d_drive_setpoint.DDriveSetpoint`
-provides setpoint control with client-side caching:
+`DDriveSetpoint.GetAsync()` returns the cached setpoint value.
 
-``` python
-from psj_lib import DDriveDevice, TransportType
-
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    channel = device.channels[0]
-
-    # Set target position
-    await channel.setpoint.set(50.0)  # 50 µm
-
-    # Read back cached value (not from hardware)
-    target = await channel.setpoint.get()
-    print(f"Target: {target} µm")
-
-    # Compare with actual position
-    actual = await channel.position.get()
-    error = target - actual
-    print(f"Position error: {error:.3f} µm")
+``` csharp
+await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false);  // cached
+var actual = await channel.Position.GetAsync().ConfigureAwait(false);   // measured
+var error = target - actual;
+Console.WriteLine($"Position error: {error:F3} µm");
 ```
 
-**Important Notes:**
+**Notes:**
 
-- `get()` returns the **cached** value, not a hardware read
-- d-Drive hardware does not support reading back setpoint
-- Cache is updated only when `set()` is called
-- If setpoint is changed by another application, cache will be stale
-- Initial cache value is 0.0 before first `set()` call
+- `GetAsync()` returns the client-side cached setpoint.
+- Use `Position.GetAsync()` for measured hardware feedback.
 
 # Multi-Channel Coordination
 
-d-Drive devices support 1-6 channels. Use parallel operations for
-efficient multi-channel control:
+d-Drive devices support 1-6 channels. Use parallel operations to keep
+control loops aligned across channels.
 
-``` python
-from psj_lib import DDriveDevice, TransportType
-import asyncio
+``` csharp
+await Task.WhenAll(device.Channels.Values.Select(ch =>
+    ch.ClosedLoopController.SetAsync(true))).ConfigureAwait(false);
 
-device = DDriveDevice(TransportType.SERIAL, "COM3")
-async with device:
-    # Enable closed-loop on all channels in parallel
-    await asyncio.gather(*[
-        ch.closed_loop_controller.set(True)
-        for ch in device.channels
-    ])
-
-    # Move all channels simultaneously
-    positions = [30.0, 50.0, 70.0]
-    await asyncio.gather(*[
-        ch.setpoint.set(pos)
-        for ch, pos in zip(device.channels, positions)
-    ])
+var targets = new[] { 30.0, 50.0, 70.0 };
+await Task.WhenAll(device.Channels.Values.Zip(targets).Select(x =>
+    x.First.Setpoint.SetAsync(x.Second))).ConfigureAwait(false);
 ```
 
 # Next Steps
 
 Explore detailed capability documentation:
 
-- **Getting Started**: `getting_started` - Basic device control and
+- **Getting Started**: [Getting Started](getting_started.md) - Basic device control and
   position feedback
-- **Base Capabilities**: `base_capabilities` - Control system,
+- **Base Capabilities**: [Base Capabilities](base_capabilities.md) - Control system,
   filtering, data acquisition, and signal generation
-- **Examples**: `examples` - Real-world use cases and complete
+- **Examples**: [Examples](examples.md) - Real-world use cases and complete
   applications

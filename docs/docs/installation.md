@@ -5,13 +5,13 @@ environment.
 
 ## Requirements
 
-**Python Version**
+**.NET Target Framework**
 
-psj-lib requires Python 3.12:
+psj-lib requires .NET 8:
 
 ``` bash
-python --version
-# Should show Python 3.12.x or higher
+dotnet --version
+# Should show 8.x or higher
 ```
 
 **Operating Systems**
@@ -31,75 +31,59 @@ psj-lib is cross-platform and works on:
 
 ## Installation Methods
 
-### Method 1: Install from PyPI (Recommended)
+### Method 1: Install from NuGet (Recommended)
 
-Once published, you can install psj-lib directly from PyPI:
+Install psj-lib into your project via NuGet:
 
 ``` bash
-pip install psj-lib
+dotnet add package PsjLib
 ```
 
 This will automatically install all required dependencies.
 
-### Method 2: Install with Poetry
-
-If you're using Poetry for dependency management:
-
-``` bash
-poetry add psj-lib
-```
-
-### Method 3: Install from Source
+### Method 2: Install from Source
 
 To install the latest development version from source:
 
 ``` bash
 # Clone the repository
-git clone https://github.com/piezosystemjena/psj-lib.git
-cd psj-lib
+git clone https://github.com/piezosystemjena/psj-lib-cs.git
+cd psj-lib-cs
 
-# Install with pip
-pip install -e .
-
-# Or with Poetry
-poetry install
+# Build library
+dotnet build PsjLib/PsjLib.csproj
 ```
 
 ## Dependencies
 
-psj-lib automatically installs the following dependencies:
+psj-lib targets .NET and uses standard runtime libraries. Device transport and capability handling are implemented in this repository.
 
-**Core Dependencies:**
+**Development tooling (optional):**
 
-- `aioserial >= 1.3.1`: Asynchronous serial communication
-- `telnetlib3 >= 2.0.4`: Asynchronous Telnet client
-- `psutil >= 7.0.0`: System utilities (for port detection)
-- `scipy >= 1.16.0`: Scientific computing utilities
-
-**Development Dependencies** (optional):
-
-- `sphinx >= 8.2.3`: Documentation generation
-- `sphinx-rtd-theme >= 3.0.2`: Documentation theme
-- `matplotlib >= 3.10.1`: Plotting for examples
+- `dotnet` SDK for building/running library and examples
+- `docfx` for generating documentation
 
 ## Verifying Installation
 
 After installation, verify that psj-lib is installed correctly:
 
-``` python
-import psj_lib
-print(psj_lib.__version__)
-# Should print: 0.0.1 (or later)
+``` csharp
+using PsjLib;
+
+Console.WriteLine(LibraryVersion.Version);
+// Should print: 1.0.0 (or later)
 ```
 
 ### Check Available Modules
 
 Verify core imports work:
 
-``` python
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-print("All imports successful!")
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+Console.WriteLine($"Created {device.DeviceId} instance");
 ```
 
 ## Platform-Specific Setup
@@ -152,20 +136,18 @@ If you plan to develop with psj-lib or contribute to the project:
 ### Clone the Repository
 
 ``` bash
-git clone https://github.com/piezosystemjena/psj-lib.git
-cd psj-lib
+git clone https://github.com/piezosystemjena/psj-lib-cs.git
+cd psj-lib-cs
 ```
 
 ### Install with Development Dependencies
 
-Using Poetry (recommended for development):
+Using NuGet/dotnet CLI (recommended for development):
 
 ``` bash
-# Install Poetry if not already installed
-pip install poetry
-
-# Install project with all dependencies
-poetry install
+# Restore and build
+dotnet restore
+dotnet build
 ```
 
 ### Build Documentation Locally
@@ -173,19 +155,12 @@ poetry install
 To build and view documentation:
 
 ``` bash
-cd doc
+cd docs
 
 # Build HTML documentation
-poetry run sphinx-build -b html . _build/
+docfx docfx.json --serve
 
-# Open in browser (Windows)
-start _build/html/index.html
-
-# Open in browser (Linux)
-xdg-open _build/html/index.html
-
-# Open in browser (macOS)
-open _build/html/index.html
+# Open "http://localhost:8080" in browser
 ```
 
 ### Running Examples
@@ -194,7 +169,7 @@ The `examples/` directory contains ready-to-run example scripts:
 
 ``` bash
 # Make sure device is connected
-python examples/01_device_discovery_and_connection.py
+dotnet run --project examples/Examples.csproj -- 01
 ```
 
 ## Troubleshooting
@@ -203,15 +178,15 @@ python examples/01_device_discovery_and_connection.py
 
 If you get import errors:
 
-``` python
-ModuleNotFoundError: No module named 'psj_lib'
+``` csharp
+CS0246: The type or namespace name 'PsjLib' could not be found
 ```
 
-**Solution**: Ensure psj-lib is installed in your current Python
-environment:
+**Solution**: Ensure your project references `PsjLib`:
 
 ``` bash
-pip list | grep psj-lib
+dotnet add package PsjLib
+dotnet restore
 ```
 
 ### Serial Connection Issues
@@ -249,37 +224,32 @@ pip list | grep psj-lib
 
 **Problem**: Dependency version conflicts
 
-**Solution**: Use a virtual environment to isolate dependencies:
+**Solution**: Align package versions and clear local caches if needed:
 
 ``` bash
-python -m venv psj_env
-source psj_env/bin/activate  # or psj_env\Scripts\activate on Windows
-pip install psj-lib
+dotnet nuget locals all --clear
+dotnet restore --force
 ```
 
-### AsyncIO Compatibility
+### Async/Await Compatibility
 
-**Problem**: asyncio errors or event loop issues
+**Problem**: async/await compile/runtime issues
 
-**Solution**: Ensure you're using Python 3.12+ and asyncio correctly:
+**Solution**: Ensure you're using .NET 8+ and `Task`-based async correctly:
 
-``` python
-import asyncio
-
-async def main():
-    # Your async code here
-    pass
-
-# Correct way to run
-asyncio.run(main())
+``` csharp
+public static async Task Main()
+{
+  // Your async code here
+}
 ```
 
 ## Getting Help
 
 If you encounter issues not covered here:
 
-1.  Check the `api` reference for detailed API documentation
-2.  Review `examples` for working code samples
+1.  Check the [API Reference](api.md) for detailed API documentation
+2.  Review [Examples](examples.md) for working code samples
 3.  Check existing GitHub issues
 4.  Contact piezosystem jena GmbH for support
 
@@ -287,7 +257,7 @@ If you encounter issues not covered here:
 
 Now that psj-lib is installed, you can:
 
-- Learn how to connect to devices: `connecting`
-- Follow the getting started tutorial: `getting_started`
-- Explore example scripts: `examples`
-- Read about d-Drive specifics: `d_drive`
+- Learn how to connect to devices: [Connecting](connecting.md)
+- Follow the getting started tutorial: [Getting Started](getting_started.md)
+- Explore example scripts: [Examples](examples.md)
+- Read about d-Drive specifics: [d-Drive](d_drive.md)

@@ -10,30 +10,26 @@ devices:
 
 ``` text
 NVFamilyDevice
-├── Global capabilities (display, knob)
+├── Global capabilities (Display, Knob)
 └── NVFamilyChannel / derived channel types
-    └── Channel capabilities (setpoint, position, status, monitor output, ...)
+    └── Channel capabilities (Setpoint, Position, Status, MonitorOutput, ...)
 ```
 
-Shared behavior is implemented in `~psj_lib.NVFamilyDevice` and
-`~psj_lib.NVFamilyChannel`, while model-specific classes define channel
-count and available closed-loop features.
+Shared behavior is implemented in `PsjLib.NVFamily.NVFamilyDevice` and
+`PsjLib.NVFamily.NVFamilyChannel`, while model-specific classes define
+channel count and available closed-loop features.
 
 ## Device Variants
 
 ### Open-loop variants
 
-- `~psj_lib.devices.nv_family.nv120.nv120_device.NV120Device` (single
-  channel)
-- `~psj_lib.devices.nv_family.nv403.nv403_device.NV403Device` (three
-  channels)
+- [NV120Device](../api/PsjLib.NVFamily.NV120.NV120Device.yml) (single channel)
+- [NV403Device](../api/PsjLib.NVFamily.NV403.NV403Device.yml) (three channels)
 
 ### Closed-loop variants
 
-- `~psj_lib.devices.nv_family.nv120_cle.nv120_cle_device.NV120CLEDevice`
-  (single channel)
-- `~psj_lib.devices.nv_family.nv403_cle.nv403_cle_device.NV403CLEDevice`
-  (three channels)
+- [NV120CLEDevice](../api/PsjLib.NVFamily.NV120CLE.NV120CLEDevice.yml) (single channel)
+- [NV403CLEDevice](../api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.yml) (three channels)
 
 ## Device Capabilities
 
@@ -42,16 +38,21 @@ to a specific channel:
 
 ### User Interface
 
-- **Display**: Front-panel brightness control
+- **Display**: Front-panel brightness control (`device.Display`)
 - **Knob Configuration**: Encoder mode, timing, acceleration, and step
-  behavior
+  behavior (`device.Knob`)
 
 ### Multi-Channel Coordination
 
-- **Multi Setpoint**: Set all channel setpoints in one command (NV40/3
-  variants)
-- **Multi Position**: Read all channel positions in one command (NV40/3
-  variants)
+- **Multi Setpoint**: Set all channel setpoints in one command
+  (`device.MultiSetpoint`, NV40/3 variants)
+- **Multi Position**: Read all channel positions in one command
+  (`device.MultiPosition`, NV40/3 variants)
+
+> [!NOTE]
+> To use the Multi Setpoint capability, all 3 channels must have an actuator connected and
+> their modulation source set to "SERIAL". If this is not the case, 
+> the amplifier will ignore the command.
 
 ## Channel Capabilities
 
@@ -61,175 +62,120 @@ diagnostics:
 ### Status and Monitoring
 
 - **Status Register**: NV-specific fault and actuator state flags
-- **Position**: Actual position readback (voltage for open-loop, sensor
-  readback for closed-loop devices)
+  (`channel.Status`)
+- **Position**: Actual position readback (`channel.Position`)
 
 ### Open-Loop Control
 
-- **Setpoint**: Open-loop/closed-loop target setting
+- **Setpoint**: Open-loop/closed-loop target setting (`channel.Setpoint`)
 - **Open-Loop Unit**: Unit readback for open-loop operation
+  (`channel.OpenloopUnit`)
 - **Open-Loop Limits**: Lower and upper admissible range
+  (`channel.OpenloopLimits`)
 
 ### Signal Routing
 
-- **Modulation Source**: Select control source (encoder/analog or
-  serial)
-- **Monitor Output**: Route internal signals to analog monitor output
+- **Modulation Source**: Select control source (`channel.ModulationSource`)
+- **Monitor Output**: Route internal signals to analog output
+  (`channel.MonitorOutput`)
 
 ### Closed-Loop Additions (CLE Variants)
 
-- **Closed-Loop Controller**: Enable/disable closed-loop feedback
-- **Closed-Loop Unit**: Unit readback for closed-loop operation
-- **Closed-Loop Limits**: Lower and upper admissible range
+- **Closed-Loop Controller**: Enable/disable feedback control
+  (`channel.ClosedLoopController`)
+- **Closed-Loop Unit**: Unit readback (`channel.ClosedloopUnit`)
+- **Closed-Loop Limits**: Range readback (`channel.ClosedloopLimits`)
 
 ## Accessing Capabilities
 
-All capabilities are accessed as device or channel attributes. The NV
-family provides both standard piezo capabilities and device-specific
-implementations.
+All capabilities are accessed as device or channel properties.
 
-``` python
-from psj_lib import NV403CLEDevice, TransportType
+``` csharp
+using PsjLib.NVFamily.NV403CLE;
+using PsjLib.Transport;
 
-device = NV403CLEDevice(TransportType.SERIAL, "COM10")
-async with device:
-    channel = device.channels[0]
+var device = new NV403CLEDevice(TransportType.Serial, "COM10");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
 
-    # Device-level capability
-    await device.display.set(brightness=40.0)
+    await device.Display.SetAsync(40.0).ConfigureAwait(false);
 
-    # Access channel capabilities
-    status = await channel.status.get()
-    position = await channel.position.get()
-    await channel.setpoint.set(25.0)
+    var status = await channel.Status.GetAsync().ConfigureAwait(false);
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(25.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ### Device Capabilities Reference
 
-All NV-family device capabilities with API references:
-
 | Property | API Reference | Description |
 |----|----|----|
-| `display` | `~psj_lib.devices.nv_family.capabilities.nv_display.NVDisplay` | Device display brightness control |
-| `knob` | `~psj_lib.devices.nv_family.capabilities.nv_knob.NVKnob`/ `~psj_lib.devices.nv_family.capabilities.nv_knob.NVCLEKnob` (CLE variants) | Encoder knob configuration |
-| `multi_setpoint` | `~psj_lib.devices.base.capabilities.multi_setpoint.MultiSetpoint` | Set all channel setpoints synchronously (NV40/3 and NV40/3CLE) |
-| `multi_position` | `~psj_lib.devices.base.capabilities.multi_position.MultiPosition` | Read all channel positions synchronously (NV40/3 and NV40/3CLE) |
+| `Display` | [NVDisplay](../api/PsjLib.NVFamily.Capabilities.NVDisplay.yml) | Device display brightness control |
+| `Knob` | [NVKnob](../api/PsjLib.NVFamily.Capabilities.NVKnob.yml) / [NVCLEKnob](../api/PsjLib.NVFamily.Capabilities.NVCLEKnob.yml) | Encoder knob configuration |
+| `MultiSetpoint` | [MultiSetpoint](../api/PsjLib.Base.Capabilities.MultiSetpoint.yml) | Set all channel setpoints synchronously (NV40/3 variants) |
+| `MultiPosition` | [MultiPosition](../api/PsjLib.Base.Capabilities.MultiPosition.yml) | Read all channel positions synchronously (NV40/3 variants) |
 
 ### Channel Capabilities Reference
 
-All NV-family channel capabilities with API references:
-
 > [!NOTE]
-> Some capability readbacks (e.g. setpoint) are cached by the library,
-> as NV devices do not provide native readback for these values. Cached
-> values are updated on set operations.
+> Some readbacks are cached by the library for NV devices (for example
+> setpoint/modulation/monitor output), because firmware does not expose
+> direct read commands for all values.
 
-<table>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 35%" />
-<col style="width: 40%" />
-</colgroup>
-<thead>
-<tr>
-<th>Property</th>
-<th>API Reference</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>setpoint</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_setpoint.NVSetpoint</code></td>
-<td><div class="line-block">Target open-loop/closed-loop setpoint</div>
-<strong>Cached readback</strong></td>
-</tr>
-<tr>
-<td><code>position</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.position.Position</code></td>
-<td>Actual channel position readback</td>
-</tr>
-<tr>
-<td><code>modulation_source</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_modulation_source.NVModulationSource</code></td>
-<td><div class="line-block">Modulation source selection (expects <code
-class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_modulation_source.NVModulationSourceTypes</code>
-enum)</div>
-<strong>Cached readback</strong></td>
-</tr>
-<tr>
-<td><code>monitor_output</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_monitor_output.NVMonitorOutput</code></td>
-<td><div class="line-block">Analog monitor output routing (expects <code
-class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_monitor_output.NVMonitorOutputSource</code>
-enum)</div>
-<strong>Cached readback</strong></td>
-</tr>
-<tr>
-<td><code>openloop_unit</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.unit.Unit</code></td>
-<td>Unit of the open-loop command domain</td>
-</tr>
-<tr>
-<td><code>openloop_limits</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.limits.Limits</code></td>
-<td>Open-loop lower and upper limits</td>
-</tr>
-<tr>
-<td><code>status</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.status.Status</code></td>
-<td>Status access using <code class="interpreted-text"
-role="class">~psj_lib.devices.nv_family.capabilities.nv_status_register.NVStatusRegister</code></td>
-</tr>
-<tr>
-<td><code>closed_loop_controller</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.closed_loop_controller.ClosedLoopController</code></td>
-<td>Closed-loop feedback control enable/disable (CLE variants only)</td>
-</tr>
-<tr>
-<td><code>closedloop_unit</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.unit.Unit</code></td>
-<td>Unit of the closed-loop command domain (CLE variants only)</td>
-</tr>
-<tr>
-<td><code>closedloop_limits</code></td>
-<td><code class="interpreted-text"
-role="class">~psj_lib.devices.base.capabilities.limits.Limits</code></td>
-<td>Closed-loop lower and upper limits (CLE variants only)</td>
-</tr>
-</tbody>
-</table>
+| Property | API Reference | Description |
+|----|----|----|
+| `Setpoint` | [NVSetpoint](../api/PsjLib.NVFamily.Capabilities.NVSetpoint.yml) | Target open-loop/closed-loop setpoint (cached readback) |
+| `Position` | [Position](../api/PsjLib.Base.Capabilities.Position.yml) | Actual channel position readback |
+| `ModulationSource` | [NVModulationSource](../api/PsjLib.NVFamily.Capabilities.NVModulationSource.yml) | Modulation source selection ([NVModulationSourceTypes](../api/PsjLib.NVFamily.Capabilities.NVModulationSourceTypes.yml), cached readback) |
+| `MonitorOutput` | [NVMonitorOutput](../api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.yml) | Analog monitor output routing ([NVMonitorOutputSource](../api/PsjLib.NVFamily.Capabilities.NVMonitorOutputSource.yml), cached readback) |
+| `OpenloopUnit` | [Unit](../api/PsjLib.Base.Capabilities.Unit.yml) | Unit of open-loop command domain |
+| `OpenloopLimits` | [Limits](../api/PsjLib.Base.Capabilities.Limits.yml) | Open-loop lower/upper limits |
+| `Status` | [`Status<TRegister>`](../api/PsjLib.Base.Capabilities.Status-1.yml), [`NVStatusRegister`](../api/PsjLib.NVFamily.Capabilities.NVStatusRegister.yml) | NV status register access |
+| `ClosedLoopController` | [ClosedLoopController](../api/PsjLib.Base.Capabilities.ClosedLoopController.yml) | Closed-loop feedback enable/disable (CLE only) |
+| `ClosedloopUnit` | [Unit](../api/PsjLib.Base.Capabilities.Unit.yml) | Closed-loop unit (CLE only) |
+| `ClosedloopLimits` | [Limits](../api/PsjLib.Base.Capabilities.Limits.yml) | Closed-loop limits (CLE only) |
 
 ## Usage Example
 
-``` python
-import asyncio
-from psj_lib import NV403CLEDevice, TransportType
+``` csharp
+using PsjLib.NVFamily.Capabilities;
+using PsjLib.NVFamily.NV403CLE;
+using PsjLib.Transport;
 
-async def main():
-    device = NV403CLEDevice(TransportType.SERIAL, "COM10")
+var device = new NV403CLEDevice(TransportType.Serial, "COM10");
+await device.ConnectAsync().ConfigureAwait(false);
 
-    async with device:
-        await device.display.set(brightness=50.0)
+try
+{
+    await device.Display.SetAsync(50.0).ConfigureAwait(false);
 
-        ch0 = device.channels[0]
-        await ch0.closed_loop_controller.set(enabled=True)
-        await ch0.setpoint.set(25.0)
-        print(await ch0.position.get())
+    var ch0 = device.Channels[0];
+    await ch0.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await ch0.Setpoint.SetAsync(25.0).ConfigureAwait(false);
+    Console.WriteLine(await ch0.Position.GetAsync().ConfigureAwait(false));
 
-        await device.multi_setpoint.set([10.0, 20.0, 30.0])
-        print(await device.multi_position.get())
+    await device.MultiSetpoint.SetAsync(new[] { 10.0, 20.0, 30.0 }).ConfigureAwait(false);
+    var positions = await device.MultiPosition.GetAsync().ConfigureAwait(false);
+    Console.WriteLine(string.Join(", ", positions));
 
-asyncio.run(main())
+    foreach (var channel in device.Channels.Values)
+    {
+        await channel.ModulationSource.SetAsync(NVModulationSourceTypes.Serial).ConfigureAwait(false);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
+
+**Notes:**
+
+- Some NV values are cached client-side where firmware has no readback command.
+- `MultiSetpoint` and `MultiPosition` are available on NV40/3 model variants.

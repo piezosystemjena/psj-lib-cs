@@ -19,43 +19,47 @@ Final connectivity support depends on the specific device model.
 
 The fastest way to connect:
 
-``` python
-import asyncio
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def main():
-    # Connect via Serial
-    device = DDriveDevice(TransportType.SERIAL, "COM3")  # Windows
-    # device = DDriveDevice(TransportType.SERIAL, "/dev/ttyUSB0")  # Linux
+var device = new DDriveDevice(TransportType.Serial, "COM3"); // Windows
+// var device = new DDriveDevice(TransportType.Serial, "/dev/ttyUSB0"); // Linux
 
-    async with device:
-        # Device is now connected
-        print(f"Connected to {device.device_id}")
-
-asyncio.run(main())
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($"Connected to {device.DeviceId}");
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Device Discovery
 
 ### Automatic Device Discovery
 
-The `discover_devices()` method automatically finds connected devices:
+`DiscoverDevicesAsync<TDevice>()` automatically finds connected devices:
 
-``` python
-import asyncio
-from psj_lib import DDriveDevice, DiscoverFlags
+``` csharp
+using PsjLib.Base;
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def discover():
-    # Discover all connected d-Drive devices
-    devices = await DDriveDevice.discover_devices()
+// Discover all connected d-Drive amplifiers
+var devices = await PiezoDevice.DiscoverDevicesAsync<DDriveDevice>(
+    DiscoverFlags.AllInterfaces).ConfigureAwait(false);
 
-    for device in devices:
-        print(f"Device: {device.device_id}")
-        print(f"Address: {device.address}")
-        print(f"Type: {device.transport_type}")
-        print("---")
-
-asyncio.run(discover())
+foreach (var discovered in devices)
+{
+    var info = discovered.DeviceInfo;
+    Console.WriteLine($"Device: {info.DeviceId}");
+    Console.WriteLine($"Identifier: {info.TransportInfo.Identifier}");
+    Console.WriteLine($"Type: {info.TransportInfo.Transport}");
+    Console.WriteLine("---");
+}
 ```
 
 **Example Output:**
@@ -63,7 +67,7 @@ asyncio.run(discover())
 ``` text
 Device: d-Drive
 Address: COM3
-Type: TransportType.SERIAL
+Type: Serial
 ---
 ```
 
@@ -71,33 +75,28 @@ Type: TransportType.SERIAL
 
 Complete discovery and connection example:
 
-``` python
-from psj_lib import DDriveDevice
+``` csharp
+using PsjLib.Base;
+using PsjLib.DDriveFamily;
 
-async def discover_and_connect():
-    # Discover devices
-    devices = await DDriveDevice.discover_devices()
+var devices = await PiezoDevice.DiscoverDevicesAsync<DDriveDevice>().ConfigureAwait(false);
+if (devices.Count == 0)
+{
+    Console.WriteLine("No devices found");
+    return;
+}
 
-    if not devices:
-        print("No devices found")
-        return
-
-    # Get first device (already created and ready to connect)
-    device = devices[0]
-
-    # Method 1: Connect with async context manager
-    async with device:
-        print(f"Connected to {device.device_id}")
-        channels = device.channels
-        print(f"Available channels: {len(channels)}")
-
-    # Method 2: Manual open/close
-    await device.connect()
-    try:
-        print(f"Connected to {device.device_id}")
-        # Use device...
-    finally:
-        await device.disconnect()
+var device = devices[0];
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($"Connected to {device.DeviceId}");
+    Console.WriteLine($"Available channels: {device.Channels.Count}");
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Serial Connection
@@ -124,46 +123,44 @@ Use `ls /dev/cu.* /dev/tty.*` to list ports.
 
 ### Creating a Serial Connection
 
-``` python
-from psj_lib import DDriveDevice, TransportType
+``` csharp
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
 
-async def connect_serial():
-    # Create device (not connected yet)
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-    # Connect using context manager (recommended)
-    async with device:
-        # Device is now open and connected
-        print(f"Connected to {device.device_id}")
-
-        # Access channels
-        for channel in device.channels:
-            status = await channel.status_register.read()
-            print(f"Channel {channel.channel_id}: {status}")
-
-    # Device automatically disconnected when exiting context
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($"Connected to {device.DeviceId}");
+    foreach (var (channelId, channel) in device.Channels)
+    {
+        var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+        Console.WriteLine($"Channel {channelId}: ClosedLoop={status.ClosedLoop}");
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ### Manual Connection Management
 
 If you need manual control over connection lifecycle:
 
-``` python
-async def manual_connection():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-    try:
-        # Manually open connection
-        await device.open()
-        print("Device opened")
-
-        # Use device...
-        channels = device.channels
-
-    finally:
-        # Always close when done
-        await device.close()
-        print("Device closed")
+``` csharp
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    Console.WriteLine("Device opened");
+    var channels = device.Channels;
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+    Console.WriteLine("Device closed");
+}
 ```
 
 ### Serial Port Settings
@@ -181,76 +178,66 @@ transport settings are adjusted by the driver as needed.
 
 ## Connection Patterns
 
-### Context Manager Pattern (Recommended)
+### `try/finally` Pattern (Recommended)
 
 The context manager automatically handles connection lifecycle:
 
-``` python
-async def safe_connection():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-    async with device:
-        # Connection opens here
-        channels = device.channels
-
-        # Do work with device
-        for channel in channels:
-            await channel.closed_loop_controller.set(True)
-
-    # Connection closes here (even if exception occurs)
+``` csharp
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    foreach (var channel in device.Channels.Values)
+    {
+        await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ### Long-Running Connection
 
 For applications that keep device connected:
 
-``` python
-class ControlSystem:
-    def __init__(self, port: str):
-        self.device = DDriveDevice(TransportType.SERIAL, port)
+``` csharp
+public sealed class ControlSystem(string port)
+{
+    private readonly DDriveDevice _device = new(TransportType.Serial, port);
 
-    async def start(self):
-        await self.device.open()
-        print("System started")
+    public async Task StartAsync() => await _device.ConnectAsync().ConfigureAwait(false);
+    public async Task StopAsync() => await _device.CloseAsync().ConfigureAwait(false);
 
-    async def stop(self):
-        await self.device.close()
-        print("System stopped")
-
-    async def move_channel(self, channel_id: int, position: float):
-        channel = self.device.channels[channel_id]
-        await channel.setpoint.set(position)
-
-# Usage
-system = ControlSystem("COM3")
-await system.start()
-
-# Use system...
-await system.move_channel(0, 50.0)
-
-# Clean shutdown
-await system.stop()
+    public async Task MoveChannelAsync(int channelId, double position)
+    {
+        var channel = _device.Channels[channelId];
+        await channel.Setpoint.SetAsync(position).ConfigureAwait(false);
+    }
+}
 ```
 
 ### Multiple Devices
 
 Managing multiple devices simultaneously:
 
-``` python
-async def multi_device():
-    # Create multiple devices
-    device1 = DDriveDevice(TransportType.SERIAL, "COM3")
-    device2 = DDriveDevice(TransportType.TELNET, "192.168.1.100")
+``` csharp
+var device1 = new DDriveDevice(TransportType.Serial, "COM3");
+var device2 = new DDriveDevice(TransportType.Telnet, "192.168.1.100");
 
-    # Connect both
-    async with device1, device2:
-        # Both devices connected
-
-        # Parallel operations
-        await asyncio.gather(
-            device1.channels[0].setpoint.set(30.0),
-            device2.channels[0].setpoint.set(60.0)
-        )
+await Task.WhenAll(device1.ConnectAsync(), device2.ConnectAsync()).ConfigureAwait(false);
+try
+{
+    await Task.WhenAll(
+        device1.Channels[0].Setpoint.SetAsync(30.0),
+        device2.Channels[0].Setpoint.SetAsync(60.0)
+    ).ConfigureAwait(false);
+}
+finally
+{
+    await Task.WhenAll(device1.CloseAsync(), device2.CloseAsync()).ConfigureAwait(false);
+}
 ```
 
 ## Error Handling
@@ -259,96 +246,102 @@ async def multi_device():
 
 Handle connection errors gracefully:
 
-``` python
-from psj_lib import DeviceError, ProtocolError
+``` csharp
+using PsjLib.Base;
+using PsjLib.Transport;
 
-async def safe_connect():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-    try:
-        async with device:
-            print("Connected successfully")
-            # Use device...
-
-    except (DeviceError, ProtocolError) as e:
-        print(f"Failed to connect: {e}")
-        # Try alternative port or notify user
-
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+var device = new DDriveDevice(TransportType.Serial, "COM3");
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    Console.WriteLine("Connected successfully");
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($"Device error: {ex.Message}");
+}
+catch (ProtocolException ex)
+{
+    Console.WriteLine($"Transport error: {ex.Message}");
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ### Timeout Configuration
 
 Set timeout for connection attempts:
 
-``` python
-async def connect_with_timeout():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
-
-    try:
-        # Wait up to 5 seconds for connection
-        async with asyncio.timeout(5.0):
-            await device.connect()
-            print("Connected")
-
-    except asyncio.TimeoutError:
-        print("Connection timeout - check device power and cables")
+``` csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+var connectTask = device.ConnectAsync();
+var completed = await Task.WhenAny(connectTask, Task.Delay(Timeout.Infinite, cts.Token)).ConfigureAwait(false);
+if (completed != connectTask)
+{
+    Console.WriteLine("Connection timeout - check device power and cables");
+}
 ```
 
 ### Reconnection Logic
 
 Implement automatic reconnection:
 
-``` python
-async def connect_with_retry(port: str, max_attempts: int = 3):
-    device = DDriveDevice(TransportType.SERIAL, port)
+``` csharp
+async Task<DDriveDevice> ConnectWithRetryAsync(string port, int maxAttempts = 3)
+{
+    var device = new DDriveDevice(TransportType.Serial, port);
+    for (var attempt = 1; attempt <= maxAttempts; attempt++)
+    {
+        try
+        {
+            await device.ConnectAsync().ConfigureAwait(false);
+            return device;
+        }
+        catch (Exception) when (attempt < maxAttempts)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+        }
+    }
 
-    for attempt in range(max_attempts):
-        try:
-            await device.open()
-            print(f"Connected on attempt {attempt + 1}")
-            return device
-
-        except (DeviceError, ProtocolError):
-            print(f"Attempt {attempt + 1} failed")
-            if attempt < max_attempts - 1:
-                await asyncio.sleep(2.0)  # Wait before retry
-
-    raise DeviceConnectionError(f"Failed after {max_attempts} attempts")
+    throw new DeviceUnavailableException($"Failed after {maxAttempts} attempts");
+}
 ```
 
 ## Verification
 
 After connecting, verify device is ready:
 
-``` python
-async def verify_connection():
-    device = DDriveDevice(TransportType.SERIAL, "COM3")
+``` csharp
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($"Device Info: {device.DeviceInfo}");
+    Console.WriteLine($"Channels: {device.Channels.Count}");
 
-    async with device:
-        print(f"Device Info: {device.device_info}")
-
-        # Check channels discovered
-        print(f"Channels: {len(device.channels)}")
-
-        # Read status from each channel
-        for channel in device.channels:
-            status = await channel.status_register.get()
-            print(f"Channel {channel.id}:")
-            print(f"  Closed loop: {status.closed_loop_state}")
-            print(f"  Temperature: {await channel.temperature.get():.1f}°C")
+    foreach (var (channelId, channel) in device.Channels)
+    {
+        var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+        var temperature = await channel.Temperature.GetAsync().ConfigureAwait(false);
+        Console.WriteLine($"Channel {channelId}:");
+        Console.WriteLine($"  Closed loop: {status.ClosedLoop}");
+        Console.WriteLine($"  Temperature: {temperature:F1}°C");
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
 ```
 
 ## Best Practices
 
-1.  **Use Context Managers**: Always use `async with` for automatic
-    cleanup
+1.  **Use `try/finally`**: Always close devices with `CloseAsync()`
 2.  **Check Discovery**: Use discovery before hardcoding ports/addresses
 3.  **Handle Errors**: Always catch and handle connection errors
 4.  **Verify Connection**: Read device info after connecting
-5.  **Clean Shutdown**: Ensure `close()` is called or use context
-    manager
+5.  **Clean Shutdown**: Ensure `CloseAsync()` is called
 6.  **Network Stability**: Use Telnet for permanent installations,
     Serial for development
 7.  **Timeout Protection**: Set reasonable timeouts for all operations
@@ -407,6 +400,6 @@ sudo usermod -a -G dialout $USER
 
 Now that you can connect to devices:
 
-- Learn basic operations: `getting_started`
-- Explore d-Drive features: `d_drive`
-- See working examples: `examples`
+- Learn basic operations: [Getting Started](getting_started.md)
+- Explore d-Drive features: [d-Drive](d_drive.md)
+- See working examples: [Examples](examples.md)
