@@ -46,7 +46,7 @@ public class PiezoChannel
     /// <param name="cmd">Device command.</param>
     /// <param name="parameters">Optional arguments.</param>
     /// <returns>Parsed response fields.</returns>
-    protected internal Task<IReadOnlyList<string>> WriteAsync(string cmd, IReadOnlyList<object?>? parameters = null)
+    internal Task<IReadOnlyList<string>> WriteAsync(string cmd, IReadOnlyList<object?>? parameters = null)
         => _writeCallback(Id, cmd, parameters);
 
     /// <summary>

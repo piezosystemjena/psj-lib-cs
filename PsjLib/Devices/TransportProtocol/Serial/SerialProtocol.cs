@@ -9,7 +9,7 @@ namespace PsjLib.Transport;
 /// <remarks>
 /// <para><b>Notes:</b> Discovery and communication require OS-level access to serial ports and may fail when ports are already occupied by other applications.</para>
 /// </remarks>
-public sealed class SerialProtocol : TransportProtocol
+internal sealed class SerialProtocol : TransportProtocol
 {
     private readonly string _port;
     private int _baudrate;
@@ -20,21 +20,21 @@ public sealed class SerialProtocol : TransportProtocol
     /// </summary>
     /// <param name="identifier">Serial port name (for example <c>COM3</c>).</param>
     /// <param name="baudrate">Serial baud rate used for communication.</param>
-    public SerialProtocol(string identifier, int baudrate = 115200)
+    internal SerialProtocol(string identifier, int baudrate = 115200)
     {
         _port = identifier;
         _baudrate = baudrate;
     }
 
     /// <inheritdoc/>
-    public override TransportType TransportType => TransportType.Serial;
+    internal override TransportType TransportType => TransportType.Serial;
     /// <inheritdoc/>
-    public override bool IsConnected => _serial?.IsOpen == true;
+    internal override bool IsConnected => _serial?.IsOpen == true;
     /// <inheritdoc/>
-    public override string Identifier => _port;
+    internal override string Identifier => _port;
 
     /// <inheritdoc/>
-    public override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
+    internal override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
     {
         var ports = SerialPort.GetPortNames();
         var tasks = ports.Select(async port =>
@@ -61,7 +61,7 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override Task ConnectAsync(bool autoAdjustCommParams = true)
+    internal override Task ConnectAsync(bool autoAdjustCommParams = true)
     {
         if (IsConnected)
         {
@@ -90,14 +90,14 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override Task FlushInputAsync()
+    internal override Task FlushInputAsync()
     {
         _serial?.DiscardInBuffer();
         return Task.CompletedTask;
     }
 
     /// <inheritdoc/>
-    public override async Task WriteAsync(string cmd)
+    internal override async Task WriteAsync(string cmd)
     {
         if (_serial is null || !_serial.IsOpen)
         {
@@ -109,7 +109,7 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
+    internal override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
     {
         if (_serial is null || !_serial.IsOpen)
         {
@@ -165,10 +165,10 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override TransportProtocolInfo GetInfo() => new(TransportType.Serial, _port);
+    internal override TransportProtocolInfo GetInfo() => new(TransportType.Serial, _port);
 
     /// <inheritdoc/>
-    public override void SetProperty(string name, object value)
+    internal override void SetProperty(string name, object value)
     {
         if (name.Equals("baudrate", StringComparison.OrdinalIgnoreCase))
         {
@@ -188,7 +188,7 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override object? GetProperty(string name)
+    internal override object? GetProperty(string name)
     {
         if (name.Equals("baudrate", StringComparison.OrdinalIgnoreCase))
         {
@@ -199,7 +199,7 @@ public sealed class SerialProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override Task CloseAsync()
+    internal override Task CloseAsync()
     {
         if (_serial?.IsOpen == true)
         {

@@ -23,6 +23,9 @@ public sealed class DDriveDevice(TransportType transportType, string identifier)
     internal override string DDriveIdentifier => "DSM";
 
     /// <inheritdoc/>
+    public override int MaxChannelCount => 6;
+
+    /// <inheritdoc/>
     internal override async Task DiscoverChannelsAsync()
     {
         var response = await WriteRawAsync("stat").ConfigureAwait(false);

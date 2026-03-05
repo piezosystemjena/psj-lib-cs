@@ -13,7 +13,7 @@ namespace PsjLib.Transport;
 /// <para><b>Notes:</b> Endpoints can be addressed either directly by IP address or indirectly via Lantronix MAC address discovery.</para>
 /// <para><b>Notes:</b> Network discovery depends on UDP broadcast support and firewall/network policy.</para>
 /// </remarks>
-public sealed class TelnetProtocol : TransportProtocol
+internal sealed class TelnetProtocol : TransportProtocol
 {
     private const string BroadcastIp = "255.255.255.255";
     private const int DiscoveryUdpPort = 30718;
@@ -43,7 +43,7 @@ public sealed class TelnetProtocol : TransportProtocol
     /// Target host identifier. This can be an IP address or a Lantronix MAC address.
     /// </param>
     /// <param name="port">TCP port used for device communication.</param>
-    public TelnetProtocol(string identifier = "", int port = 23)
+    internal TelnetProtocol(string identifier = "", int port = 23)
     {
         _port = port;
         if (IPAddress.TryParse(identifier, out var _))
@@ -58,14 +58,14 @@ public sealed class TelnetProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override TransportType TransportType => TransportType.Telnet;
+    internal override TransportType TransportType => TransportType.Telnet;
     /// <inheritdoc/>
-    public override bool IsConnected => _client?.Connected == true;
+    internal override bool IsConnected => _client?.Connected == true;
     /// <inheritdoc/>
-    public override string Identifier => string.IsNullOrWhiteSpace(_host) ? (_mac ?? string.Empty) : _host;
+    internal override string Identifier => string.IsNullOrWhiteSpace(_host) ? (_mac ?? string.Empty) : _host;
 
     /// <inheritdoc/>
-    public override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
+    internal override async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(DiscoveryCallback discoveryCallback)
     {
         var devices = new List<DetectedDevice>();
 
@@ -99,7 +99,7 @@ public sealed class TelnetProtocol : TransportProtocol
     /// <para><b>Notes:</b> When MAC addressing is used, connection performs an additional discovery phase to resolve the current IP.</para>
     /// <para><b>Notes:</b> Optional communication-parameter adjustment can trigger a device-side reboot delay before regular Telnet communication resumes.</para>
     /// </remarks>
-    public override async Task ConnectAsync(bool autoAdjustCommParams = true)
+    internal override async Task ConnectAsync(bool autoAdjustCommParams = true)
     {
         if (IsConnected)
         {
@@ -138,7 +138,7 @@ public sealed class TelnetProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override async Task FlushInputAsync()
+    internal override async Task FlushInputAsync()
     {
         if (_stream is null)
         {
@@ -153,7 +153,7 @@ public sealed class TelnetProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override async Task WriteAsync(string cmd)
+    internal override async Task WriteAsync(string cmd)
     {
         if (_stream is null)
         {
@@ -167,7 +167,7 @@ public sealed class TelnetProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
+    internal override async Task<string> ReadUntilAsync(byte[] expected, double timeoutSecs = DefaultTimeoutSecs)
     {
         if (_stream is null)
         {
@@ -178,10 +178,10 @@ public sealed class TelnetProtocol : TransportProtocol
     }
 
     /// <inheritdoc/>
-    public override TransportProtocolInfo GetInfo() => new(TransportType.Telnet, _host, _mac);
+    internal override TransportProtocolInfo GetInfo() => new(TransportType.Telnet, _host, _mac);
 
     /// <inheritdoc/>
-    public override Task CloseAsync()
+    internal override Task CloseAsync()
     {
         _stream?.Dispose();
         _stream = null;

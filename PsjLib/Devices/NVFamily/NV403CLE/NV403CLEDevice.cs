@@ -49,7 +49,7 @@ public sealed class NV403CLEDevice : NVFamilyDevice
     /// <inheritdoc/>
     internal override string NVFamilyIdentifier => "NV403CLE";
     /// <inheritdoc/>
-    protected override int MaxChannelCount => 3;
+    public override int MaxChannelCount => 3;
     /// <inheritdoc/>
     internal override NVFamilyChannel CreateChannel(int channelId) => new NV403CLEChannel(channelId, WriteChannelAsync);
 

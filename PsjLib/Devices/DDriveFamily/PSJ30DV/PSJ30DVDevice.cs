@@ -21,6 +21,8 @@ public sealed class PSJ30DVDevice(TransportType transportType, string identifier
     public override string? DeviceId => "30DV50/300";
     /// <inheritdoc/>
     internal override string DDriveIdentifier => "AP";
+    /// <inheritdoc/>
+    public override int MaxChannelCount => 1;
 
     /// <inheritdoc/>
     internal override Task DiscoverChannelsAsync()

@@ -38,7 +38,7 @@ public sealed class NV120CLEDevice : NVFamilyDevice
     /// <inheritdoc/>
     internal override string NVFamilyIdentifier => "NV120CLE";
     /// <inheritdoc/>
-    protected override int MaxChannelCount => 1;
+    public override int MaxChannelCount => 1;
     /// <inheritdoc/>
     internal override NVFamilyChannel CreateChannel(int channelId) => new NV120CLEChannel(channelId, WriteChannelAsync);
 

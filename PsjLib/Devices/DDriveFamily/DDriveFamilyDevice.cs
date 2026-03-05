@@ -32,8 +32,6 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     };
 
     /// <inheritdoc/>
-    protected override double DefaultTimeoutSecs => 0.5;
-    /// <inheritdoc/>
     internal override byte[] FrameDelimiterRead => TransportProtocol.Xon;
 
     private static readonly Dictionary<string, ErrorCode> ErrorMap = new(StringComparer.OrdinalIgnoreCase)
@@ -131,8 +129,9 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     /// <inheritdoc/>
     public override async Task<string> WriteRawAsync(string cmd, double? timeoutSecs = null, byte[]? rxDelimiter = null)
     {
-        var isRead = (SingleChannel && cmd.Count(c => c == ',') == 0) 
-            || (!SingleChannel && cmd.Count(c => c == ',') <= 1);
+        var isSingleChannel = MaxChannelCount == 1;
+        var isRead = (isSingleChannel && cmd.Count(c => c == ',') == 0) 
+            || (!isSingleChannel && cmd.Count(c => c == ',') <= 1);
 
         if (isRead || cmd.StartsWith("m,", StringComparison.OrdinalIgnoreCase) || cmd.StartsWith("u,", StringComparison.OrdinalIgnoreCase))
         {

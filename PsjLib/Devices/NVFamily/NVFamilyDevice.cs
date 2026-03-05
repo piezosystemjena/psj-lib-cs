@@ -36,10 +36,6 @@ public abstract class NVFamilyDevice : PiezoDevice
     /// </summary>
     internal abstract string NVFamilyIdentifier { get; }
     /// <summary>
-    /// Gets maximum channel count for this model.
-    /// </summary>
-    protected abstract int MaxChannelCount { get; }
-    /// <summary>
     /// Creates channel instance for the specified channel identifier.
     /// </summary>
     internal virtual NVFamilyChannel CreateChannel(int channelId) => new(channelId, WriteChannelAsync);

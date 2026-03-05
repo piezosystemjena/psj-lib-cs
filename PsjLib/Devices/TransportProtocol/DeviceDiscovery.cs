@@ -6,7 +6,7 @@ namespace PsjLib.Transport;
 /// <remarks>
 /// <para><b>Notes:</b> Discovery latency depends on enabled transports and network conditions; serial and ethernet probes are executed concurrently when both are enabled.</para>
 /// </remarks>
-public static class DeviceDiscovery
+internal static class DeviceDiscovery
 {
     /// <summary>
     /// Discovers devices on selected transports and probes each candidate using the supplied callback.
@@ -17,7 +17,7 @@ public static class DeviceDiscovery
     /// <remarks>
     /// <para><b>Notes:</b> Empty results are valid when no matching devices are reachable on the selected interfaces.</para>
     /// </remarks>
-    public static async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(
+    internal static async Task<IReadOnlyList<DetectedDevice>> DiscoverDevicesAsync(
         DiscoveryCallback discoveryCallback,
         DiscoverFlags flags = DiscoverFlags.AllInterfaces)
     {
@@ -42,7 +42,7 @@ public static class DeviceDiscovery
     /// </summary>
     /// <param name="transportType">Transport type, or <see langword="null"/> for all interfaces.</param>
     /// <returns>Discovery flags for the requested transport scope.</returns>
-    public static DiscoverFlags FlagsForTransport(TransportType? transportType = null)
+    internal static DiscoverFlags FlagsForTransport(TransportType? transportType = null)
     {
         if (transportType is null)
         {

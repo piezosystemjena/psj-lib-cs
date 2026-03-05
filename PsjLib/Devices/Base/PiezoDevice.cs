@@ -17,19 +17,19 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <summary>
     /// Command response cache used to optimize repeated reads.
     /// </summary>
-    protected readonly CommandCache Cache;
+    internal readonly CommandCache Cache;
     /// <summary>
     /// Synchronizes transport access so command/response pairs remain ordered.
     /// </summary>
-    protected readonly SemaphoreSlim DeviceLock = new(1, 1);
+    internal readonly SemaphoreSlim DeviceLock = new(1, 1);
     /// <summary>
     /// Active transport used to communicate with the physical device.
     /// </summary>
-    protected readonly TransportProtocol Transport;
+    internal readonly TransportProtocol Transport;
     /// <summary>
     /// Mutable channel map filled during connection and discovery.
     /// </summary>
-    protected readonly Dictionary<int, PiezoChannel> ChannelsInternal = new();
+    internal readonly Dictionary<int, PiezoChannel> ChannelsInternal = new();
 
     /// <summary>
     /// Initializes a new device abstraction bound to a transport endpoint.
@@ -50,9 +50,9 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// </summary>
     public virtual string? DeviceId => null;
     /// <summary>
-    /// Gets whether this model exposes exactly one logical channel.
+    /// Gets maximum channel count for this model.
     /// </summary>
-    public virtual bool SingleChannel => false;
+    public abstract int MaxChannelCount { get; }
     /// <summary>
     /// Gets commands that may be cached between reads.
     /// </summary>
@@ -64,7 +64,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <summary>
     /// Gets default command timeout in seconds.
     /// </summary>
-    protected virtual double DefaultTimeoutSecs => 0.6;
+    internal virtual double DefaultTimeoutSecs => 0.6;
     /// <summary>
     /// The default Serial baudrate.
     /// </summary>
@@ -117,7 +117,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <typeparam name="TDevice">Abstract base type whose concrete descendants should be discovered.</typeparam>
     /// <param name="flags">Transport discovery options.</param>
     /// <returns>Aggregated discovered devices for all matching concrete subtypes.</returns>
-    public static async Task<IReadOnlyList<TDevice>> DiscoverDevicesAbstractClassAsync<TDevice>(
+    internal static async Task<IReadOnlyList<TDevice>> DiscoverDevicesAbstractClassAsync<TDevice>(
         DiscoverFlags flags = DiscoverFlags.AllInterfaces) where TDevice : PiezoDevice
     {
         List<TDevice> results = [];
@@ -207,7 +207,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <param name="response">Raw response frame without transport delimiter.</param>
     /// <returns>Parsed response values.</returns>
     /// <exception cref="DeviceError">Raised when response indicates a device error.</exception>
-    protected virtual IReadOnlyList<string> ParseResponse(string response)
+    internal virtual IReadOnlyList<string> ParseResponse(string response)
     {
         HandleError(response);
         
@@ -235,7 +235,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// Parses a device error response and throws a typed exception.
     /// </summary>
     /// <param name="response">Raw error response.</param>
-    protected virtual void RaiseError(string response)
+    internal virtual void RaiseError(string response)
     {
         var parts = response.Split(',', 2);
         if (parts.Length < 2)
@@ -318,7 +318,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <param name="parameters">Optional write values. If <see langword="null"/>, a read command is assumed.</param>
     /// <param name="timeoutSecs">Optional custom timeout in seconds.</param>
     /// <returns>Parsed response values.</returns>
-    public async Task<IReadOnlyList<string>> WriteAsync(string cmd, IReadOnlyList<object?>? parameters = null, double? timeoutSecs = null)
+    internal async Task<IReadOnlyList<string>> WriteAsync(string cmd, IReadOnlyList<object?>? parameters = null, double? timeoutSecs = null)
     {
         if (parameters is null)
         {
@@ -363,7 +363,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <param name="cmd">Fully serialized command frame without transport delimiter.</param>
     /// <param name="timeoutSecs">Read timeout in seconds.</param>
     /// <returns>Parsed response values.</returns>
-    protected async Task<IReadOnlyList<string>> WriteAndParseAsync(string cmd, double timeoutSecs)
+    internal async Task<IReadOnlyList<string>> WriteAndParseAsync(string cmd, double timeoutSecs)
     {
         var response = await WriteRawAsync(cmd, timeoutSecs).ConfigureAwait(false);
         return ParseResponse(response);

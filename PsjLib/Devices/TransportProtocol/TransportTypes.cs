@@ -91,7 +91,7 @@ public sealed record TransportProtocolInfo(TransportType Transport, string Ident
 /// <param name="Identifier">Endpoint identifier used for reconnection.</param>
 /// <param name="Mac">Optional MAC address for network devices.</param>
 /// <param name="DeviceId">Optional model identifier detected by probing.</param>
-public sealed record DetectedDevice(TransportType Transport, string Identifier, string? Mac = null, string? DeviceId = null)
+internal sealed record DetectedDevice(TransportType Transport, string Identifier, string? Mac = null, string? DeviceId = null)
 {
     /// <summary>
     /// Returns a formatted discovery description containing identifier and optional metadata.

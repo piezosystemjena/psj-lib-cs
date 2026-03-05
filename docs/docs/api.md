@@ -180,5 +180,4 @@ PsjLib/
 - [TransportType](../api/PsjLib.Transport.TransportType.yml)
 - [DiscoverFlags](../api/PsjLib.Transport.DiscoverFlags.yml)
 - [TransportProtocolInfo](../api/PsjLib.Transport.TransportProtocolInfo.yml)
-- [DetectedDevice](../api/PsjLib.Transport.DetectedDevice.yml)
 - [DeviceInfo](../api/PsjLib.Base.DeviceInfo.yml)
