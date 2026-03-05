@@ -12,7 +12,7 @@ public class Display(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string
     /// <summary>
     /// Command token for display brightness read/write.
     /// </summary>
-    public const string CmdBrightness = "DISPLAY_BRIGHTNESS";
+    internal const string CmdBrightness = "DISPLAY_BRIGHTNESS";
 
     /// <summary>
     /// Sets display brightness.

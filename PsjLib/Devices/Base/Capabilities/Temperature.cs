@@ -12,7 +12,7 @@ public sealed class Temperature(CapabilityWriteCallback writeCb, IReadOnlyDictio
     /// <summary>
     /// Command token for querying temperature.
     /// </summary>
-    public const string CmdTemperature = "TEMPERATURE";
+    internal const string CmdTemperature = "TEMPERATURE";
 
     /// <summary>
     /// Reads temperature from the device.

@@ -12,27 +12,27 @@ public abstract class DataRecorder(CapabilityWriteCallback writeCb, IReadOnlyDic
     /// <summary>
     /// Command token that starts recording.
     /// </summary>
-    public const string CmdStartRecording = "DATA_RECORDER_START";
+    internal const string CmdStartRecording = "DATA_RECORDER_START";
     /// <summary>
     /// Command token for recorder stride.
     /// </summary>
-    public const string CmdStride = "DATA_RECORDER_STRIDE";
+    internal const string CmdStride = "DATA_RECORDER_STRIDE";
     /// <summary>
     /// Command token for recorder memory length.
     /// </summary>
-    public const string CmdMemoryLength = "DATA_RECORDER_MEMORY_LENGTH";
+    internal const string CmdMemoryLength = "DATA_RECORDER_MEMORY_LENGTH";
     /// <summary>
     /// Command token for sample pointer/index.
     /// </summary>
-    public const string CmdPtr = "DATA_RECORDER_PTR";
+    internal const string CmdPtr = "DATA_RECORDER_PTR";
     /// <summary>
     /// Command token for recorder channel 1 data access.
     /// </summary>
-    public const string CmdGetData1 = "DATA_RECORDER_GET_DATA_1";
+    internal const string CmdGetData1 = "DATA_RECORDER_GET_DATA_1";
     /// <summary>
     /// Command token for recorder channel 2 data access.
     /// </summary>
-    public const string CmdGetData2 = "DATA_RECORDER_GET_DATA_2";
+    internal const string CmdGetData2 = "DATA_RECORDER_GET_DATA_2";
 
     /// <summary>
     /// Zero-based index representing data recorder channel 1.

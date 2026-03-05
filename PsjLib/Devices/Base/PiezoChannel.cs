@@ -38,7 +38,7 @@ public class PiezoChannel
     /// <summary>
     /// Gets commands included when channel backup is requested.
     /// </summary>
-    public virtual ISet<string> BackupCommands { get; } = new HashSet<string>();
+    internal virtual ISet<string> BackupCommands { get; } = new HashSet<string>();
 
     /// <summary>
     /// Executes a command against this channel.

@@ -12,7 +12,7 @@ public class ClosedLoopController(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <summary>
     /// Command token for closed-loop enable state.
     /// </summary>
-    public const string CmdEnable = "CLOSED_LOOP_CONTROLLER_ENABLE";
+    internal const string CmdEnable = "CLOSED_LOOP_CONTROLLER_ENABLE";
 
     /// <summary>
     /// Gets controller sample period in microseconds.

@@ -16,7 +16,7 @@ public sealed class DDriveTriggerOut(CapabilityWriteCallback writeCb, IReadOnlyD
     /// <summary>
     /// Command token for trigger output offset.
     /// </summary>
-    public const string CmdOffset = "TRIGGER_OUT_OFFSET";
+    internal const string CmdOffset = "TRIGGER_OUT_OFFSET";
 
     /// <summary>
     /// Updates trigger-out parameters, including optional d-Drive specific offset.

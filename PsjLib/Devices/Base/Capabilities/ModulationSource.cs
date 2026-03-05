@@ -12,7 +12,7 @@ public class ModulationSource(CapabilityWriteCallback writeCb, IReadOnlyDictiona
     /// <summary>
     /// Command token for modulation source selection.
     /// </summary>
-    public const string CmdSource = "MODULATION_SOURCE";
+    internal const string CmdSource = "MODULATION_SOURCE";
     private readonly Type _enumType = enumType;
 
     /// <summary>

@@ -14,7 +14,7 @@ public sealed class Status<TStatusRegister>(CapabilityWriteCallback writeCb, IRe
     /// <summary>
     /// Command token for status register read.
     /// </summary>
-    public const string CmdStatus = "STATUS";
+    internal const string CmdStatus = "STATUS";
 
     /// <summary>
     /// Reads status payload and constructs a typed status register.

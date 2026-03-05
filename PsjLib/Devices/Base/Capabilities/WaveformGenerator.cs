@@ -9,7 +9,7 @@ public abstract class WaveformGenerator(CapabilityWriteCallback writeCb, IReadOn
     /// <summary>
     /// Command token for waveform generator enable state.
     /// </summary>
-    public const string CmdEnable = "WAVEFORM_GENERATOR_ENABLE";
+    internal const string CmdEnable = "WAVEFORM_GENERATOR_ENABLE";
 
     /// <summary>
     /// Enables or disables waveform generation.

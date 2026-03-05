@@ -12,11 +12,11 @@ public class Limits(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string,
     /// <summary>
     /// Command token for upper limit readback.
     /// </summary>
-    public const string CmdUpperLimit = "UPPER_LIMIT";
+    internal const string CmdUpperLimit = "UPPER_LIMIT";
     /// <summary>
     /// Command token for lower limit readback.
     /// </summary>
-    public const string CmdLowerLimit = "LOWER_LIMIT";
+    internal const string CmdLowerLimit = "LOWER_LIMIT";
 
     /// <summary>
     /// Reads lower admissible limit.

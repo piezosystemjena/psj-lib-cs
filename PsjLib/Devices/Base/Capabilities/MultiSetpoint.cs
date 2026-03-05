@@ -12,7 +12,7 @@ public class MultiSetpoint(CapabilityWriteCallback writeCb, IReadOnlyDictionary<
     /// <summary>
     /// Command token for multi-setpoint write.
     /// </summary>
-    public const string CmdSetpoints = "SETPOINTS";
+    internal const string CmdSetpoints = "SETPOINTS";
     private readonly int _channelCount = channelCount;
 
     /// <summary>

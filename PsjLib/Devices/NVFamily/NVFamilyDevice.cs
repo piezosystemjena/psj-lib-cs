@@ -30,11 +30,11 @@ public abstract class NVFamilyDevice : PiezoDevice
     /// <summary>
     /// Probe baudrate used for NV family identification over serial transport.
     /// </summary>
-    protected override int SerialBaudrate => 19200;
+    internal override int SerialBaudrate => 19200;
     /// <summary>
     /// Gets NV-family identifier string expected in startup prompt.
     /// </summary>
-    protected abstract string NVFamilyIdentifier { get; }
+    internal abstract string NVFamilyIdentifier { get; }
     /// <summary>
     /// Gets maximum channel count for this model.
     /// </summary>
@@ -42,7 +42,7 @@ public abstract class NVFamilyDevice : PiezoDevice
     /// <summary>
     /// Creates channel instance for the specified channel identifier.
     /// </summary>
-    protected virtual NVFamilyChannel CreateChannel(int channelId) => new(channelId, WriteChannelAsync);
+    internal virtual NVFamilyChannel CreateChannel(int channelId) => new(channelId, WriteChannelAsync);
 
     /// <inheritdoc/>
     public override string? DeviceId => "NV Family Device";
@@ -53,22 +53,22 @@ public abstract class NVFamilyDevice : PiezoDevice
     public NVDisplay Display { get; }
 
     /// <inheritdoc/>
-    protected override ISet<string> CacheableCommands { get; } = new HashSet<string>
+    internal override ISet<string> CacheableCommands { get; } = new HashSet<string>
     {
         "light", "encmode", "enctime", "enclim", "encexp", "encstol", "setk", "monwpa",
         "dspclmin", "dspclmax", "dspvmin", "dspvmax", "unitol", "unitcl",
     };
 
     /// <inheritdoc/>
-    protected override ISet<string> BackupCommands { get; } = new HashSet<string>
+    internal override ISet<string> BackupCommands { get; } = new HashSet<string>
     {
         "light", "encmode", "enctime", "enclim", "encexp", "encstol",
     };
 
     /// <inheritdoc/>
-    protected override byte[] FrameDelimiterWrite => TransportProtocol.Cr;
+    internal override byte[] FrameDelimiterWrite => TransportProtocol.Cr;
     /// <inheritdoc/>
-    protected override byte[] FrameDelimiterRead => TransportProtocol.Xon;
+    internal override byte[] FrameDelimiterRead => TransportProtocol.Xon;
 
     private static readonly Dictionary<int, ErrorCode> ErrorMap = new()
     {
@@ -81,7 +81,7 @@ public abstract class NVFamilyDevice : PiezoDevice
     };
 
     /// <inheritdoc/>
-    protected override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
+    internal override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
         var initialBaudrate = transport.GetProperty("baudrate");
         transport.SetProperty("baudrate", SerialBaudrate);
@@ -116,7 +116,7 @@ public abstract class NVFamilyDevice : PiezoDevice
     }
 
     /// <inheritdoc/>
-    protected override Task DiscoverChannelsAsync()
+    internal override Task DiscoverChannelsAsync()
     {
         ChannelsInternal.Clear();
         for (var channelId = 0; channelId < MaxChannelCount; channelId++)
@@ -128,7 +128,7 @@ public abstract class NVFamilyDevice : PiezoDevice
     }
 
     /// <inheritdoc/>
-    protected override void HandleError(string response)
+    internal override void HandleError(string response)
     {
         if (!response.StartsWith("ErrorCode", StringComparison.OrdinalIgnoreCase))
         {

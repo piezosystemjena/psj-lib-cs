@@ -12,7 +12,7 @@ public class Unit(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string, s
     /// <summary>
     /// Command token for unit readback.
     /// </summary>
-    public const string CmdUnit = "UNIT";
+    internal const string CmdUnit = "UNIT";
 
     /// <summary>
     /// Reads active unit string.

@@ -15,7 +15,7 @@ public sealed class DDriveClosedLoopController(CapabilityWriteCallback writeCb, 
     /// <summary>
     /// Command token used to read status register for closed-loop state.
     /// </summary>
-    public const string CmdStatus = "STATUS";
+    internal const string CmdStatus = "STATUS";
 
     /// <summary>
     /// Reads closed-loop enable state from status register bit 7.

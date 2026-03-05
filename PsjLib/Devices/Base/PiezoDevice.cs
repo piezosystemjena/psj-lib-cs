@@ -56,11 +56,11 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <summary>
     /// Gets commands that may be cached between reads.
     /// </summary>
-    protected virtual ISet<string> CacheableCommands => new HashSet<string>();
+    internal virtual ISet<string> CacheableCommands => new HashSet<string>();
     /// <summary>
     /// Gets global (device-level) commands included in backup operations.
     /// </summary>
-    protected virtual ISet<string> BackupCommands => new HashSet<string>();
+    internal virtual ISet<string> BackupCommands => new HashSet<string>();
     /// <summary>
     /// Gets default command timeout in seconds.
     /// </summary>
@@ -68,15 +68,15 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <summary>
     /// The default Serial baudrate.
     /// </summary>
-    protected virtual int SerialBaudrate => 115200;
+    internal virtual int SerialBaudrate => 115200;
     /// <summary>
     /// Gets delimiter bytes appended to outgoing command frames.
     /// </summary>
-    protected virtual byte[] FrameDelimiterWrite => TransportProtocol.Crlf;
+    internal virtual byte[] FrameDelimiterWrite => TransportProtocol.Crlf;
     /// <summary>
     /// Gets delimiter bytes expected for incoming device frames.
     /// </summary>
-    protected virtual byte[] FrameDelimiterRead => TransportProtocol.Crlf;
+    internal virtual byte[] FrameDelimiterRead => TransportProtocol.Crlf;
 
     /// <summary>
     /// Gets discovered channels keyed by channel identifier.
@@ -191,7 +191,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// </summary>
     /// <param name="transport">Connected transport to probe.</param>
     /// <returns>Model identifier when matched; otherwise <see langword="null"/>.</returns>
-    protected virtual Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
+    internal virtual Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
         return Task.FromResult<string?>(null);
     }
@@ -199,7 +199,7 @@ public abstract class PiezoDevice : IAsyncDisposable
     /// <summary>
     /// Discovers and initializes channel objects for this model.
     /// </summary>
-    protected abstract Task DiscoverChannelsAsync();
+    internal abstract Task DiscoverChannelsAsync();
 
     /// <summary>
     /// Parses a raw device response into value tokens.
@@ -223,7 +223,7 @@ public abstract class PiezoDevice : IAsyncDisposable
             .ToList();
     }
 
-    protected virtual void HandleError(string response)
+    internal virtual void HandleError(string response)
     {
         if (response.StartsWith("error", StringComparison.OrdinalIgnoreCase))
         {

@@ -15,8 +15,8 @@ NVFamilyDevice
     └── Channel capabilities (Setpoint, Position, Status, MonitorOutput, ...)
 ```
 
-Shared behavior is implemented in `PsjLib.NVFamily.NVFamilyDevice` and
-`PsjLib.NVFamily.NVFamilyChannel`, while model-specific classes define
+Shared behavior is implemented in [NVFamilyDevice](../api/PsjLib.NVFamily.NVFamilyDevice.yml) and
+[NVFamilyChannel](../api/PsjLib.NVFamily.NVFamilyChannel.yml), while model-specific classes define
 channel count and available closed-loop features.
 
 ## Device Variants
@@ -136,7 +136,7 @@ finally
 | `MonitorOutput` | [NVMonitorOutput](../api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.yml) | Analog monitor output routing ([NVMonitorOutputSource](../api/PsjLib.NVFamily.Capabilities.NVMonitorOutputSource.yml), cached readback) |
 | `OpenloopUnit` | [Unit](../api/PsjLib.Base.Capabilities.Unit.yml) | Unit of open-loop command domain |
 | `OpenloopLimits` | [Limits](../api/PsjLib.Base.Capabilities.Limits.yml) | Open-loop lower/upper limits |
-| `Status` | [`Status<TRegister>`](../api/PsjLib.Base.Capabilities.Status-1.yml), [`NVStatusRegister`](../api/PsjLib.NVFamily.Capabilities.NVStatusRegister.yml) | NV status register access |
+| `Status` | [Status<TRegister>](../api/PsjLib.Base.Capabilities.Status-1.yml), [NVStatusRegister](../api/PsjLib.NVFamily.Capabilities.NVStatusRegister.yml) | NV status register access |
 | `ClosedLoopController` | [ClosedLoopController](../api/PsjLib.Base.Capabilities.ClosedLoopController.yml) | Closed-loop feedback enable/disable (CLE only) |
 | `ClosedloopUnit` | [Unit](../api/PsjLib.Base.Capabilities.Unit.yml) | Closed-loop unit (CLE only) |
 | `ClosedloopLimits` | [Limits](../api/PsjLib.Base.Capabilities.Limits.yml) | Closed-loop limits (CLE only) |

@@ -9,7 +9,7 @@ public sealed class Linearization(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <summary>
     /// Command token for linearization enable state.
     /// </summary>
-    public const string CmdEnable = "LINEARIZATION_ENABLE";
+    internal const string CmdEnable = "LINEARIZATION_ENABLE";
 
     /// <summary>
     /// Enables or disables linearization.

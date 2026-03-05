@@ -9,7 +9,7 @@ public sealed class Report(CapabilityWriteCallback writeCb, IReadOnlyDictionary<
     /// <summary>
     /// Command token for report retrieval.
     /// </summary>
-    public const string CmdReport = "REPORT";
+    internal const string CmdReport = "REPORT";
 
     /// <summary>
     /// Reads a report string from firmware.

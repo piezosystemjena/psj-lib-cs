@@ -12,19 +12,19 @@ public sealed class StaticWaveformGenerator(CapabilityWriteCallback writeCb, IRe
     /// <summary>
     /// Command token for waveform amplitude.
     /// </summary>
-    public const string CmdAmplitude = "WFG_AMPLITUDE";
+    internal const string CmdAmplitude = "WFG_AMPLITUDE";
     /// <summary>
     /// Command token for waveform offset.
     /// </summary>
-    public const string CmdOffset = "WFG_OFFSET";
+    internal const string CmdOffset = "WFG_OFFSET";
     /// <summary>
     /// Command token for waveform frequency or period parameter.
     /// </summary>
-    public const string CmdFrequency = "WFG_FREQUENCY";
+    internal const string CmdFrequency = "WFG_FREQUENCY";
     /// <summary>
     /// Command token for waveform duty cycle.
     /// </summary>
-    public const string CmdDutyCycle = "WFG_DUTY_CYCLE";
+    internal const string CmdDutyCycle = "WFG_DUTY_CYCLE";
 
     /// <summary>
     /// Updates one or more waveform parameters.

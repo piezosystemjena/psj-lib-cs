@@ -16,13 +16,13 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     /// <summary>
     /// Gets the identifier fragment expected in startup banner for this model.
     /// </summary>
-    protected abstract string DDriveIdentifier { get; }
+    internal abstract string DDriveIdentifier { get; }
 
     /// <inheritdoc/>
     public override string? DeviceId => "d-Drive Family Device";
 
     /// <inheritdoc/>
-    protected override ISet<string> CacheableCommands { get; } = new HashSet<string>
+    internal override ISet<string> CacheableCommands { get; } = new HashSet<string>
     {
         "acdescr", "acolmas", "acclmas", "set", "fan", "modon", "monsrc", "cl", "sr", "pcf", "errlpf",
         "elpor", "kp", "ki", "kd", "tf", "notchon", "notchf", "notchb", "lpon", "lpf", "gfkt", "gasin",
@@ -34,7 +34,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     /// <inheritdoc/>
     protected override double DefaultTimeoutSecs => 0.5;
     /// <inheritdoc/>
-    protected override byte[] FrameDelimiterRead => TransportProtocol.Xon;
+    internal override byte[] FrameDelimiterRead => TransportProtocol.Xon;
 
     private static readonly Dictionary<string, ErrorCode> ErrorMap = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -92,7 +92,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     };
 
     /// <inheritdoc/>
-    protected override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
+    internal override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
         // Try to connect twice incase the device has some leftover garbage in its input buffer.
         try
@@ -117,7 +117,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     }
 
     /// <inheritdoc/>
-    protected override void HandleError(string response)
+    internal override void HandleError(string response)
     {
         foreach (var kv in ErrorMap)
         {

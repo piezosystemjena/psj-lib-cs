@@ -9,7 +9,7 @@ public sealed class OutputVoltage(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <summary>
     /// Command token for output voltage query.
     /// </summary>
-    public const string CmdOutputVoltage = "OUTPUT_VOLTAGE";
+    internal const string CmdOutputVoltage = "OUTPUT_VOLTAGE";
 
     /// <summary>
     /// Reads current output voltage.

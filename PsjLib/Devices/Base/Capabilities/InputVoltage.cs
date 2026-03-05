@@ -9,7 +9,7 @@ public sealed class InputVoltage(CapabilityWriteCallback writeCb, IReadOnlyDicti
     /// <summary>
     /// Command token for input voltage query.
     /// </summary>
-    public const string CmdInputVoltage = "INPUT_VOLTAGE";
+    internal const string CmdInputVoltage = "INPUT_VOLTAGE";
 
     /// <summary>
     /// Reads current input voltage.

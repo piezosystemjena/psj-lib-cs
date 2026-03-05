@@ -32,15 +32,15 @@ public class NVKnob(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string,
     : PiezoCapability(writeCb, commands)
 {
     /// <summary>Command token for knob mode.</summary>
-    public const string CmdMode = "KNOB_MODE";
+    internal const string CmdMode = "KNOB_MODE";
     /// <summary>Command token for knob sampling time.</summary>
-    public const string CmdSampleTime = "KNOB_SAMPLE_TIME";
+    internal const string CmdSampleTime = "KNOB_SAMPLE_TIME";
     /// <summary>Command token for acceleration exponent.</summary>
-    public const string CmdAccelExponent = "KNOB_ACCEL_EXPONENT";
+    internal const string CmdAccelExponent = "KNOB_ACCEL_EXPONENT";
     /// <summary>Command token for step limit.</summary>
-    public const string CmdStepLimit = "KNOB_STEP_LIMIT";
+    internal const string CmdStepLimit = "KNOB_STEP_LIMIT";
     /// <summary>Command token for open-loop step size.</summary>
-    public const string CmdStepOpenLoop = "KNOB_STEP_OPEN_LOOP";
+    internal const string CmdStepOpenLoop = "KNOB_STEP_OPEN_LOOP";
 
     /// <summary>
     /// Sets encoder knob parameters; only non-null values are written.
@@ -138,7 +138,7 @@ public sealed class NVCLEKnob(CapabilityWriteCallback writeCb, IReadOnlyDictiona
     /// <summary>
     /// Command token for closed-loop step size.
     /// </summary>
-    public const string CmdStepClosedLoop = "KNOB_STEP_CLOSED_LOOP";
+    internal const string CmdStepClosedLoop = "KNOB_STEP_CLOSED_LOOP";
 
     public override async Task SetAsync(
         NVKnobMode? mode = null,

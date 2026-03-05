@@ -12,7 +12,7 @@ public class MonitorOutput(CapabilityWriteCallback writeCb, IReadOnlyDictionary<
     /// <summary>
     /// Command token for monitor output source selection.
     /// </summary>
-    public const string CmdOutputSrc = "MONITOR_OUTPUT_SOURCE";
+    internal const string CmdOutputSrc = "MONITOR_OUTPUT_SOURCE";
     private readonly Type _enumType = enumType;
 
     /// <summary>

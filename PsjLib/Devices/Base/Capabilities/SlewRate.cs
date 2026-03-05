@@ -12,7 +12,7 @@ public sealed class SlewRate(CapabilityWriteCallback writeCb, IReadOnlyDictionar
     /// <summary>
     /// Command token for slew rate.
     /// </summary>
-    public const string CmdRate = "SLEW_RATE";
+    internal const string CmdRate = "SLEW_RATE";
 
     /// <summary>
     /// Sets slew rate.

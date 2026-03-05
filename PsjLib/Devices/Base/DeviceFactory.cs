@@ -5,12 +5,12 @@ namespace PsjLib.Base;
 /// <summary>
 /// Global registry mapping device identifiers to concrete C# constructors.
 /// </summary>
-public static class DeviceModelRegistry
+internal static class DeviceModelRegistry
 {
     /// <summary>
     /// Gets registered model constructors keyed by device identifier.
     /// </summary>
-    public static readonly Dictionary<string, Func<TransportType, string, PiezoDevice>> Registry = new(StringComparer.Ordinal);
+    internal static readonly Dictionary<string, Func<TransportType, string, PiezoDevice>> Registry = new(StringComparer.Ordinal);
 }
 
 /// <summary>
@@ -19,7 +19,7 @@ public static class DeviceModelRegistry
 /// <remarks>
 /// <para><b>Notes:</b> Factory resolution relies on <see cref="DeviceModelRegistry"/> entries, so supported device types must be registered before creation.</para>
 /// </remarks>
-public static class DeviceFactory
+internal static class DeviceFactory
 {
     /// <summary>
     /// Creates a device instance for a detected endpoint.
@@ -29,7 +29,7 @@ public static class DeviceFactory
     /// </remarks>
     /// <param name="detectedDevice">Discovery result containing transport and model metadata.</param>
     /// <returns>New device instance for the detected model and endpoint.</returns>
-    public static PiezoDevice FromDetectedDevice(DetectedDevice detectedDevice)
+    internal static PiezoDevice FromDetectedDevice(DetectedDevice detectedDevice)
     {
         if (detectedDevice.DeviceId is null)
         {
@@ -49,7 +49,7 @@ public static class DeviceFactory
     /// <param name="transportType">Transport backend.</param>
     /// <param name="identifier">Transport endpoint identifier.</param>
     /// <returns>New device instance.</returns>
-    public static PiezoDevice FromId(string deviceId, TransportType transportType, string identifier)
+    internal static PiezoDevice FromId(string deviceId, TransportType transportType, string identifier)
     {
         if (!DeviceModelRegistry.Registry.TryGetValue(deviceId, out var ctor))
         {

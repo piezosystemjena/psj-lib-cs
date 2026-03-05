@@ -22,7 +22,7 @@ public class DDriveFamilyChannel : PiezoChannel
     public const int SamplePeriod = 20;
 
     /// <inheritdoc/>
-    public override ISet<string> BackupCommands { get; } = new HashSet<string>
+    internal override ISet<string> BackupCommands { get; } = new HashSet<string>
     {
         "modon", "monsrc", "cl", "sr", "pcf", "errlpf", "elpor", "kp", "ki", "kd", "tf",
         "notchon", "notchf", "notchb", "lpon", "lpf", "gfkt", "gasin", "gosin", "gfsin", "gatri",

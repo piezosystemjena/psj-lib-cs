@@ -13,7 +13,7 @@ namespace PsjLib.NVFamily;
 public class NVFamilyChannel : PiezoChannel
 {
     /// <inheritdoc/>
-    public override ISet<string> BackupCommands { get; } = new HashSet<string>
+    internal override ISet<string> BackupCommands { get; } = new HashSet<string>
     {
         "monwpa", "setk", "cloop",
     };

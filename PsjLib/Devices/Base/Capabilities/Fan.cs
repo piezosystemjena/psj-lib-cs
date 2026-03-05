@@ -12,7 +12,7 @@ public sealed class Fan(CapabilityWriteCallback writeCb, IReadOnlyDictionary<str
     /// <summary>
     /// Command token for fan enable/disable.
     /// </summary>
-    public const string CmdEnable = "FAN_ENABLE";
+    internal const string CmdEnable = "FAN_ENABLE";
 
     /// <summary>
     /// Enables or disables the fan.

@@ -12,11 +12,11 @@ public sealed class ErrorLowPassFilter(CapabilityWriteCallback writeCb, IReadOnl
     /// <summary>
     /// Command token for error low-pass filter cutoff frequency.
     /// </summary>
-    public const string CmdCutoffFrequency = "ERROR_LOW_PASS_FILTER_CUTOFF_FREQUENCY";
+    internal const string CmdCutoffFrequency = "ERROR_LOW_PASS_FILTER_CUTOFF_FREQUENCY";
     /// <summary>
     /// Command token for error low-pass filter order.
     /// </summary>
-    public const string CmdOrder = "ERROR_LOW_PASS_FILTER_ORDER";
+    internal const string CmdOrder = "ERROR_LOW_PASS_FILTER_ORDER";
 
     /// <summary>
     /// Updates error low-pass filter settings.

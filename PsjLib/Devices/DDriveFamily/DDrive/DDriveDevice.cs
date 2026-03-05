@@ -20,10 +20,10 @@ public sealed class DDriveDevice(TransportType transportType, string identifier)
     /// <inheritdoc/>
     public override string? DeviceId => "d-Drive";
     /// <inheritdoc/>
-    protected override string DDriveIdentifier => "DSM";
+    internal override string DDriveIdentifier => "DSM";
 
     /// <inheritdoc/>
-    protected override async Task DiscoverChannelsAsync()
+    internal override async Task DiscoverChannelsAsync()
     {
         var response = await WriteRawAsync("stat").ConfigureAwait(false);
         ParseChannelStatus(response);

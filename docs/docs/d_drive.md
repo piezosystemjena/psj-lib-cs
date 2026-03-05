@@ -64,8 +64,8 @@ Each d-Drive channel provides comprehensive control capabilities:
 # Accessing Capabilities
 
 All capabilities are accessed as channel properties. d-Drive channels
-use `PsjLib.DDriveFamily.DDriveChannel` (derived from
-`DDriveFamilyChannel`).
+use [DDriveChannel](../api/PsjLib.DDriveFamily.DDriveChannel.yml) (derived from
+[DDriveFamilyChannel](../api/PsjLib.DDriveFamily.DDriveFamilyChannel.yml)).
 
 ``` csharp
 using PsjLib.DDriveFamily;
@@ -115,7 +115,7 @@ All d-Drive channel capabilities with API references:
 
 | Property | API Reference | Description |
 |----|----|----|
-| `StatusRegister` | [`Status<TRegister>`](../api/PsjLib.Base.Capabilities.Status-1.yml), [`DDriveStatusRegister`](../api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.yml) | Hardware status with d-Drive-specific flags |
+| `StatusRegister` | [Status<TRegister>](../api/PsjLib.Base.Capabilities.Status-1.yml), [DDriveStatusRegister](../api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.yml) | Hardware status with d-Drive-specific flags |
 | `ActuatorDescription` | [ActuatorDescription](../api/PsjLib.Base.Capabilities.ActuatorDescription.yml) | Actuator identification and specifications |
 | `Setpoint` | [DDriveSetpoint](../api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.yml) | Target position/voltage setpoint (cached readback) |
 | `Position` | [Position](../api/PsjLib.Base.Capabilities.Position.yml) | Actual position readback |

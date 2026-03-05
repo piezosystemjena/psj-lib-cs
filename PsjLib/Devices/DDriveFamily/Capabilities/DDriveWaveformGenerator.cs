@@ -83,43 +83,43 @@ public sealed class DDriveWaveformGenerator(CapabilityWriteCallback writeCb, IRe
     : PiezoCapability(writeCb, commands)
 {
     /// <summary>Command token for active waveform type.</summary>
-    public const string CmdWfgType = "WFG_TYPE";
+    internal const string CmdWfgType = "WFG_TYPE";
     /// <summary>Command token for sine amplitude.</summary>
-    public const string CmdSineAmplitude = "WFG_SINE_AMPLITUDE";
+    internal const string CmdSineAmplitude = "WFG_SINE_AMPLITUDE";
     /// <summary>Command token for sine offset.</summary>
-    public const string CmdSineOffset = "WFG_SINE_OFFSET";
+    internal const string CmdSineOffset = "WFG_SINE_OFFSET";
     /// <summary>Command token for sine frequency.</summary>
-    public const string CmdSineFrequency = "WFG_SINE_FREQUENCY";
+    internal const string CmdSineFrequency = "WFG_SINE_FREQUENCY";
     /// <summary>Command token for triangle amplitude.</summary>
-    public const string CmdTriAmplitude = "WFG_TRIANGLE_AMPLITUDE";
+    internal const string CmdTriAmplitude = "WFG_TRIANGLE_AMPLITUDE";
     /// <summary>Command token for triangle offset.</summary>
-    public const string CmdTriOffset = "WFG_TRIANGLE_OFFSET";
+    internal const string CmdTriOffset = "WFG_TRIANGLE_OFFSET";
     /// <summary>Command token for triangle frequency.</summary>
-    public const string CmdTriFrequency = "WFG_TRIANGLE_FREQUENCY";
+    internal const string CmdTriFrequency = "WFG_TRIANGLE_FREQUENCY";
     /// <summary>Command token for triangle duty cycle.</summary>
-    public const string CmdTriDutyCycle = "WFG_TRIANGLE_DUTY_CYCLE";
+    internal const string CmdTriDutyCycle = "WFG_TRIANGLE_DUTY_CYCLE";
     /// <summary>Command token for rectangle amplitude.</summary>
-    public const string CmdRecAmplitude = "WFG_RECTANGLE_AMPLITUDE";
+    internal const string CmdRecAmplitude = "WFG_RECTANGLE_AMPLITUDE";
     /// <summary>Command token for rectangle offset.</summary>
-    public const string CmdRecOffset = "WFG_RECTANGLE_OFFSET";
+    internal const string CmdRecOffset = "WFG_RECTANGLE_OFFSET";
     /// <summary>Command token for rectangle frequency.</summary>
-    public const string CmdRecFrequency = "WFG_RECTANGLE_FREQUENCY";
+    internal const string CmdRecFrequency = "WFG_RECTANGLE_FREQUENCY";
     /// <summary>Command token for rectangle duty cycle.</summary>
-    public const string CmdRecDutyCycle = "WFG_RECTANGLE_DUTY_CYCLE";
+    internal const string CmdRecDutyCycle = "WFG_RECTANGLE_DUTY_CYCLE";
     /// <summary>Command token for noise amplitude.</summary>
-    public const string CmdNoiseAmplitude = "WFG_NOISE_AMPLITUDE";
+    internal const string CmdNoiseAmplitude = "WFG_NOISE_AMPLITUDE";
     /// <summary>Command token for noise offset.</summary>
-    public const string CmdNoiseOffset = "WFG_NOISE_OFFSET";
+    internal const string CmdNoiseOffset = "WFG_NOISE_OFFSET";
     /// <summary>Command token for sweep amplitude.</summary>
-    public const string CmdSweepAmplitude = "WFG_SWEEP_AMPLITUDE";
+    internal const string CmdSweepAmplitude = "WFG_SWEEP_AMPLITUDE";
     /// <summary>Command token for sweep offset.</summary>
-    public const string CmdSweepOffset = "WFG_SWEEP_OFFSET";
+    internal const string CmdSweepOffset = "WFG_SWEEP_OFFSET";
     /// <summary>Command token for sweep time/frequency parameter.</summary>
-    public const string CmdSweepTime = "WFG_SWEEP_TIME";
+    internal const string CmdSweepTime = "WFG_SWEEP_TIME";
     /// <summary>Command token that starts a scan.</summary>
-    public const string CmdScanStart = "WFG_SCAN_START";
+    internal const string CmdScanStart = "WFG_SCAN_START";
     /// <summary>Command token for selecting scan type.</summary>
-    public const string CmdScanType = "WFG_SCAN_TYPE";
+    internal const string CmdScanType = "WFG_SCAN_TYPE";
 
     private readonly StaticWaveformGenerator _sine = new(writeCb, new Dictionary<string, string>
     {

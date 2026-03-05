@@ -12,11 +12,11 @@ public sealed class LowPassFilter(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <summary>
     /// Command token for low-pass filter enable state.
     /// </summary>
-    public const string CmdEnable = "LOW_PASS_FILTER_ENABLE";
+    internal const string CmdEnable = "LOW_PASS_FILTER_ENABLE";
     /// <summary>
     /// Command token for low-pass filter cutoff frequency.
     /// </summary>
-    public const string CmdCutoffFrequency = "LOW_PASS_FILTER_CUTOFF_FREQUENCY";
+    internal const string CmdCutoffFrequency = "LOW_PASS_FILTER_CUTOFF_FREQUENCY";
 
     /// <summary>
     /// Updates low-pass filter settings.

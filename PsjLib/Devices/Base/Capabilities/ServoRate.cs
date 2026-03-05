@@ -9,7 +9,7 @@ public sealed class ServoRate(CapabilityWriteCallback writeCb, IReadOnlyDictiona
     /// <summary>
     /// Command token for servo rate.
     /// </summary>
-    public const string CmdServoRate = "SERVO_RATE";
+    internal const string CmdServoRate = "SERVO_RATE";
 
     /// <summary>
     /// Sets servo rate.

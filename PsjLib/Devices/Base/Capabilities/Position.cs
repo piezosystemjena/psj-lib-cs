@@ -12,7 +12,7 @@ public sealed class Position(CapabilityWriteCallback writeCb, IReadOnlyDictionar
     /// <summary>
     /// Command token for querying measured position.
     /// </summary>
-    public const string CmdPosition = "POSITION";
+    internal const string CmdPosition = "POSITION";
 
     /// <summary>
     /// Reads the current measured position.

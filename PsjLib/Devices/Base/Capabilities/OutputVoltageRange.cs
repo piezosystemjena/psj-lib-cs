@@ -9,7 +9,7 @@ public sealed class OutputVoltageRange(CapabilityWriteCallback writeCb, IReadOnl
     /// <summary>
     /// Command token for output voltage range query.
     /// </summary>
-    public const string CmdOutputVoltageRange = "OUTPUT_VOLTAGE_RANGE";
+    internal const string CmdOutputVoltageRange = "OUTPUT_VOLTAGE_RANGE";
 
     /// <summary>
     /// Reads the output voltage range.

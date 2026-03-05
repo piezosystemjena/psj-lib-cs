@@ -12,7 +12,7 @@ public sealed class FactoryReset(CapabilityWriteCallback writeCb, IReadOnlyDicti
     /// <summary>
     /// Command token for executing factory reset.
     /// </summary>
-    public const string CmdReset = "FACTORY_RESET";
+    internal const string CmdReset = "FACTORY_RESET";
 
     /// <summary>
     /// Executes a factory reset command.

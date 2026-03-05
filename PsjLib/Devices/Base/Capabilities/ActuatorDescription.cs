@@ -12,7 +12,7 @@ public sealed class ActuatorDescription(CapabilityWriteCallback writeCb, IReadOn
     /// <summary>
     /// Command token for actuator description query.
     /// </summary>
-    public const string CmdDescription = "actuator_description";
+    internal const string CmdDescription = "actuator_description";
 
     /// <summary>
     /// Reads the actuator description string from the device.

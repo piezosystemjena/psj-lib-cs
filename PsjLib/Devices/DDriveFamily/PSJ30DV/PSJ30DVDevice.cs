@@ -20,10 +20,10 @@ public sealed class PSJ30DVDevice(TransportType transportType, string identifier
     /// <inheritdoc/>
     public override string? DeviceId => "30DV50/300";
     /// <inheritdoc/>
-    protected override string DDriveIdentifier => "AP";
+    internal override string DDriveIdentifier => "AP";
 
     /// <inheritdoc/>
-    protected override Task DiscoverChannelsAsync()
+    internal override Task DiscoverChannelsAsync()
     {
         ChannelsInternal.Clear();
         ChannelsInternal[0] = new PSJ30DVChannel(0, WriteChannelAsync);

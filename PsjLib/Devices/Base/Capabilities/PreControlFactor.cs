@@ -12,7 +12,7 @@ public sealed class PreControlFactor(CapabilityWriteCallback writeCb, IReadOnlyD
     /// <summary>
     /// Command token for pre-control factor value.
     /// </summary>
-    public const string CmdValue = "PRE_CONTROL_FACTOR";
+    internal const string CmdValue = "PRE_CONTROL_FACTOR";
 
     /// <summary>
     /// Sets pre-control factor value.

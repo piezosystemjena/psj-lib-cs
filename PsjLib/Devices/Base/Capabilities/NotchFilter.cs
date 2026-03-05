@@ -12,15 +12,15 @@ public sealed class NotchFilter(CapabilityWriteCallback writeCb, IReadOnlyDictio
     /// <summary>
     /// Command token for notch filter enable state.
     /// </summary>
-    public const string CmdEnable = "NOTCH_FILTER_ENABLE";
+    internal const string CmdEnable = "NOTCH_FILTER_ENABLE";
     /// <summary>
     /// Command token for notch center frequency.
     /// </summary>
-    public const string CmdFrequency = "NOTCH_FILTER_FREQUENCY";
+    internal const string CmdFrequency = "NOTCH_FILTER_FREQUENCY";
     /// <summary>
     /// Command token for notch bandwidth.
     /// </summary>
-    public const string CmdBandwidth = "NOTCH_FILTER_BANDWIDTH";
+    internal const string CmdBandwidth = "NOTCH_FILTER_BANDWIDTH";
 
     /// <summary>
     /// Updates notch filter settings.

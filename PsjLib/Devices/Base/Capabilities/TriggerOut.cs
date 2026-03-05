@@ -42,27 +42,27 @@ public class TriggerOut(CapabilityWriteCallback writeCb, IReadOnlyDictionary<str
     /// <summary>
     /// Command token for trigger start threshold.
     /// </summary>
-    public const string CmdStart = "TRIGGER_OUT_START";
+    internal const string CmdStart = "TRIGGER_OUT_START";
     /// <summary>
     /// Command token for trigger stop threshold.
     /// </summary>
-    public const string CmdStop = "TRIGGER_OUT_STOP";
+    internal const string CmdStop = "TRIGGER_OUT_STOP";
     /// <summary>
     /// Command token for trigger interval.
     /// </summary>
-    public const string CmdInterval = "TRIGGER_OUT_INTERVAL";
+    internal const string CmdInterval = "TRIGGER_OUT_INTERVAL";
     /// <summary>
     /// Command token for trigger pulse length.
     /// </summary>
-    public const string CmdLength = "TRIGGER_OUT_LENGTH";
+    internal const string CmdLength = "TRIGGER_OUT_LENGTH";
     /// <summary>
     /// Command token for trigger polarity.
     /// </summary>
-    public const string CmdEdge = "TRIGGER_OUT_EDGE";
+    internal const string CmdEdge = "TRIGGER_OUT_EDGE";
     /// <summary>
     /// Command token for trigger source selection.
     /// </summary>
-    public const string CmdSrc = "TRIGGER_OUT_SOURCE";
+    internal const string CmdSrc = "TRIGGER_OUT_SOURCE";
 
     /// <summary>
     /// Updates one or more trigger output parameters.

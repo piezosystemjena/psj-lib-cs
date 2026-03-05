@@ -12,7 +12,7 @@ public class Setpoint(CapabilityWriteCallback writeCb, IReadOnlyDictionary<strin
     /// <summary>
     /// Command token for writing setpoint value.
     /// </summary>
-    public const string CmdSetpoint = "SETPOINT";
+    internal const string CmdSetpoint = "SETPOINT";
 
     /// <summary>
     /// Writes a new setpoint value.

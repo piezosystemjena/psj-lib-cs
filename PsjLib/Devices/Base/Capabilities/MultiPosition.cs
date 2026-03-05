@@ -9,7 +9,7 @@ public class MultiPosition(CapabilityWriteCallback writeCb, IReadOnlyDictionary<
     /// <summary>
     /// Command token for multi-position readback.
     /// </summary>
-    public const string CmdPositions = "POSITIONS";
+    internal const string CmdPositions = "POSITIONS";
 
     /// <summary>
     /// Reads current positions for all channels in a single device command.

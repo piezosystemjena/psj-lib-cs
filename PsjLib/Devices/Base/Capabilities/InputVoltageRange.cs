@@ -9,7 +9,7 @@ public sealed class InputVoltageRange(CapabilityWriteCallback writeCb, IReadOnly
     /// <summary>
     /// Command token for input voltage range query.
     /// </summary>
-    public const string CmdInputVoltageRange = "INPUT_VOLTAGE_RANGE";
+    internal const string CmdInputVoltageRange = "INPUT_VOLTAGE_RANGE";
 
     /// <summary>
     /// Reads configured input voltage range.

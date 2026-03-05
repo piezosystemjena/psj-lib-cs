@@ -55,9 +55,9 @@ PsjLib/
 For complete implementation guidance, use existing family/device classes
 as references:
 
-- `PsjLib.Base.PiezoDevice`
-- `PsjLib.DDriveFamily.DDriveFamilyDevice`
-- `PsjLib.NVFamily.NVFamilyDevice`
+- [PiezoDevice](../api/PsjLib.Base.PiezoDevice.yml)
+- [DDriveFamilyDevice](../api/PsjLib.DDriveFamily.DDriveFamilyDevice.yml)
+- [NVFamilyDevice](../api/PsjLib.NVFamily.NVFamilyDevice.yml)
 
 ### Quick Start: New Device
 
@@ -142,7 +142,7 @@ foreach (var device in devices)
 
 ### Base Capability Class
 
-All capabilities derive from `PsjLib.Base.Capabilities.PiezoCapability`.
+All capabilities derive from [PiezoCapability](../api/PsjLib.Base.Capabilities.PiezoCapability.yml).
 
 ``` csharp
 using PsjLib.Base.Capabilities;

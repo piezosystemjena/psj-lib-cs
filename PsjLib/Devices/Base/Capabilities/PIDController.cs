@@ -12,19 +12,19 @@ public class PIDController(CapabilityWriteCallback writeCb, IReadOnlyDictionary<
     /// <summary>
     /// Command token for proportional gain.
     /// </summary>
-    public const string CmdP = "PID_P";
+    internal const string CmdP = "PID_P";
     /// <summary>
     /// Command token for integral gain.
     /// </summary>
-    public const string CmdI = "PID_I";
+    internal const string CmdI = "PID_I";
     /// <summary>
     /// Command token for derivative gain.
     /// </summary>
-    public const string CmdD = "PID_D";
+    internal const string CmdD = "PID_D";
     /// <summary>
     /// Command token for derivative filter time constant.
     /// </summary>
-    public const string CmdTf = "PID_TF";
+    internal const string CmdTf = "PID_TF";
 
     /// <summary>
     /// Updates one or more PID parameters.
