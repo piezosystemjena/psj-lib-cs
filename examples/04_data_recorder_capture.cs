@@ -32,7 +32,7 @@ public static class Example04DataRecorderCapture
 
             await channel.DataRecorder.SetAsync(memoryLength: numSamples, stride: stride).ConfigureAwait(false);
             Console.WriteLine($"  ✓ Configured: {numSamples} samples at {sampleRate} Hz");
-            Console.WriteLine($"  Duration: {durationSec} seconds\n");
+            Console.WriteLine($"  Duration: {durationSec} seconds");
 
             Console.WriteLine("\n[2] Performing position step (30µm → 70µm)...");
             await channel.Setpoint.SetAsync(30.0).ConfigureAwait(false);

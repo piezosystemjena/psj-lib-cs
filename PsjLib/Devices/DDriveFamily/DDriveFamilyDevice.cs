@@ -94,16 +94,26 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     /// <inheritdoc/>
     protected override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
+        // Try to connect twice incase the device has some leftover garbage in its input buffer.
         try
         {
-            await transport.WriteAsync("\r\n").ConfigureAwait(false);
-            var msg = await transport.ReadMessageAsync().ConfigureAwait(false);
-            return msg.Contains(DDriveIdentifier + " V", StringComparison.Ordinal) ? DeviceId : null;
+            for (var i = 0; i < 2; i++)
+            {
+                await transport.WriteAsync("\r\n").ConfigureAwait(false);
+                var msg = await transport.ReadUntilAsync(FrameDelimiterRead, DefaultTimeoutSecs).ConfigureAwait(false);
+             
+                if (msg.Contains(DDriveIdentifier + " V", StringComparison.Ordinal))
+                {
+                    return DeviceId;
+                }
+            }
         }
         catch
         {
             return null;
         }
+
+        return null;
     }
 
     /// <inheritdoc/>

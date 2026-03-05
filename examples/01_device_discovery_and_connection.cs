@@ -13,7 +13,7 @@ public static class Example01DeviceDiscoveryAndConnection
 
         Console.WriteLine("\n[1] Discovering devices on all interfaces...");
 
-        var discovered = await PiezoDevice.DiscoverDevicesAsync<PiezoDevice>().ConfigureAwait(false);
+        var discovered = await PiezoDevice.DiscoverDevicesAsync<PiezoDevice>(Transport.DiscoverFlags.DetectSerial).ConfigureAwait(false);
 
         if (discovered.Count == 0)
         {

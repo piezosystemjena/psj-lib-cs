@@ -187,26 +187,6 @@ public abstract class PiezoDevice : IAsyncDisposable
     }
 
     /// <summary>
-    /// Checks whether the connected transport matches any registered device type.
-    /// </summary>
-    /// <param name="transport">Connected transport instance.</param>
-    /// <returns>Matching device identifier, or <see langword="null"/> when no type matches.</returns>
-    protected static async Task<string?> IsAnyRegisteredTypeAsync(TransportProtocol transport)
-    {
-        foreach (var kv in DeviceModelRegistry.Registry)
-        {
-            var device = kv.Value(transport.TransportType, transport.Identifier);
-            var match = await device.IsDeviceTypeAsync(transport).ConfigureAwait(false);
-            if (match is not null)
-            {
-                return match;
-            }
-        }
-
-        return null;
-    }
-
-    /// <summary>
     /// Determines whether a transport endpoint matches this concrete device type.
     /// </summary>
     /// <param name="transport">Connected transport to probe.</param>
