@@ -86,13 +86,13 @@ public abstract class NVFamilyDevice : PiezoDevice
         var initialBaudrate = transport.GetProperty("baudrate");
         transport.SetProperty("baudrate", SerialBaudrate);
 
-        // Try to connect 3 times to account for potential garbage in device input buffer
+        // Try to connect twice incase the device has some leftover garbage in its input buffer.
         try
         {
-            for (var attempt = 0; attempt < 3; attempt++)
+            for (var i = 0; i < 2; i++)
             {
                 await transport.WriteAsync("\r").ConfigureAwait(false);
-                var msg = await transport.ReadUntilAsync(FrameDelimiterRead, 5.0).ConfigureAwait(false);
+                var msg = await transport.ReadUntilAsync(FrameDelimiterRead, DefaultTimeoutSecs).ConfigureAwait(false);
             
                 if (msg.Contains(NVFamilyIdentifier + ">", StringComparison.Ordinal))
                 {

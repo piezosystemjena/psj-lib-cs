@@ -12,7 +12,6 @@ public static class Example01DeviceDiscoveryAndConnection
         Console.WriteLine(new string('=', 60));
 
         Console.WriteLine("\n[1] Discovering devices on all interfaces...");
-        Console.WriteLine("    (This searches both Serial and Telnet connections)");
 
         var discovered = await PiezoDevice.DiscoverDevicesAsync<PiezoDevice>().ConfigureAwait(false);
 
