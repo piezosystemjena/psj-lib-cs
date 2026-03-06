@@ -60,7 +60,8 @@
       "_appFooter": "piezosystem jena GmbH",
       "_enableSearch": true,
       "_appFaviconPath": "images/favicon.png",
-      "_appLogoPath": "images/favicon.png"
+      "_appLogoPath": "images/favicon.png",
+      "_disableContribution": true
     },
     "template": [
       "default",
