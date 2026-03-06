@@ -8,11 +8,12 @@
     <Title>PsjLib</Title>
     <Authors>piezosystem jena GmbH</Authors>
     <Company>piezosystem jena GmbH</Company>
-    <Description>.NET library for controlling piezosystem jena d-Drive family piezo devices.</Description>
+    <Description>.NET library for controlling piezosystem jena amplifiers and control devices.</Description>
     <PackageTags>piezo;hardware;serial;ddrive</PackageTags>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Version>0.1.0</Version>
+    <InformationalVersion>$(Version)</InformationalVersion>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -21,6 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" Link="README.md" />
   </ItemGroup>
 </Project>
