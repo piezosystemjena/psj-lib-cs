@@ -1,6 +1,6 @@
 # Getting Started
 
-This tutorial guides you through the basics of using psj-lib to control
+This tutorial guides you through the basics of using PsjLib to control
 piezosystem jena devices.
 
 ## Your First Program
@@ -54,7 +54,7 @@ Use the class matching your hardware model:
 
 ### Async/Await Pattern
 
-psj-lib uses .NET `Task`-based async/await for non-blocking operations. Key points:
+PsjLib uses .NET `Task`-based async/await for non-blocking operations. Key points:
 
 - All device operations are `async` functions
 - Use `await` when calling device methods
@@ -70,7 +70,7 @@ var pending = channel.Position.GetAsync();
 
 ### Device Hierarchy
 
-psj-lib uses a three-level structure:
+PsjLib uses a three-level structure:
 
 ``` text
 Device (DDriveDevice)

@@ -1,8 +1,8 @@
-# psj-lib: Piezosystem Jena Device Library
+# PsjLib C# Library Documentation
 
 ![image](images/psj-lib-header.png)
 
-**psj-lib** is a comprehensive C# library for controlling
+**PsjLib** is a comprehensive C# library for controlling
 piezoelectric amplifiers and control devices manufactured by
 [piezosystem jena GmbH](https://www.piezosystem.com). The library
 provides an intuitive, asynchronous interface for precision position

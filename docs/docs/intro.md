@@ -2,20 +2,20 @@
 
 ![image](images/psj-lib-header.png)
 
-## Welcome to psj-lib
+## Welcome to PsjLib
 
-**psj-lib** is a comprehensive C# library for controlling
+**PsjLib** is a comprehensive C# library for controlling
 piezoelectric amplifiers and control devices manufactured by
 [piezosystem jena GmbH](https://www.piezosystem.com). The library
 provides an intuitive, asynchronous interface for precise position
 control, waveform generation, data acquisition, and advanced control
 system configuration.
 
-For a Python port of psj-lib, see [psj-lib Python GitHub](https://github.com/piezosystemjena/psj-lib)
+For a Python port of PsjLib, see [psj-lib Python GitHub](https://github.com/piezosystemjena/psj-lib)
 
-## What is psj-lib?
+## What is PsjLib?
 
-psj-lib is designed to provide researchers, engineers, and developers
+PsjLib is designed to provide researchers, engineers, and developers
 with a powerful yet easy-to-use C# interface for piezosystem jena
 devices. The library abstracts the complexity of low-level device
 communication while exposing the full capabilities of the hardware.
@@ -75,7 +75,7 @@ closed-loop variants. They include features such as:
 
 ## Architecture Overview
 
-The psj-lib library follows a hierarchical architecture:
+The PsjLib library follows a hierarchical architecture:
 
 ``` text
 PiezoDevice (Base Class)
@@ -109,7 +109,7 @@ PiezoDevice (Base Class)
 
 ### Capability-Based Architecture
 
-Instead of a monolithic device class, psj-lib uses **capabilities** to
+Instead of a monolithic device class, PsjLib uses **capabilities** to
 represent hardware features. Each capability is a focused module that
 encapsulates related functionality:
 
@@ -162,7 +162,7 @@ The same API works regardless of transport type.
 
 ## Getting Started
 
-Ready to start using psj-lib? Here's what to do next:
+Ready to start using PsjLib? Here's what to do next:
 
 1.  **Installation**: See [Installation](installation.md) for setup instructions
 2.  **Connecting**: Learn how to connect to your device in [Connecting](connecting.md)
@@ -186,7 +186,7 @@ GmbH](https://www.piezosystem.com) or [create an issue on GitHub](https://github
 
 ## License and Attribution
 
-psj-lib is developed and maintained by piezosystem jena GmbH.
+PsjLib is developed and maintained by piezosystem jena GmbH.
 
 **Authors**: piezosystem jena GmbH
 
@@ -194,5 +194,5 @@ psj-lib is developed and maintained by piezosystem jena GmbH.
 
 ## What's Next?
 
-Continue to [Installation](installation.md) to set up psj-lib and start controlling your
+Continue to [Installation](installation.md) to set up PsjLib and start controlling your
 piezosystem jena devices.

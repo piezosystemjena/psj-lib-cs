@@ -1,13 +1,13 @@
 # Developer Guide
 
-This guide is for developers who want to extend psj-lib or add support
+This guide is for developers who want to extend PsjLib or add support
 for new piezosystem jena devices.
 
 ## Architecture Overview
 
 ### Library Structure
 
-psj-lib follows a modular, capability-based architecture:
+PsjLib follows a modular, capability-based architecture:
 
 ``` text
 PsjLib/

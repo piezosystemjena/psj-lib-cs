@@ -1,7 +1,7 @@
 # NV40/3(CLE) and NV120/1(CLE)
 
 This page covers the currently supported NV-series amplifiers and their
-psj-lib integration.
+PsjLib integration.
 
 ## Overview
 

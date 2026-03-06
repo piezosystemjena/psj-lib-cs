@@ -1,11 +1,11 @@
 # Connecting to Devices
 
 This guide explains how to discover and connect to piezosystem jena
-devices using psj-lib.
+devices using PsjLib.
 
 ## Connection Overview
 
-psj-lib supports two connection methods:
+PsjLib supports two connection methods:
 
 - **Serial (USB)**: Direct USB connection using virtual COM port
 - **Telnet (Ethernet)**: Network connection via Telnet protocol
@@ -165,7 +165,7 @@ finally
 
 ### Serial Port Settings
 
-psj-lib automatically configures serial port settings. Most devices use:
+PsjLib automatically configures serial port settings. Most devices use:
 
 - **Baud Rate**: 115200
 - **Data Bits**: 8

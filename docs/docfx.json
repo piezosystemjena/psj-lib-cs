@@ -56,7 +56,7 @@
     "overwrite": [],
     "dest": "_docs/site",
     "globalMetadata": {
-      "_appTitle": "psj-lib C# Library",
+      "_appTitle": "PsjLib C# Library",
       "_appFooter": "piezosystem jena GmbH",
       "_enableSearch": true,
       "_appFaviconPath": "images/favicon.png",

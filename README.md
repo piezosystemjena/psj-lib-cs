@@ -173,7 +173,7 @@ var data = await channel.DataRecorder
 
 ## Architecture
 
-`psj-lib-cs` uses a three-layer hierarchical architecture:
+`PsjLib` uses a three-layer hierarchical architecture:
 
 ```text
 PiezoDevice (e.g., DDriveDevice)

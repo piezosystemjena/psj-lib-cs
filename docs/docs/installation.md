@@ -1,13 +1,13 @@
 # Installation
 
-This guide covers how to install psj-lib and set up your development
+This guide covers how to install PsjLib and set up your development
 environment.
 
 ## Requirements
 
 **.NET Target Framework**
 
-psj-lib requires .NET 8:
+PsjLib requires .NET 8:
 
 ``` bash
 dotnet --version
@@ -16,7 +16,7 @@ dotnet --version
 
 **Operating Systems**
 
-psj-lib is cross-platform and works on:
+PsjLib is cross-platform and works on:
 
 - Windows 10/11
 - Linux (Ubuntu, Debian, Fedora, etc.)
@@ -33,7 +33,7 @@ psj-lib is cross-platform and works on:
 
 ### Method 1: Install from NuGet (Recommended)
 
-Install psj-lib into your project via NuGet:
+Install PsjLib into your project via NuGet:
 
 ``` bash
 dotnet add package PsjLib
@@ -56,7 +56,7 @@ dotnet build PsjLib/PsjLib.csproj
 
 ## Dependencies
 
-psj-lib targets .NET and uses standard runtime libraries. Device transport and capability handling are implemented in this repository.
+PsjLib targets .NET and uses standard runtime libraries. Device transport and capability handling are implemented in this repository.
 
 **Development tooling (optional):**
 
@@ -65,7 +65,7 @@ psj-lib targets .NET and uses standard runtime libraries. Device transport and c
 
 ## Verifying Installation
 
-After installation, verify that psj-lib is installed correctly:
+After installation, verify that PsjLib is installed correctly:
 
 ``` csharp
 using PsjLib;
@@ -131,7 +131,7 @@ ls /dev/cu.* /dev/tty.*
 
 ## Setting Up for Development
 
-If you plan to develop with psj-lib or contribute to the project:
+If you plan to develop with PsjLib or contribute to the project:
 
 ### Clone the Repository
 
@@ -255,7 +255,7 @@ If you encounter issues not covered here:
 
 ## Next Steps
 
-Now that psj-lib is installed, you can:
+Now that PsjLib is installed, you can:
 
 - Learn how to connect to devices: [Connecting](connecting.md)
 - Follow the getting started tutorial: [Getting Started](getting_started.md)

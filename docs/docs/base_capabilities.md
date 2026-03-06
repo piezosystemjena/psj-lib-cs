@@ -1,7 +1,7 @@
 # Base Capabilities
 
 This page documents the base capabilities that are available across
-piezo devices in psj-lib. These capabilities provide core functionality
+piezo devices in PsjLib. These capabilities provide core functionality
 for position control, signal processing, data acquisition, and system
 configuration.
 

@@ -1,6 +1,6 @@
 # API Reference
 
-Complete API reference overview for psj-lib.
+Complete API reference overview for PsjLib.
 
 ## Quick Navigation
 
