@@ -92,7 +92,7 @@ public abstract class DDriveFamilyDevice(TransportType transportType, string ide
     /// <inheritdoc/>
     internal override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
     {
-        // Try to connect twice incase the device has some leftover garbage in its input buffer.
+        // Try to connect twice in case the device has some leftover garbage in its input buffer.
         try
         {
             for (var i = 0; i < 2; i++)

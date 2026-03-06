@@ -82,7 +82,7 @@ public abstract class NVFamilyDevice : PiezoDevice
         var initialBaudrate = transport.GetProperty("baudrate");
         transport.SetProperty("baudrate", SerialBaudrate);
 
-        // Try to connect twice incase the device has some leftover garbage in its input buffer.
+        // Try to connect twice in case the device has some leftover garbage in its input buffer.
         try
         {
             for (var i = 0; i < 2; i++)

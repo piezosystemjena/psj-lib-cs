@@ -140,16 +140,6 @@ public sealed class NVCLEKnob(CapabilityWriteCallback writeCb, IReadOnlyDictiona
     /// </summary>
     internal const string CmdStepClosedLoop = "KNOB_STEP_CLOSED_LOOP";
 
-    public override async Task SetAsync(
-        NVKnobMode? mode = null,
-        double? sampleTime = null,
-        int? accelExponent = null,
-        int? stepLimit = null,
-        double? stepOpenLoop = null)
-    {
-        await base.SetAsync(mode, sampleTime, accelExponent, stepLimit, stepOpenLoop).ConfigureAwait(false);
-    }
-
     /// <summary>
     /// Sets encoder knob parameters including optional closed-loop step size.
     /// </summary>

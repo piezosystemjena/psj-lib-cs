@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+
 namespace PsjLib.Base;
 
 /// <summary>
@@ -8,7 +10,7 @@ namespace PsjLib.Base;
 /// </remarks>
 public sealed class CommandCache
 {
-    private readonly Dictionary<string, IReadOnlyList<string>> _cache = new();
+    private readonly ConcurrentDictionary<string, IReadOnlyList<string>> _cache = new();
     private readonly HashSet<string> _cacheableCommands;
 
     /// <summary>
@@ -77,7 +79,7 @@ public sealed class CommandCache
     /// Removes a single command entry from the cache.
     /// </summary>
     /// <param name="cmd">Command key.</param>
-    public void Invalidate(string cmd) => _cache.Remove(cmd);
+    public void Invalidate(string cmd) => _cache.TryRemove(cmd, out _);
 
     /// <summary>
     /// Clears all cache entries.

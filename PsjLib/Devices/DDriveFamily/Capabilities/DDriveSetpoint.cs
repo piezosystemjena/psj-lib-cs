@@ -21,8 +21,8 @@ public sealed class DDriveSetpoint(CapabilityWriteCallback writeCb, IReadOnlyDic
     /// <param name="setpoint">Target setpoint value.</param>
     public override async Task SetAsync(double setpoint)
     {
-        _setpointCache = setpoint;
         await base.SetAsync(setpoint).ConfigureAwait(false);
+        _setpointCache = setpoint;
     }
 
     /// <summary>
