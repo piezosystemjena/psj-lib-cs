@@ -1,0 +1,41 @@
+@import url("color_roles.css");
+
+@font-face {
+  font-family: "pathway_extreme";
+  src: url("https://piezosystemjena.github.io/psj-lib/_static/style_override_css/fonts/pathway-extreme-latin-400-normal.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "pathway_extreme_bold";
+  src: url("https://piezosystemjena.github.io/psj-lib/_static/style_override_css/fonts/pathway-extreme-condensed.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  font-family: "pathway_extreme";
+}
+
+#logo {
+  height: 35px;
+  margin-left: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "pathway_extreme_bold";
+  font-weight: 700;
+  font-style: italic;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+}
+
+h5.alert {
+  margin-top: 0rem;
+}

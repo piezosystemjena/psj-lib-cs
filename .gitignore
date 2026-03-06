@@ -1,0 +1,8 @@
+# C# Ignore build output and solution files
+bin/
+obj/
+*.sln
+
+# Documentation build output
+docs/api/
+_docs/

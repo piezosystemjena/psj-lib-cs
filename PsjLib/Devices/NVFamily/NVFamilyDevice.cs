@@ -1,0 +1,168 @@
+using PsjLib.Base;
+using PsjLib.Base.Capabilities;
+using PsjLib.NVFamily.Capabilities;
+using PsjLib.Transport;
+
+namespace PsjLib.NVFamily;
+
+/// <summary>
+/// Base class for NV-series devices.
+/// </summary>
+/// <remarks>
+/// <para><b>Notes:</b> NV identification is probed at a dedicated serial baudrate and then restored to the previous transport setting.</para>
+/// </remarks>
+public abstract class NVFamilyDevice : PiezoDevice
+{
+    /// <summary>
+    /// Initializes an NV-family device instance.
+    /// </summary>
+    /// <param name="transportType">Transport backend.</param>
+    /// <param name="identifier">Transport identifier.</param>
+    protected NVFamilyDevice(TransportType transportType, string identifier)
+        : base(transportType, identifier)
+    {
+        Display = new NVDisplay(CapabilityWriteAsync, new Dictionary<string, string>
+        {
+            [PsjLib.Base.Capabilities.Display.CmdBrightness] = "light",
+        });
+    }
+
+    /// <summary>
+    /// Probe baudrate used for NV family identification over serial transport.
+    /// </summary>
+    internal override int SerialBaudrate => 19200;
+    /// <summary>
+    /// Gets NV-family identifier string expected in startup prompt.
+    /// </summary>
+    internal abstract string NVFamilyIdentifier { get; }
+    /// <summary>
+    /// Creates channel instance for the specified channel identifier.
+    /// </summary>
+    internal virtual NVFamilyChannel CreateChannel(int channelId) => new(channelId, WriteChannelAsync);
+
+    /// <inheritdoc/>
+    public override string? DeviceId => "NV Family Device";
+
+    /// <summary>
+    /// Device-level display capability.
+    /// </summary>
+    public NVDisplay Display { get; }
+
+    /// <inheritdoc/>
+    internal override ISet<string> CacheableCommands { get; } = new HashSet<string>
+    {
+        "light", "encmode", "enctime", "enclim", "encexp", "encstol", "setk", "monwpa",
+        "dspclmin", "dspclmax", "dspvmin", "dspvmax", "unitol", "unitcl",
+    };
+
+    /// <inheritdoc/>
+    internal override ISet<string> BackupCommands { get; } = new HashSet<string>
+    {
+        "light", "encmode", "enctime", "enclim", "encexp", "encstol",
+    };
+
+    /// <inheritdoc/>
+    internal override byte[] FrameDelimiterWrite => TransportProtocol.Cr;
+    /// <inheritdoc/>
+    internal override byte[] FrameDelimiterRead => TransportProtocol.Xon;
+
+    private static readonly Dictionary<int, ErrorCode> ErrorMap = new()
+    {
+        [11] = ErrorCode.UnknownCommand,
+        [15] = ErrorCode.UnknownChannel,
+        [16] = ErrorCode.UnknownChannel,
+        [17] = ErrorCode.ParameterMissing,
+        [18] = ErrorCode.AdmissibleParameterRangeExceeded,
+        [25] = ErrorCode.ActuatorNotConnected,
+    };
+
+    /// <inheritdoc/>
+    internal override async Task<string?> IsDeviceTypeAsync(TransportProtocol transport)
+    {
+        var initialBaudrate = transport.GetProperty("baudrate");
+        transport.SetProperty("baudrate", SerialBaudrate);
+
+        // Try to connect twice in case the device has some leftover garbage in its input buffer.
+        try
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                await transport.WriteAsync("\r").ConfigureAwait(false);
+                var msg = await transport.ReadUntilAsync(FrameDelimiterRead, DefaultTimeoutSecs).ConfigureAwait(false);
+            
+                if (msg.Contains(NVFamilyIdentifier + ">", StringComparison.Ordinal))
+                {
+                    return DeviceId;
+                }
+            }
+        }
+        catch
+        {
+            return null;
+        }
+        finally
+        {
+            if (initialBaudrate is not null)
+            {
+                transport.SetProperty("baudrate", initialBaudrate);
+            }
+        }
+
+        return null;
+    }
+
+    /// <inheritdoc/>
+    internal override Task DiscoverChannelsAsync()
+    {
+        ChannelsInternal.Clear();
+        for (var channelId = 0; channelId < MaxChannelCount; channelId++)
+        {
+            ChannelsInternal[channelId] = CreateChannel(channelId);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    internal override void HandleError(string response)
+    {
+        if (!response.StartsWith("ErrorCode", StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        var parts = response.Split(',', 2);
+        if (parts.Length < 2)
+        {
+            ErrorCode.ErrorNotSpecified.RaiseError(response);
+        }
+
+        if (!int.TryParse(parts[1].Trim('\x01', '\n', '\r', '\0'), out var code))
+        {
+            ErrorCode.ErrorNotSpecified.RaiseError(response);
+        }
+
+        if (ErrorMap.TryGetValue(code, out var mapped))
+        {
+            mapped.RaiseError(response);
+            return;
+        }
+
+        ErrorCode.ErrorNotSpecified.RaiseError(response);
+    }
+
+    /// <summary>
+    /// Routes NV channel commands and omits channel prefix for global commands.
+    /// </summary>
+    internal override Task<IReadOnlyList<string>> WriteChannelAsync(int? channelId, string cmd, IReadOnlyList<object?>? parameters = null)
+    {
+        var command = cmd.Split(',')[0];
+        if (channelId is not null && NVFamilyChannel.GlobalCommands.Contains(command))
+        {
+            return base.WriteChannelAsync(null, cmd, parameters);
+        }
+
+        return base.WriteChannelAsync(channelId, cmd, parameters);
+    }
+
+}
