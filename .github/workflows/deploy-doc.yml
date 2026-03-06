@@ -1,0 +1,46 @@
+name: Publish Documentation
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish documentation
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install DocFX
+        run: |
+          dotnet tool update -g docfx
+
+      - name: Build documentation
+        run: |
+          docfx docs/docfx.json
+          touch docs/_docs/site/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: gh-pages
+          build_dir: docs/_docs/site/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
