@@ -1,6 +1,6 @@
 ![header](docs/images/piezosystem_logo.svg)
 
-# psj-lib
+# PsjLib C# Library
 
 [![.NET](https://img.shields.io/badge/.NET-8.0+-512BD4)](https://dotnet.microsoft.com/)
 [![Language](https://img.shields.io/badge/language-C%23-239120)](https://learn.microsoft.com/dotnet/csharp/)
