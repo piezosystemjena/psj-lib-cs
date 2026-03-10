@@ -49,8 +49,6 @@ PsjLib/
     ├── NVFamily/
     │   ├── NVFamilyDevice.cs
     │   ├── NVFamilyChannel.cs
-    │   ├── NV120/
-    │   ├── NV120CLE/
     │   ├── NV403/
     │   ├── NV403CLE/
     │   └── Capabilities/
@@ -82,10 +80,6 @@ PsjLib/
 
 - [NVFamilyDevice](../api/PsjLib.NVFamily.NVFamilyDevice.yml)
 - [NVFamilyChannel](../api/PsjLib.NVFamily.NVFamilyChannel.yml)
-- [NV120Device](../api/PsjLib.NVFamily.NV120.NV120Device.yml)
-- [NV120Channel](../api/PsjLib.NVFamily.NV120.NV120Channel.yml)
-- [NV120CLEDevice](../api/PsjLib.NVFamily.NV120CLE.NV120CLEDevice.yml)
-- [NV120CLEChannel](../api/PsjLib.NVFamily.NV120CLE.NV120CLEChannel.yml)
 - [NV403Device](../api/PsjLib.NVFamily.NV403.NV403Device.yml)
 - [NV403Channel](../api/PsjLib.NVFamily.NV403.NV403Channel.yml)
 - [NV403CLEDevice](../api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.yml)

@@ -47,8 +47,7 @@ Use the class matching your hardware model:
 
 - `DDriveDevice` for d-Drive systems
 - `PSJ30DVDevice` for 30DV50/300
-- `NV120Device`, `NV120CLEDevice`, `NV403Device`, `NV403CLEDevice` for
-  supported NV models
+- `NV403Device`, `NV403CLEDevice` for supported NV models
 
 ## Understanding the Basics
 

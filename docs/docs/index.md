@@ -29,8 +29,8 @@ system configuration.
 - **d-Drive**: Modular piezo amplifiers with 20-bit resolution, 50 kHz
   sampling, and advanced control features
 - **30DV50/300**: Single-channel, standalone amplifier
-- **NV120/1, NV120CLE, NV40/3, NV40/3CLE**: NV-series amplifiers with
-  open-loop and closed-loop variants
+- **NV40/3, NV40/3CLE**: NV-series amplifiers with open-loop and
+  closed-loop variants
 
 **Not currently supported:**
 

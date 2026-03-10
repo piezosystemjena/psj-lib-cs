@@ -1,4 +1,4 @@
-# NV40/3(CLE) and NV120/1(CLE)
+# NV40/3(CLE)
 
 This page covers the currently supported NV-series amplifiers and their
 PsjLib integration.
@@ -23,12 +23,10 @@ channel count and available closed-loop features.
 
 ### Open-loop variants
 
-- [NV120Device](../api/PsjLib.NVFamily.NV120.NV120Device.yml) (single channel)
 - [NV403Device](../api/PsjLib.NVFamily.NV403.NV403Device.yml) (three channels)
 
 ### Closed-loop variants
 
-- [NV120CLEDevice](../api/PsjLib.NVFamily.NV120CLE.NV120CLEDevice.yml) (single channel)
 - [NV403CLEDevice](../api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.yml) (three channels)
 
 ## Device Capabilities
