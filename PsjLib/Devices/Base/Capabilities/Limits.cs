@@ -25,9 +25,15 @@ public class Limits(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string,
     public async Task<double> GetLowerAsync()
     {
         var result = await WriteAsync(CmdLowerLimit).ConfigureAwait(false);
-        return double.TryParse(result[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var value)
-            ? value
-            : double.NaN;
+
+        try
+        {
+            return double.Parse(result[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch (Exception)
+        {
+            return double.NaN;
+        }
     }
 
     /// <summary>
@@ -37,9 +43,15 @@ public class Limits(CapabilityWriteCallback writeCb, IReadOnlyDictionary<string,
     public async Task<double> GetUpperAsync()
     {
         var result = await WriteAsync(CmdUpperLimit).ConfigureAwait(false);
-        return double.TryParse(result[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var value)
-            ? value
-            : double.NaN;
+
+        try
+        {
+            return double.Parse(result[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        catch (Exception)
+        {
+            return double.NaN;
+        }
     }
 
     /// <summary>

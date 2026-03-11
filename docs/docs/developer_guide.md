@@ -29,8 +29,6 @@ PsjLib/
     ├── NVFamily/
     │   ├── NVFamilyDevice.cs
     │   ├── NVFamilyChannel.cs
-    │   ├── NV120/
-    │   ├── NV120CLE/
     │   ├── NV403/
     │   ├── NV403CLE/
     │   └── Capabilities/

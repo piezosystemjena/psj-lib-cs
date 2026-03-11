@@ -14,7 +14,7 @@
   items:
     - name: d-Drive and 30DV50/300
       href: d_drive.md
-    - name: NV40/3(CLE) and NV120/1(CLE)
+    - name: NV40/3(CLE)
       href: nv_series.md
     - name: Base Capabilities
       href: base_capabilities.md

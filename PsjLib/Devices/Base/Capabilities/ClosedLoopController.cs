@@ -36,5 +36,17 @@ public class ClosedLoopController(CapabilityWriteCallback writeCb, IReadOnlyDict
     /// <remarks>
     /// <para><b>Notes:</b> Base implementations typically read a dedicated command; some derived device families override this to read status-register bits.</para>
     /// </remarks>
-    public virtual async Task<bool> GetEnabledAsync() => int.Parse((await WriteAsync(CmdEnable).ConfigureAwait(false))[0]) != 0;
+    public virtual async Task<bool> GetEnabledAsync()
+    {
+        var result = await WriteAsync(CmdEnable).ConfigureAwait(false);
+
+        // If the device returns no data, assume closed-loop is not enabled.
+        // This an happen if the actuator is not plugged in.
+        if (result is null || result.Count == 0)
+        {
+            return false;
+        }
+
+        return int.Parse(result[0]) != 0;  
+    } 
 }
