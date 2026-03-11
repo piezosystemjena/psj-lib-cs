@@ -61,7 +61,7 @@ generation, and data recording.
 
 ### NV40/3(CLE) Amplifiers
 
-Piezo amplifiers with 1 or 3 channels, available in open-loop and
+Three-channel piezo amplifiers, available in open-loop and
 closed-loop variants. They include features such as:
 
 - **Position Control**: Synchronous setpoint and position reading for
