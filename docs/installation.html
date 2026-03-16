@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Installation | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Installation | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/installation.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="installation">Installation</h1>
+
+<p>This guide covers how to install PsjLib and set up your development
+environment.</p>
+<h2 id="requirements">Requirements</h2>
+<p><strong>.NET Target Framework</strong></p>
+<p>PsjLib requires .NET 8:</p>
+<pre><code class="lang-bash">dotnet --version
+# Should show 8.x or higher
+</code></pre>
+<p><strong>Operating Systems</strong></p>
+<p>PsjLib is cross-platform and works on:</p>
+<ul>
+<li>Windows 10/11</li>
+<li>Linux (Ubuntu, Debian, Fedora, etc.)</li>
+<li>macOS 10.15+</li>
+</ul>
+<p><strong>Hardware Requirements</strong></p>
+<ul>
+<li>For Serial (USB) connection: USB port and appropriate USB-to-Serial
+driver (depends on OS and device)</li>
+<li>For Telnet connection: Ethernet interface and network connectivity</li>
+<li>Piezosystem jena device (e.g., d-Drive amplifier or 30DV50/300)</li>
+</ul>
+<h2 id="installation-methods">Installation Methods</h2>
+<h3 id="method-1-install-from-nuget-recommended">Method 1: Install from NuGet (Recommended)</h3>
+<p>Install PsjLib into your project via NuGet:</p>
+<pre><code class="lang-bash">dotnet add package PsjLib
+</code></pre>
+<p>This will automatically install all required dependencies.</p>
+<h3 id="method-2-install-from-source">Method 2: Install from Source</h3>
+<p>To install the latest development version from source:</p>
+<pre><code class="lang-bash"># Clone the repository
+git clone https://github.com/piezosystemjena/psj-lib-cs.git
+cd psj-lib-cs
+
+# Build library
+dotnet build PsjLib/PsjLib.csproj
+</code></pre>
+<h2 id="dependencies">Dependencies</h2>
+<p>PsjLib targets .NET and uses standard runtime libraries. Device transport and capability handling are implemented in this repository.</p>
+<p><strong>Development tooling (optional):</strong></p>
+<ul>
+<li><code>dotnet</code> SDK for building/running library and examples</li>
+<li><code>docfx</code> for generating documentation</li>
+</ul>
+<h2 id="verifying-installation">Verifying Installation</h2>
+<p>After installation, verify that PsjLib is installed correctly:</p>
+<pre><code class="lang-csharp">using PsjLib;
+
+Console.WriteLine(LibraryVersion.Version);
+// Should print: 1.0.0 (or later)
+</code></pre>
+<h3 id="check-available-modules">Check Available Modules</h3>
+<p>Verify core imports work:</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+Console.WriteLine($&quot;Created {device.DeviceId} instance&quot;);
+</code></pre>
+<h2 id="platform-specific-setup">Platform-Specific Setup</h2>
+<h3 id="windows-setup">Windows Setup</h3>
+<p><strong>Serial Driver Installation:</strong></p>
+<p>For USB-based serial communication, ensure proper drivers are installed:</p>
+<ol>
+<li>Connect your piezo amplifier via USB</li>
+<li>Windows may automatically install drivers</li>
+<li>Verify in Device Manager under &quot;Ports (COM &amp; LPT)&quot;</li>
+<li>Note the COM port number (e.g., COM3)</li>
+</ol>
+<h3 id="linux-setup">Linux Setup</h3>
+<p><strong>Serial Permissions:</strong></p>
+<p>On Linux, you may need to add your user to the <code>dialout</code> group for
+serial access:</p>
+<pre><code class="lang-bash">sudo usermod -a -G dialout $USER
+# Log out and back in for changes to take effect
+</code></pre>
+<p><strong>Check Serial Ports:</strong></p>
+<pre><code class="lang-bash">ls /dev/ttyUSB* /dev/ttyACM*
+# Lists available serial ports
+</code></pre>
+<h3 id="macos-setup">macOS Setup</h3>
+<p><strong>Serial Ports:</strong></p>
+<p>macOS typically detects USB-to-Serial devices automatically:</p>
+<pre><code class="lang-bash">ls /dev/cu.* /dev/tty.*
+# Lists available serial ports
+</code></pre>
+<h2 id="setting-up-for-development">Setting Up for Development</h2>
+<p>If you plan to develop with PsjLib or contribute to the project:</p>
+<h3 id="clone-the-repository">Clone the Repository</h3>
+<pre><code class="lang-bash">git clone https://github.com/piezosystemjena/psj-lib-cs.git
+cd psj-lib-cs
+</code></pre>
+<h3 id="install-with-development-dependencies">Install with Development Dependencies</h3>
+<p>Using NuGet/dotnet CLI (recommended for development):</p>
+<pre><code class="lang-bash"># Restore and build
+dotnet restore
+dotnet build
+</code></pre>
+<h3 id="build-documentation-locally">Build Documentation Locally</h3>
+<p>To build and view documentation:</p>
+<pre><code class="lang-bash">cd docs
+
+# Build HTML documentation
+docfx docfx.json --serve
+
+# Open &quot;http://localhost:8080&quot; in browser
+</code></pre>
+<h3 id="running-examples">Running Examples</h3>
+<p>The <code>examples/</code> directory contains ready-to-run example scripts:</p>
+<pre><code class="lang-bash"># Make sure device is connected
+dotnet run --project examples/Examples.csproj -- 01
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="import-errors">Import Errors</h3>
+<p>If you get import errors:</p>
+<pre><code class="lang-csharp">CS0246: The type or namespace name 'PsjLib' could not be found
+</code></pre>
+<p><strong>Solution</strong>: Ensure your project references <code>PsjLib</code>:</p>
+<pre><code class="lang-bash">dotnet add package PsjLib
+dotnet restore
+</code></pre>
+<h3 id="serial-connection-issues">Serial Connection Issues</h3>
+<p><strong>Problem</strong>: Cannot connect to device via serial</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>Check cable is properly connected</li>
+<li>Verify correct COM port / device path</li>
+<li>Ensure no other application is using the port</li>
+<li>Check permissions (Linux: add user to <code>dialout</code> group)</li>
+</ol>
+<h3 id="telnet-connection-issues">Telnet Connection Issues</h3>
+<p><strong>Problem</strong>: Cannot connect via Telnet</p>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li><p>Verify device IP address (check device display or network scan)</p>
+</li>
+<li><p>Ensure device and computer are on same network</p>
+</li>
+<li><p>Check firewall settings</p>
+</li>
+<li><p>Verify Telnet port (default: 23 or device-specific)</p>
+</li>
+<li><p>Try ping to verify network connectivity:</p>
+<pre><code class="lang-bash">ping 192.168.1.100
+</code></pre>
+</li>
+</ol>
+<h3 id="dependency-conflicts">Dependency Conflicts</h3>
+<p><strong>Problem</strong>: Dependency version conflicts</p>
+<p><strong>Solution</strong>: Align package versions and clear local caches if needed:</p>
+<pre><code class="lang-bash">dotnet nuget locals all --clear
+dotnet restore --force
+</code></pre>
+<h3 id="asyncawait-compatibility">Async/Await Compatibility</h3>
+<p><strong>Problem</strong>: async/await compile/runtime issues</p>
+<p><strong>Solution</strong>: Ensure you're using .NET 8+ and <code>Task</code>-based async correctly:</p>
+<pre><code class="lang-csharp">public static async Task Main()
+{
+  // Your async code here
+}
+</code></pre>
+<h2 id="getting-help">Getting Help</h2>
+<p>If you encounter issues not covered here:</p>
+<ol>
+<li>Check the <a href="api.html">API Reference</a> for detailed API documentation</li>
+<li>Review <a href="examples.html">Examples</a> for working code samples</li>
+<li>Check existing GitHub issues</li>
+<li>Contact piezosystem jena GmbH for support</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that PsjLib is installed, you can:</p>
+<ul>
+<li>Learn how to connect to devices: <a href="connecting.html">Connecting</a></li>
+<li>Follow the getting started tutorial: <a href="getting_started.html">Getting Started</a></li>
+<li>Explore example scripts: <a href="examples.html">Examples</a></li>
+<li>Read about d-Drive specifics: <a href="d_drive.html">d-Drive</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

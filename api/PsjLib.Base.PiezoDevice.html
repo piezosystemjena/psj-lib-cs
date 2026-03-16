@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class PiezoDevice | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class PiezoDevice | PsjLib C# Library ">
+      
+      <meta name="description" content="Base class for all supported piezo amplifier devices.">
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/new/v1.0.1/apiSpec/new?filename=PsjLib_Base_PiezoDevice.md&amp;value=---%0Auid%3A%20PsjLib.Base.PiezoDevice%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="PsjLib.Base.PiezoDevice">
+
+
+
+  <h1 id="PsjLib_Base_PiezoDevice" data-uid="PsjLib.Base.PiezoDevice" class="text-break">
+Class PiezoDevice  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="PsjLib.html">PsjLib</a>.<a class="xref" href="PsjLib.Base.html">Base</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>PsjLib.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Base class for all supported piezo amplifier devices.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class PiezoDevice : IAsyncDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">PiezoDevice</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iasyncdisposable">IAsyncDisposable</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="PsjLib.DDriveFamily.DDriveFamilyDevice.html">DDriveFamilyDevice</a></div>
+      <div><a class="xref" href="PsjLib.NVFamily.NVFamilyDevice.html">NVFamilyDevice</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="PsjLib_Base_PiezoDevice_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This type encapsulates transport setup, command serialization, response parsing,
+command caching, and channel discovery for derived device implementations.</p>
+<p><b>Notes:</b> Discovery behavior and channel topology are device-family specific and are implemented by derived classes.</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="PsjLib_Base_PiezoDevice__ctor_" data-uid="PsjLib.Base.PiezoDevice.#ctor*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice__ctor_PsjLib_Transport_TransportType_System_String_" data-uid="PsjLib.Base.PiezoDevice.#ctor(PsjLib.Transport.TransportType,System.String)">
+  PiezoDevice(TransportType, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new device abstraction bound to a transport endpoint.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected PiezoDevice(TransportType transportType, string identifier)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>transportType</code> <a class="xref" href="PsjLib.Transport.TransportType.html">TransportType</a></dt>
+    <dd><p>Transport backend to use.</p>
+</dd>
+    <dt><code>identifier</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Transport-specific address (for example COM port or IP/MAC).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="PsjLib_Base_PiezoDevice_Channels_" data-uid="PsjLib.Base.PiezoDevice.Channels*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_Channels" data-uid="PsjLib.Base.PiezoDevice.Channels">
+  Channels
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets discovered channels keyed by channel identifier.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;int, PiezoChannel&gt; Channels { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>, <a class="xref" href="PsjLib.Base.PiezoChannel.html">PiezoChannel</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_DeviceId_" data-uid="PsjLib.Base.PiezoDevice.DeviceId*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_DeviceId" data-uid="PsjLib.Base.PiezoDevice.DeviceId">
+  DeviceId
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the model identifier for this device type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string? DeviceId { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_DeviceInfo_" data-uid="PsjLib.Base.PiezoDevice.DeviceInfo*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_DeviceInfo" data-uid="PsjLib.Base.PiezoDevice.DeviceInfo">
+  DeviceInfo
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets current transport and model metadata for this device instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DeviceInfo DeviceInfo { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.DeviceInfo.html">DeviceInfo</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_MaxChannelCount_" data-uid="PsjLib.Base.PiezoDevice.MaxChannelCount*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_MaxChannelCount" data-uid="PsjLib.Base.PiezoDevice.MaxChannelCount">
+  MaxChannelCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets maximum channel count for this model.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract int MaxChannelCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="PsjLib_Base_PiezoDevice_BackupAsync_" data-uid="PsjLib.Base.PiezoDevice.BackupAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_BackupAsync_System_Collections_Generic_IReadOnlyCollection_System_String__System_Boolean_" data-uid="PsjLib.Base.PiezoDevice.BackupAsync(System.Collections.Generic.IReadOnlyCollection{System.String},System.Boolean)">
+  BackupAsync(IReadOnlyCollection&lt;string&gt;?, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L409"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads and returns a backup snapshot of global and optionally per-channel command values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;Dictionary&lt;string, IReadOnlyList&lt;string&gt;&gt;&gt; BackupAsync(IReadOnlyCollection&lt;string&gt;? backupList = null, bool backupChannels = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>backupList</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Optional explicit list of global commands to backup.</p>
+</dd>
+    <dt><code>backupChannels</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>Whether to include channel command snapshots.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;&gt;</dt>
+    <dd><p>Dictionary mapping command identifiers to captured values.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_ClearCommandCache_" data-uid="PsjLib.Base.PiezoDevice.ClearCommandCache*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_ClearCommandCache" data-uid="PsjLib.Base.PiezoDevice.ClearCommandCache">
+  ClearCommandCache()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clears all cached command responses.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ClearCommandCache()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_CloseAsync_" data-uid="PsjLib.Base.PiezoDevice.CloseAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_CloseAsync" data-uid="PsjLib.Base.PiezoDevice.CloseAsync">
+  CloseAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L472"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Closes transport connection and clears command cache.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task CloseAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_ConnectAsync_" data-uid="PsjLib.Base.PiezoDevice.ConnectAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_ConnectAsync_System_Boolean_" data-uid="PsjLib.Base.PiezoDevice.ConnectAsync(System.Boolean)">
+  ConnectAsync(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Connects transport, verifies device type, and discovers channels.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task ConnectAsync(bool autoAdjustCommParams = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>autoAdjustCommParams</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>When <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a>, transport-specific communication tuning may be applied.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="PsjLib_Base_PiezoDevice_ConnectAsync_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Notes:</b> Automatic communication-parameter adjustment may increase connection time for some network transports.</p>
+</div>
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_DiscoverDevicesAsync_" data-uid="PsjLib.Base.PiezoDevice.DiscoverDevicesAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_DiscoverDevicesAsync__1_PsjLib_Transport_DiscoverFlags_" data-uid="PsjLib.Base.PiezoDevice.DiscoverDevicesAsync``1(PsjLib.Transport.DiscoverFlags)">
+  DiscoverDevicesAsync&lt;TDevice&gt;(DiscoverFlags)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Discovers connected devices compatible with <code class="typeparamref">TDevice</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Task&lt;IReadOnlyList&lt;TDevice&gt;&gt; DiscoverDevicesAsync&lt;TDevice&gt;(DiscoverFlags flags = DiscoverFlags.AllInterfaces) where TDevice : PiezoDevice</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>flags</code> <a class="xref" href="PsjLib.Transport.DiscoverFlags.html">DiscoverFlags</a></dt>
+    <dd><p>Transport discovery options.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;TDevice&gt;&gt;</dt>
+    <dd><p>Instantiated device wrappers for discovered devices.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TDevice</code></dt>
+    <dd><p>Concrete or abstract device base type to discover.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_DisposeAsync_" data-uid="PsjLib.Base.PiezoDevice.DisposeAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_DisposeAsync" data-uid="PsjLib.Base.PiezoDevice.DisposeAsync">
+  DisposeAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L481"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asynchronously disposes the device and underlying synchronization resources.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ValueTask DisposeAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.valuetask">ValueTask</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_EnableCommandCache_" data-uid="PsjLib.Base.PiezoDevice.EnableCommandCache*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_EnableCommandCache_System_Boolean_" data-uid="PsjLib.Base.PiezoDevice.EnableCommandCache(System.Boolean)">
+  EnableCommandCache(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L460"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Enables or disables command response caching.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EnableCommandCache(bool enable)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>enable</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p>New cache state.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_RestoreAsync_" data-uid="PsjLib.Base.PiezoDevice.RestoreAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_RestoreAsync_System_Collections_Generic_IReadOnlyDictionary_System_String_System_Collections_Generic_IReadOnlyList_System_String___" data-uid="PsjLib.Base.PiezoDevice.RestoreAsync(System.Collections.Generic.IReadOnlyDictionary{System.String,System.Collections.Generic.IReadOnlyList{System.String}})">
+  RestoreAsync(IReadOnlyDictionary&lt;string, IReadOnlyList&lt;string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L443"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Restores command values from a backup snapshot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task RestoreAsync(IReadOnlyDictionary&lt;string, IReadOnlyList&lt;string&gt;&gt; backup)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>backup</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd><p>Backup dictionary previously produced by <a class="xref" href="PsjLib.Base.PiezoDevice.html#PsjLib_Base_PiezoDevice_BackupAsync_System_Collections_Generic_IReadOnlyCollection_System_String__System_Boolean_">BackupAsync(IReadOnlyCollection&lt;string&gt;?, bool)</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="PsjLib_Base_PiezoDevice_WriteRawAsync_" data-uid="PsjLib.Base.PiezoDevice.WriteRawAsync*"></a>
+
+  <h3 id="PsjLib_Base_PiezoDevice_WriteRawAsync_System_String_System_Nullable_System_Double__System_Byte___" data-uid="PsjLib.Base.PiezoDevice.WriteRawAsync(System.String,System.Nullable{System.Double},System.Byte[])">
+  WriteRawAsync(string, double?, byte[]?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/Base/PiezoDevice.cs/#L379"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sends a raw command to the transport and returns the unparsed response payload.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task&lt;string&gt; WriteRawAsync(string cmd, double? timeoutSecs = null, byte[]? rxDelimiter = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cmd</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Command body to send (without line/frame delimiter).</p>
+</dd>
+    <dt><code>timeoutSecs</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a>?</dt>
+    <dd><p>Optional timeout override in seconds.</p>
+</dd>
+    <dt><code>rxDelimiter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">byte</a>[]</dt>
+    <dd><p>Optional response delimiter override.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;</dt>
+    <dd><p>Raw response payload returned by the transport.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

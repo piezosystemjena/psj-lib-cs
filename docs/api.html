@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>API Reference | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="API Reference | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/api.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="api-reference">API Reference</h1>
+
+<p>Complete API reference overview for PsjLib.</p>
+<h2 id="quick-navigation">Quick Navigation</h2>
+<p><strong>Core Components</strong></p>
+<ul>
+<li><a href="#devices">Devices</a> - Device and channel classes</li>
+<li><a href="#base-capabilities">Base Capabilities</a> - Common capabilities across
+all devices</li>
+<li><a href="#nv-family">NV Family</a> - NV-series device and capability classes</li>
+<li><a href="#d-drive-specific-capabilities">d-Drive Specific Capabilities</a> -
+d-Drive enhanced features</li>
+<li><a href="#exceptions">Exceptions</a> - Error handling</li>
+<li><a href="#type-definitions">Type Definitions</a> - Enums and records</li>
+</ul>
+<p><strong>Base Capabilities by Category</strong></p>
+<ul>
+<li><a href="#status-and-monitoring">Status and Monitoring</a></li>
+<li><a href="#position-control">Position Control</a></li>
+<li><a href="#control-system">Control System</a></li>
+<li><a href="#filters">Filters</a></li>
+<li><a href="#signal-generation">Signal Generation</a></li>
+<li><a href="#data-acquisition">Data Acquisition</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+<p><strong>Usage Patterns</strong></p>
+<ul>
+<li>See <a href="examples.html">Examples</a> for practical usage patterns.</li>
+</ul>
+<h2 id="package-structure">Package Structure</h2>
+<pre><code class="lang-text">PsjLib/
+├── PsjLib.cs
+└── Devices/
+    ├── Base/
+    │   ├── PiezoDevice.cs
+    │   ├── PiezoChannel.cs
+    │   ├── Exceptions.cs
+    │   └── Capabilities/
+    ├── DDriveFamily/
+    │   ├── DDriveFamilyDevice.cs
+    │   ├── DDriveFamilyChannel.cs
+    │   ├── DDrive/
+    │   ├── PSJ30DV/
+    │   └── Capabilities/
+    ├── NVFamily/
+    │   ├── NVFamilyDevice.cs
+    │   ├── NVFamilyChannel.cs
+    │   ├── NV403/
+    │   ├── NV403CLE/
+    │   └── Capabilities/
+    └── TransportProtocol/
+</code></pre>
+<h2 id="core-modules">Core Modules</h2>
+<h3 id="devices">Devices</h3>
+<ul>
+<li><a href="../api/PsjLib.Base.PiezoDevice.html">PiezoDevice</a></li>
+<li><a href="../api/PsjLib.Base.PiezoChannel.html">PiezoChannel</a></li>
+</ul>
+<h3 id="base-device-classes">Base Device Classes</h3>
+<ul>
+<li><a href="../api/PsjLib.Base.PiezoDevice.html">PiezoDevice</a></li>
+<li><a href="../api/PsjLib.Base.PiezoChannel.html">PiezoChannel</a></li>
+</ul>
+<h3 id="d-drive-family">d-Drive Family</h3>
+<ul>
+<li><a href="../api/PsjLib.DDriveFamily.DDriveFamilyDevice.html">DDriveFamilyDevice</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.DDriveFamilyChannel.html">DDriveFamilyChannel</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.DDriveDevice.html">DDriveDevice</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.DDriveChannel.html">DDriveChannel</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.PSJ30DVDevice.html">PSJ30DVDevice</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.PSJ30DVChannel.html">PSJ30DVChannel</a></li>
+</ul>
+<h3 id="nv-family">NV Family</h3>
+<ul>
+<li><a href="../api/PsjLib.NVFamily.NVFamilyDevice.html">NVFamilyDevice</a></li>
+<li><a href="../api/PsjLib.NVFamily.NVFamilyChannel.html">NVFamilyChannel</a></li>
+<li><a href="../api/PsjLib.NVFamily.NV403.NV403Device.html">NV403Device</a></li>
+<li><a href="../api/PsjLib.NVFamily.NV403.NV403Channel.html">NV403Channel</a></li>
+<li><a href="../api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.html">NV403CLEDevice</a></li>
+<li><a href="../api/PsjLib.NVFamily.NV403CLE.NV403CLEChannel.html">NV403CLEChannel</a></li>
+</ul>
+<h3 id="base-capabilities">Base Capabilities</h3>
+<h4 id="status-and-monitoring">Status and Monitoring</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.Status-1.html">Status<tregister></tregister></a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.Temperature.html">Temperature</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.ActuatorDescription.html">ActuatorDescription</a></li>
+</ul>
+<h4 id="position-control">Position Control</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.Position.html">Position</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.Setpoint.html">Setpoint</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.ClosedLoopController.html">ClosedLoopController</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.SlewRate.html">SlewRate</a></li>
+</ul>
+<h4 id="control-system">Control System</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.PIDController.html">PIDController</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.PreControlFactor.html">PreControlFactor</a></li>
+</ul>
+<h4 id="filters">Filters</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.NotchFilter.html">NotchFilter</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.LowPassFilter.html">LowPassFilter</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.ErrorLowPassFilter.html">ErrorLowPassFilter</a></li>
+</ul>
+<h4 id="signal-generation">Signal Generation</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.ModulationSource.html">ModulationSource</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.MonitorOutput.html">MonitorOutput</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.StaticWaveformGenerator.html">StaticWaveformGenerator</a></li>
+</ul>
+<h4 id="data-acquisition">Data Acquisition</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.DataRecorder.html">DataRecorder</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.TriggerOut.html">TriggerOut</a></li>
+</ul>
+<h4 id="configuration">Configuration</h4>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.Unit.html">Unit</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.Limits.html">Limits</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.Display.html">Display</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.MultiSetpoint.html">MultiSetpoint</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.MultiPosition.html">MultiPosition</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.FactoryReset.html">FactoryReset</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.Fan.html">Fan</a></li>
+</ul>
+<h3 id="d-drive-specific-capabilities">d-Drive Specific Capabilities</h3>
+<ul>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.html">DDriveStatusRegister</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.html">DDriveWaveformGenerator</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.html">DDriveDataRecorder</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.html">DDriveTriggerOut</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.html">DDriveModulationSourceTypes</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.html">DDriveMonitorOutputSource</a></li>
+</ul>
+<h3 id="nv-specific-capabilities">NV Specific Capabilities</h3>
+<ul>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVDisplay.html">NVDisplay</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVKnob.html">NVKnob</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVCLEKnob.html">NVCLEKnob</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVModulationSource.html">NVModulationSource</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.html">NVMonitorOutput</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVSetpoint.html">NVSetpoint</a></li>
+<li><a href="../api/PsjLib.NVFamily.Capabilities.NVStatusRegister.html">NVStatusRegister</a></li>
+</ul>
+<h3 id="exceptions">Exceptions</h3>
+<ul>
+<li><a href="../api/PsjLib.Base.DeviceError.html">DeviceError</a></li>
+<li><a href="../api/PsjLib.Base.UnknownCommand.html">UnknownCommand</a></li>
+<li><a href="../api/PsjLib.Base.ParameterMissing.html">ParameterMissing</a></li>
+<li><a href="../api/PsjLib.Base.AdmissibleParameterRangeExceeded.html">AdmissibleParameterRangeExceeded</a></li>
+<li><a href="../api/PsjLib.Base.CommandParameterCountExceeded.html">CommandParameterCountExceeded</a></li>
+<li><a href="../api/PsjLib.Base.ParameterLockedOrReadOnly.html">ParameterLockedOrReadOnly</a></li>
+<li><a href="../api/PsjLib.Base.Underload.html">Underload</a></li>
+<li><a href="../api/PsjLib.Base.Overload.html">Overload</a></li>
+<li><a href="../api/PsjLib.Base.ParameterTooLow.html">ParameterTooLow</a></li>
+<li><a href="../api/PsjLib.Base.ParameterTooHigh.html">ParameterTooHigh</a></li>
+<li><a href="../api/PsjLib.Base.UnknownChannel.html">UnknownChannel</a></li>
+<li><a href="../api/PsjLib.Base.ActuatorNotConnected.html">ActuatorNotConnected</a></li>
+<li><a href="../api/PsjLib.Transport.ProtocolException.html">ProtocolException</a></li>
+<li><a href="../api/PsjLib.Transport.DeviceUnavailableException.html">DeviceUnavailableException</a></li>
+<li><a href="../api/PsjLib.Transport.TimeoutException.html">TimeoutException</a></li>
+</ul>
+<h3 id="type-definitions">Type Definitions</h3>
+<ul>
+<li><a href="../api/PsjLib.Transport.TransportType.html">TransportType</a></li>
+<li><a href="../api/PsjLib.Transport.DiscoverFlags.html">DiscoverFlags</a></li>
+<li><a href="../api/PsjLib.Transport.TransportProtocolInfo.html">TransportProtocolInfo</a></li>
+<li><a href="../api/PsjLib.Base.DeviceInfo.html">DeviceInfo</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

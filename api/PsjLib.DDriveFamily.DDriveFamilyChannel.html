@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class DDriveFamilyChannel | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DDriveFamilyChannel | PsjLib C# Library ">
+      
+      <meta name="description" content="Channel implementation for d-Drive family devices with pre-wired capability objects.">
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/new/v1.0.1/apiSpec/new?filename=PsjLib_DDriveFamily_DDriveFamilyChannel.md&amp;value=---%0Auid%3A%20PsjLib.DDriveFamily.DDriveFamilyChannel%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel">
+
+
+
+  <h1 id="PsjLib_DDriveFamily_DDriveFamilyChannel" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel" class="text-break">
+Class DDriveFamilyChannel  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L14"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="PsjLib.html">PsjLib</a>.<a class="xref" href="PsjLib.DDriveFamily.html">DDriveFamily</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>PsjLib.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Channel implementation for d-Drive family devices with pre-wired capability objects.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DDriveFamilyChannel : PiezoChannel</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="PsjLib.Base.PiezoChannel.html">PiezoChannel</a></div>
+      <div><span class="xref">DDriveFamilyChannel</span></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist derived">
+    <dt>Derived</dt>
+    <dd>
+      <div><a class="xref" href="PsjLib.DDriveFamily.DDriveChannel.html">DDriveChannel</a></div>
+      <div><a class="xref" href="PsjLib.DDriveFamily.PSJ30DVChannel.html">PSJ30DVChannel</a></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="PsjLib.Base.PiezoChannel.html#PsjLib_Base_PiezoChannel_Id">PiezoChannel.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+  <h2 id="PsjLib_DDriveFamily_DDriveFamilyChannel_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Notes:</b> d-Drive family channels operate with a 20µs control period (50kHz) used by control, waveform, trigger, and recorder features.</p>
+<p><b>Notes:</b> Capability instances are model-specific and exposed as strongly typed properties on this class.</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel__ctor_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.#ctor*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel__ctor_System_Int32_PsjLib_Base_ChannelWriteCallback_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.#ctor(System.Int32,PsjLib.Base.ChannelWriteCallback)">
+  DDriveFamilyChannel(int, ChannelWriteCallback)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a d-Drive family channel and all supported capabilities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveFamilyChannel(int id, ChannelWriteCallback writeCallback)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>Channel identifier.</p>
+</dd>
+    <dt><code>writeCallback</code> <a class="xref" href="PsjLib.Base.ChannelWriteCallback.html">ChannelWriteCallback</a></dt>
+    <dd><p>Callback used to execute channel commands.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="PsjLib_DDriveFamily_DDriveFamilyChannel__ctor_System_Int32_PsjLib_Base_ChannelWriteCallback__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Notes:</b> Backup command coverage includes persistent configuration commands; dynamic run-time state is not treated as backup configuration.</p>
+</div>
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_SamplePeriod" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.SamplePeriod">
+  SamplePeriod
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Control sample period in microseconds for this family.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int SamplePeriod = 20</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="PsjLib_DDriveFamily_DDriveFamilyChannel_SamplePeriod_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Notes:</b> 20µs corresponds to a nominal 50kHz loop/update rate.</p>
+</div>
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_ActuatorDescription_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ActuatorDescription*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_ActuatorDescription" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ActuatorDescription">
+  ActuatorDescription
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Actuator description capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ActuatorDescription ActuatorDescription { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.ActuatorDescription.html">ActuatorDescription</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_ClosedLoopController_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ClosedLoopController*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_ClosedLoopController" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ClosedLoopController">
+  ClosedLoopController
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Closed-loop controller capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveClosedLoopController ClosedLoopController { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.html">DDriveClosedLoopController</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_DataRecorder_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.DataRecorder*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_DataRecorder" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.DataRecorder">
+  DataRecorder
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Data recorder capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveDataRecorder DataRecorder { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.html">DDriveDataRecorder</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_ErrorLpf_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ErrorLpf*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_ErrorLpf" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ErrorLpf">
+  ErrorLpf
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Error low-pass filter capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ErrorLowPassFilter ErrorLpf { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.ErrorLowPassFilter.html">ErrorLowPassFilter</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Fan_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Fan*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Fan" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Fan">
+  Fan
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Fan control capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Fan Fan { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.Fan.html">Fan</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Lpf_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Lpf*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Lpf" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Lpf">
+  Lpf
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Low-pass filter capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LowPassFilter Lpf { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.LowPassFilter.html">LowPassFilter</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_ModulationSource_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ModulationSource*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_ModulationSource" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.ModulationSource">
+  ModulationSource
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Modulation source capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ModulationSource ModulationSource { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.ModulationSource.html">ModulationSource</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_MonitorOutput_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.MonitorOutput*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_MonitorOutput" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.MonitorOutput">
+  MonitorOutput
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L187"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Monitor output source capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MonitorOutput MonitorOutput { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.MonitorOutput.html">MonitorOutput</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Notch_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Notch*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Notch" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Notch">
+  Notch
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Notch filter capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NotchFilter Notch { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.NotchFilter.html">NotchFilter</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Pcf_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Pcf*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Pcf" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Pcf">
+  Pcf
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Pre-control factor capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PreControlFactor Pcf { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.PreControlFactor.html">PreControlFactor</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_PidController_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.PidController*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_PidController" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.PidController">
+  PidController
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>PID controller capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PIDController PidController { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.PIDController.html">PIDController</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Position_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Position*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Position" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Position">
+  Position
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Measured position capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Position Position { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.Position.html">Position</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Setpoint_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Setpoint*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Setpoint" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Setpoint">
+  Setpoint
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Setpoint capability with d-Drive cache semantics.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveSetpoint Setpoint { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.html">DDriveSetpoint</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_SlewRate_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.SlewRate*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_SlewRate" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.SlewRate">
+  SlewRate
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Slew-rate capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SlewRate SlewRate { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.SlewRate.html">SlewRate</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_StatusRegister_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.StatusRegister*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_StatusRegister" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.StatusRegister">
+  StatusRegister
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Typed status capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Status&lt;DDriveStatusRegister&gt; StatusRegister { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.Status-1.html">Status</a>&lt;<a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.html">DDriveStatusRegister</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_Temperature_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Temperature*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_Temperature" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.Temperature">
+  Temperature
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Temperature capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Temperature Temperature { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.Base.Capabilities.Temperature.html">Temperature</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_TriggerOut_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.TriggerOut*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_TriggerOut" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.TriggerOut">
+  TriggerOut
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Trigger output capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveTriggerOut TriggerOut { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.html">DDriveTriggerOut</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_WaveformGenerator_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.WaveformGenerator*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_WaveformGenerator" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.WaveformGenerator">
+  WaveformGenerator
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Waveform generator capability.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DDriveWaveformGenerator WaveformGenerator { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.html">DDriveWaveformGenerator</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="PsjLib_DDriveFamily_DDriveFamilyChannel_BackupAsync_" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.BackupAsync*"></a>
+
+  <h3 id="PsjLib_DDriveFamily_DDriveFamilyChannel_BackupAsync" data-uid="PsjLib.DDriveFamily.DDriveFamilyChannel.BackupAsync">
+  BackupAsync()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/PsjLib/Devices/DDriveFamily/DDriveFamilyChannel.cs/#L210"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads all commands listed in <span class="xref">PsjLib.Base.PiezoChannel.BackupCommands</span> and returns their values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Task&lt;Dictionary&lt;string, IReadOnlyList&lt;string&gt;&gt;&gt; BackupAsync()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1">Task</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;&gt;</dt>
+    <dd><p>Dictionary mapping command names to response payloads.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

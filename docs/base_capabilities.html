@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Base Capabilities | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Base Capabilities | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/base_capabilities.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="base-capabilities">Base Capabilities</h1>
+
+<p>This page documents the base capabilities that are available across
+piezo devices in PsjLib. These capabilities provide core functionality
+for position control, signal processing, data acquisition, and system
+configuration.</p>
+<p>Device-specific implementations may extend these base capabilities with
+additional features or specialized behavior. Refer to
+device-specific documentation (for example <a href="d_drive.html">d-Drive</a>) for details.</p>
+<h2 id="overview">Overview</h2>
+<p>Capabilities are modular features exposed as properties of devices and channels.</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    await channel.PidController.SetAsync(p: 10.0, i: 5.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="position-control">Position Control</h2>
+<h3 id="setpoint">Setpoint</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Setpoint.html">Setpoint</a></p>
+<p>Controls target position or voltage for the actuator.</p>
+<pre><code class="lang-csharp">await channel.Setpoint.SetAsync(75.5).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false); // cached where applicable
+Console.WriteLine($&quot;Target: {target:F2}&quot;);
+</code></pre>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Units depend on control mode and device configuration</li>
+<li>Range is limited by hardware and firmware constraints</li>
+<li>Movement dynamics are influenced by slew-rate settings</li>
+</ul>
+<h3 id="position">Position</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Position.html">Position</a></p>
+<p>Reads actual position (or corresponding readback quantity on open-loop
+devices).</p>
+<pre><code class="lang-csharp">var currentPos = await channel.Position.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Position: {currentPos:F2}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Position is a readback value from the device, not a cached command value.</li>
+<li>Reported units depend on device mode and channel configuration.</li>
+</ul>
+<h3 id="closed-loop-controller">Closed-Loop Controller</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.ClosedLoopController.html">ClosedLoopController</a></p>
+<p>Enables/disables closed-loop feedback control.</p>
+<pre><code class="lang-csharp">await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+var enabled = await channel.ClosedLoopController.GetEnabledAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Mode: {(enabled ? &quot;Closed-loop&quot; : &quot;Open-loop&quot;)}&quot;);
+Console.WriteLine($&quot;Sample period: {channel.ClosedLoopController.SamplePeriod} µs&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Closed-loop availability depends on hardware and connected actuator/sensor.</li>
+<li>Controller timing properties are device-defined and read-only.</li>
+</ul>
+<h3 id="slew-rate">Slew Rate</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.SlewRate.html">SlewRate</a></p>
+<p>Limits maximum rate-of-change for smoother motion.</p>
+<pre><code class="lang-csharp">await channel.SlewRate.SetAsync(10.0).ConfigureAwait(false);
+var rate = await channel.SlewRate.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Max speed: {rate:F1}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Lower slew rates improve smoothness but increase move time.</li>
+<li>Use conservative limits for fragile setups or high-load conditions.</li>
+</ul>
+<h2 id="control-system">Control System</h2>
+<h3 id="pid-controller">PID Controller</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.PIDController.html">PIDController</a></p>
+<p>Configures PID gains and derivative filter (<code>Tf</code>).</p>
+<pre><code class="lang-csharp">await channel.PidController.SetAsync(p: 10.0, i: 5.0, d: 0.5, tf: 100.0).ConfigureAwait(false);
+var p = await channel.PidController.GetPAsync().ConfigureAwait(false);
+var i = await channel.PidController.GetIAsync().ConfigureAwait(false);
+var d = await channel.PidController.GetDAsync().ConfigureAwait(false);
+var tf = await channel.PidController.GetTfAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;PID: P={p}, I={i}, D={d}, Tf={tf}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Tune gains incrementally to avoid oscillation or overshoot.</li>
+<li><code>Tf</code> smooths derivative behavior and helps reduce noise sensitivity.</li>
+</ul>
+<h3 id="pre-control-factor-pcf">Pre-Control Factor (PCF)</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.PreControlFactor.html">PreControlFactor</a></p>
+<p>Feedforward compensation for faster response.</p>
+<pre><code class="lang-csharp">await channel.Pcf.SetAsync(0.5).ConfigureAwait(false);
+var value = await channel.Pcf.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;PCF: {value}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>PCF is feedforward and should be tuned together with PID gains.</li>
+<li>Overly aggressive values can reduce stability margins.</li>
+</ul>
+<h2 id="signal-filtering">Signal Filtering</h2>
+<h3 id="notch-filter">Notch Filter</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.NotchFilter.html">NotchFilter</a></p>
+<p>Suppresses resonance frequencies.</p>
+<pre><code class="lang-csharp">await channel.Notch.SetAsync(enabled: true, frequency: 500.0, bandwidth: 50.0).ConfigureAwait(false);
+var notchFreq = await channel.Notch.GetFrequencyAsync().ConfigureAwait(false);
+var notchBw = await channel.Notch.GetBandwidthAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Match notch center frequency to measured resonance peaks.</li>
+<li>Keep bandwidth as narrow as practical to avoid excessive phase impact.</li>
+</ul>
+<h3 id="low-pass-filter">Low-Pass Filter</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.LowPassFilter.html">LowPassFilter</a></p>
+<p>Attenuates high-frequency components.</p>
+<pre><code class="lang-csharp">await channel.Lpf.SetAsync(enabled: true, cutoffFrequency: 100.0).ConfigureAwait(false);
+var lpfCutoff = await channel.Lpf.GetCutoffFrequencyAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Lower cutoffs improve noise rejection but slow response.</li>
+<li>Validate closed-loop behavior after major cutoff changes.</li>
+</ul>
+<h3 id="error-low-pass-filter">Error Low-Pass Filter</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.ErrorLowPassFilter.html">ErrorLowPassFilter</a></p>
+<p>Filters error signal before PID processing.</p>
+<pre><code class="lang-csharp">await channel.ErrorLpf.SetAsync(cutoffFrequency: 200.0, order: 2).ConfigureAwait(false);
+var order = await channel.ErrorLpf.GetOrderAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Error filtering can stabilize noisy systems before PID processing.</li>
+<li>Higher order filters increase attenuation and phase lag.</li>
+</ul>
+<h2 id="data-acquisition">Data Acquisition</h2>
+<h3 id="data-recorder">Data Recorder</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.DataRecorder.html">DataRecorder</a></p>
+<p>Captures high-speed device data to internal memory.</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+var recorder = channel.DataRecorder;
+await recorder.SetAsync(memoryLength: 10000, stride: 1).ConfigureAwait(false);
+
+var data = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Position,
+    10000,
+    (current, total) =&gt; Console.WriteLine($&quot;Downloaded {current}/{total}&quot;)
+).ConfigureAwait(false);
+
+Console.WriteLine($&quot;Sample rate: {recorder.SampleRate:F0} Hz&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Recorder downloads may take noticeable time for large captures.</li>
+<li>Use progress callbacks for UI feedback during long reads.</li>
+</ul>
+<h3 id="trigger-output">Trigger Output</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.TriggerOut.html">TriggerOut</a></p>
+<p>Generates trigger pulses based on signal thresholds/ranges.</p>
+<pre><code class="lang-csharp">using PsjLib.Base.Capabilities;
+
+await channel.TriggerOut.SetAsync(
+    startValue: 20.0,
+    stopValue: 80.0,
+    interval: 10.0,
+    length: 100,
+    edge: TriggerEdge.Both,
+    src: TriggerDataSource.Position
+).ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Trigger polarity/edge behavior is controlled by <code>TriggerEdge</code>.</li>
+<li>Verify electrical compatibility with connected external hardware.</li>
+</ul>
+<h2 id="signal-generation">Signal Generation</h2>
+<h3 id="static-waveform-generator">Static Waveform Generator</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.StaticWaveformGenerator.html">StaticWaveformGenerator</a></p>
+<p>Base abstraction for periodic waveforms. Device families may expose
+derived capability types with additional waveform options.</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+await channel.WaveformGenerator.Sine
+    .SetAsync(amplitude: 20.0, offset: 50.0, frequency: 10.0)
+    .ConfigureAwait(false);
+await channel.WaveformGenerator
+    .SetWaveformTypeAsync(DDriveWaveformType.Sine)
+    .ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Configure waveform parameters before enabling output waveform type.</li>
+<li>Ensure amplitude/offset remain within actuator-safe operating range.</li>
+</ul>
+<h2 id="system-monitoring">System Monitoring</h2>
+<h3 id="status-register">Status Register</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Status-1.html">Status<tregister></tregister></a></p>
+<p>Reads model-specific status registers.</p>
+<pre><code class="lang-csharp">var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine(status);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Status fields and bit meanings are model-specific.</li>
+<li>Polling interval should match your monitoring needs and transport budget.</li>
+</ul>
+<h3 id="temperature">Temperature</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Temperature.html">Temperature</a></p>
+<p>Reads internal device temperature.</p>
+<pre><code class="lang-csharp">var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Temperature: {temp:F1}°C&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Use temperature checks during prolonged high-power operation.</li>
+<li>Add your own thermal safety threshold handling in application logic.</li>
+</ul>
+<h3 id="fan-control">Fan Control</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Fan.html">Fan</a></p>
+<p>Controls cooling fan where supported.</p>
+<pre><code class="lang-csharp">await channel.Fan.SetAsync(true).ConfigureAwait(false);
+var fanEnabled = await channel.Fan.GetEnabledAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Fan control availability depends on specific hardware.</li>
+<li>Enabling active cooling can improve thermal headroom.</li>
+</ul>
+<h2 id="device-information">Device Information</h2>
+<h3 id="actuator-description">Actuator Description</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.ActuatorDescription.html">ActuatorDescription</a></p>
+<p>Returns actuator identification text.</p>
+<pre><code class="lang-csharp">var description = await channel.ActuatorDescription.GetAsync().ConfigureAwait(false);
+Console.WriteLine(description);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Description strings are firmware-provided and model dependent.</li>
+<li>Use this value for diagnostics and setup validation.</li>
+</ul>
+<h3 id="unit">Unit</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Unit.html">Unit</a></p>
+<p>Reads unit string for mapped command domains.</p>
+<pre><code class="lang-csharp">var unit = await channel.OpenloopUnit.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Open-loop unit: {unit}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Unit mapping depends on current control domain and device family.</li>
+<li>Read units before presenting values in UI/log output.</li>
+</ul>
+<h3 id="limits">Limits</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Limits.html">Limits</a></p>
+<p>Reads lower/upper admissible ranges.</p>
+<pre><code class="lang-csharp">var range = await channel.OpenloopLimits.GetRangeAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Allowed range: {range.Lower} .. {range.Upper}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Limits should be checked before issuing movement/output commands.</li>
+<li>Boundaries can differ between open-loop and closed-loop modes.</li>
+</ul>
+<h3 id="display">Display</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.Display.html">Display</a></p>
+<p>Controls front-panel display brightness where available.</p>
+<pre><code class="lang-csharp">await device.Display.SetAsync(40.0).ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Display capability may be device-level rather than channel-level.</li>
+<li>Brightness range and behavior are device-specific.</li>
+</ul>
+<h3 id="multi-channel-helpers">Multi-Channel Helpers</h3>
+<p><strong>API References:</strong></p>
+<ul>
+<li><a href="../api/PsjLib.Base.Capabilities.MultiSetpoint.html">MultiSetpoint</a></li>
+<li><a href="../api/PsjLib.Base.Capabilities.MultiPosition.html">MultiPosition</a></li>
+</ul>
+<pre><code class="lang-csharp">await device.MultiSetpoint.SetAsync(new[] { 10.0, 20.0, 30.0 }).ConfigureAwait(false);
+var positions = await device.MultiPosition.GetAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Multi-channel helpers are only available on supported multi-axis models.</li>
+<li>Use these calls for synchronized set/read patterns across channels.</li>
+</ul>
+<h2 id="signal-routing">Signal Routing</h2>
+<h3 id="modulation-source">Modulation Source</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.ModulationSource.html">ModulationSource</a></p>
+<p>Configures modulation source using device-specific enums.</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+await channel.ModulationSource
+    .SetAsync(DDriveModulationSourceTypes.SerialEncoder)
+    .ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Available source enums are family/model specific.</li>
+<li>Some modulation sources require additional external wiring or mode setup.</li>
+</ul>
+<h3 id="monitor-output">Monitor Output</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.MonitorOutput.html">MonitorOutput</a></p>
+<p>Routes internal signals to monitor output.</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+await channel.MonitorOutput
+    .SetAsync(DDriveMonitorOutputSource.ClosedLoopPosition)
+    .ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Monitor output source enums are family specific.</li>
+<li>Confirm output scaling before quantitative measurements.</li>
+</ul>
+<h2 id="configuration-management">Configuration Management</h2>
+<h3 id="factory-reset">Factory Reset</h3>
+<p><strong>API Reference:</strong> <a href="../api/PsjLib.Base.Capabilities.FactoryReset.html">FactoryReset</a></p>
+<p>Resets device configuration to factory defaults.</p>
+<pre><code class="lang-csharp">var backup = await device.BackupAsync().ConfigureAwait(false);
+await device.FactoryReset.ExecuteAsync().ConfigureAwait(false);
+</code></pre>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>All custom settings are permanently lost</li>
+<li>Use <code>device.BackupAsync()</code> to save configuration first</li>
+<li>Restore with <code>device.RestoreAsync(backup)</code> where appropriate</li>
+</ul>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>Factory reset is irreversible. Always back up configuration before
+performing a reset.</p>
+</div>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="d_drive.html">d-Drive</a> - d-Drive specific capabilities and enhancements</li>
+<li><a href="api.html">API Reference</a> - Complete API reference</li>
+<li><a href="examples.html">Examples</a> - Usage examples and tutorials</li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

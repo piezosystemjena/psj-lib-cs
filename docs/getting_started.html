@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Getting Started | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Getting Started | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/getting_started.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="getting-started">Getting Started</h1>
+
+<p>This tutorial guides you through the basics of using PsjLib to control
+piezosystem jena devices.</p>
+<h2 id="your-first-program">Your First Program</h2>
+<p>Let's start with a complete, minimal example:</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($&quot;Current position: {position:F2} µm&quot;);
+
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    Console.WriteLine(&quot;Moved to 50.0 µm&quot;);
+
+    var finalPos = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($&quot;Final position: {finalPos:F2} µm&quot;);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<p><strong>What This Does:</strong></p>
+<ol>
+<li>Connects to a d-Drive device on COM3</li>
+<li>Gets the first channel</li>
+<li>Reads the current position</li>
+<li>Enables closed-loop control</li>
+<li>Moves to 50 µm</li>
+<li>Verifies the final position</li>
+</ol>
+<h2 id="choosing-the-right-device-class">Choosing the Right Device Class</h2>
+<p>Use the class matching your hardware model:</p>
+<ul>
+<li><code>DDriveDevice</code> for d-Drive systems</li>
+<li><code>PSJ30DVDevice</code> for 30DV50/300</li>
+<li><code>NV403Device</code>, <code>NV403CLEDevice</code> for supported NV models</li>
+</ul>
+<h2 id="understanding-the-basics">Understanding the Basics</h2>
+<h3 id="asyncawait-pattern">Async/Await Pattern</h3>
+<p>PsjLib uses .NET <code>Task</code>-based async/await for non-blocking operations. Key points:</p>
+<ul>
+<li>All device operations are <code>async</code> functions</li>
+<li>Use <code>await</code> when calling device methods</li>
+<li>Run your async code from an <code>async Task Main(...)</code> entry point</li>
+</ul>
+<pre><code class="lang-csharp">// ✓ Correct
+var position = await channel.Position.GetAsync().ConfigureAwait(false);
+
+// ✗ Wrong - missing await
+var pending = channel.Position.GetAsync();
+</code></pre>
+<h3 id="device-hierarchy">Device Hierarchy</h3>
+<p>PsjLib uses a three-level structure:</p>
+<pre><code class="lang-text">Device (DDriveDevice)
+└── Channels (DDriveChannel / DDriveFamilyChannel)
+    └── Capabilities (Position, StatusRegister, PidController, etc.)
+</code></pre>
+<pre><code class="lang-csharp">// Access pattern
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+var channel = device.Channels[0];
+
+// Use &quot;Position&quot; capability
+var value = await channel.Position.GetAsync().ConfigureAwait(false);
+</code></pre>
+<h2 id="working-with-channels">Working with Channels</h2>
+<h3 id="accessing-channels">Accessing Channels</h3>
+<p>Devices may have multiple channels:</p>
+<pre><code class="lang-csharp">await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($&quot;Device has {device.Channels.Count} channels&quot;);
+    var channel0 = device.Channels[0];
+
+    foreach (var (channelId, _) in device.Channels)
+    {
+        Console.WriteLine($&quot;Channel {channelId}&quot;);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="channel-information">Channel Information</h3>
+<p>Each channel provides identification and status:</p>
+<pre><code class="lang-csharp">var channel = device.Channels[0];
+Console.WriteLine($&quot;Channel ID: {channel.Id}&quot;);
+var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Closed-loop enabled: {status.ClosedLoop}&quot;);
+Console.WriteLine($&quot;No overload: {status.NoOverload}&quot;);
+Console.WriteLine($&quot;Setpoint reached: {status.SetpointReached}&quot;);
+</code></pre>
+<h2 id="position-control">Position Control</h2>
+<h3 id="open-loop-control">Open-Loop Control</h3>
+<p>Open-loop control sets output voltage directly:</p>
+<pre><code class="lang-csharp">await channel.ClosedLoopController.SetAsync(false).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false); // cached value
+</code></pre>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li>Testing piezo response</li>
+<li>Maximum speed movement (no feedback delay)</li>
+<li>Applications where position feedback unavailable</li>
+</ul>
+<h3 id="closed-loop-control">Closed-Loop Control</h3>
+<p>Depending on the amplifier and connected actuator, closed-loop control
+might be available. It uses sensor feedback for precise positioning:</p>
+<pre><code class="lang-csharp">await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(30.0).ConfigureAwait(false);
+var actualPos = await channel.Position.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Position: {actualPos:F2} µm&quot;);
+</code></pre>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Precise positioning regardless of load</li>
+<li>Automatic compensation for drift and hysteresis</li>
+<li>Repeatable positioning</li>
+</ul>
+<h3 id="position-control-example">Position Control Example</h3>
+<p>Complete example with error checking:</p>
+<pre><code class="lang-csharp">static async Task&lt;bool&gt; MoveToPositionAsync(DDriveChannel channel, double target, double tolerance = 0.5)
+{
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+    await Task.Delay(1000).ConfigureAwait(false);
+
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+    var error = Math.Abs(actual - target);
+    Console.WriteLine(error &lt; tolerance
+        ? $&quot;✓ Reached {target:F2} µm (error: {error:F3} µm)&quot;
+        : $&quot;✗ Position error: {error:F3} µm&quot;);
+    return error &lt; tolerance;
+}
+</code></pre>
+<h2 id="reading-status">Reading Status</h2>
+<h3 id="status-register">Status Register</h3>
+<p>Depending on the device, a status register might be available. The
+status register provides real-time device state:</p>
+<pre><code class="lang-csharp">var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+
+# Check individual flags
+Console.WriteLine($&quot;Closed-loop: {status.ClosedLoop}&quot;);
+Console.WriteLine($&quot;Actor plugged: {status.ActorPlugged}&quot;);
+Console.WriteLine($&quot;Actor type: {status.ActorType}&quot;);
+Console.WriteLine($&quot;Sensor type: {status.SensorType}&quot;);
+</code></pre>
+<h3 id="temperature-monitoring">Temperature Monitoring</h3>
+<p>Monitor amplifier temperature:</p>
+<pre><code class="lang-csharp">var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Temperature: {temp:F1}°C&quot;);
+if (temp &gt; 60.0)
+{
+    Console.WriteLine(&quot;Warning: High temperature!&quot;);
+}
+</code></pre>
+<h3 id="actuator-information">Actuator Information</h3>
+<p>Read actuator description string:</p>
+<pre><code class="lang-csharp">var actuator = await channel.ActuatorDescription.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Actuator description: {actuator}&quot;);
+</code></pre>
+<h2 id="basic-control-patterns">Basic Control Patterns</h2>
+<h3 id="sequential-movement">Sequential Movement</h3>
+<p>Move through a sequence of positions:</p>
+<pre><code class="lang-csharp">var positions = new[] { 10.0, 30.0, 50.0, 70.0, 90.0 };
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+foreach (var pos in positions)
+{
+    await channel.Setpoint.SetAsync(pos).ConfigureAwait(false);
+    await Task.Delay(200).ConfigureAwait(false);
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($&quot;Position: {actual:F2} µm&quot;);
+}
+</code></pre>
+<h3 id="parallel-channel-control">Parallel Channel Control</h3>
+<p>Control multiple channels simultaneously:</p>
+<pre><code class="lang-csharp">var channels = device.Channels.Values.ToList();
+await Task.WhenAll(channels.Select(ch =&gt; ch.ClosedLoopController.SetAsync(true))).ConfigureAwait(false);
+var targets = new[] { 30.0, 50.0, 70.0 };
+await Task.WhenAll(channels.Zip(targets).Select(x =&gt; x.First.Setpoint.SetAsync(x.Second))).ConfigureAwait(false);
+</code></pre>
+<h3 id="continuous-monitoring">Continuous Monitoring</h3>
+<p>Monitor position over time:</p>
+<pre><code class="lang-csharp">var endTime = DateTime.UtcNow + TimeSpan.FromSeconds(5);
+while (DateTime.UtcNow &lt; endTime)
+{
+    var pos = await channel.Position.GetAsync().ConfigureAwait(false);
+    var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($&quot;Position: {pos:F2} µm, Temp: {temp:F1}°C&quot;);
+    await Task.Delay(100).ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="handling-device-errors">Handling Device Errors</h2>
+<p>Always handle potential errors:</p>
+<pre><code class="lang-csharp">try
+{
+    var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+    await device.ConnectAsync().ConfigureAwait(false);
+    try
+    {
+        var channel = device.Channels[0];
+        await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+    }
+    finally
+    {
+        await device.CloseAsync().ConfigureAwait(false);
+    }
+}
+catch (DeviceUnavailableException ex)
+{
+    Console.WriteLine($&quot;Connection failed: {ex.Message}&quot;);
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($&quot;Device error: {ex.Message}&quot;);
+}
+</code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="initialization-routine">Initialization Routine</h3>
+<p>Standard initialization pattern:</p>
+<pre><code class="lang-csharp">var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Initial status: {status}&quot;);
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+await channel.Setpoint.SetAsync(0.0).ConfigureAwait(false);
+Console.WriteLine(&quot;Homed to 0.0 µm&quot;);
+</code></pre>
+<h2 id="complete-example">Complete Example</h2>
+<p>Here's a complete application template:</p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var port = &quot;COM3&quot;;
+var targetPositions = new[] { 20.0, 40.0, 60.0, 80.0 };
+var device = new DDriveDevice(TransportType.Serial, port);
+
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    var channel = device.Channels[0];
+
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+    Console.WriteLine($&quot;Temperature: {temp:F1}°C&quot;);
+
+    foreach (var target in targetPositions)
+    {
+        await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+        await Task.Delay(1000).ConfigureAwait(false);
+        var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+        var error = Math.Abs(actual - target);
+        Console.WriteLine($&quot;Target: {target:F1} µm, Actual: {actual:F2} µm, Error: {error:F3} µm&quot;);
+    }
+
+    await channel.Setpoint.SetAsync(0.0).ConfigureAwait(false);
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($&quot;Device error: {ex.Message}&quot;);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><p><strong>Always Use <code>try/finally</code></strong></p>
+<pre><code class="lang-csharp">await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    // Device operations here
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+</li>
+<li><p><strong>Enable Closed-Loop for Precision</strong></p>
+<pre><code class="lang-csharp">await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+</code></pre>
+</li>
+<li><p><strong>Check Status After Critical Operations</strong></p>
+<pre><code class="lang-csharp">await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+</code></pre>
+</li>
+<li><p><strong>Handle Errors Appropriately</strong></p>
+<pre><code class="lang-csharp">try
+{
+    await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+}
+catch (DeviceError)
+{
+    // Handle error
+}
+</code></pre>
+</li>
+<li><p><strong>Monitor Temperature Under Load</strong></p>
+<pre><code class="lang-csharp">var temp = await channel.Temperature.GetAsync().ConfigureAwait(false);
+if (temp &gt; 60.0)
+{
+    // Reduce duty cycle or wait
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you understand the basics:</p>
+<ul>
+<li>Learn about d-Drive specific features: <a href="d_drive.html">d-Drive</a></li>
+<li>Explore base capabilities: <a href="base_capabilities.html">Base Capabilities</a></li>
+<li>See complete examples: <a href="examples.html">Examples</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,1772 @@
+{
+  "source_base_path": "/home/runner/work/psj-lib-cs/psj-lib-cs/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ActorType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ActorType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ActorType",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ActorType.yml\" sourcestartlinenumber=\"1\">Actuator families that may be connected to a controller channel.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ActuatorNotConnected.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ActuatorNotConnected.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ActuatorNotConnected",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ActuatorNotConnected.yml\" sourcestartlinenumber=\"1\">Raised when no actuator is connected or recognized for the channel.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.AdmissibleParameterRangeExceeded.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.AdmissibleParameterRangeExceeded.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.AdmissibleParameterRangeExceeded",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.AdmissibleParameterRangeExceeded.yml\" sourcestartlinenumber=\"1\">Raised when at least one command parameter is outside admissible range.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ActuatorDescription.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ActuatorDescription.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ActuatorDescription",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ActuatorDescription.yml\" sourcestartlinenumber=\"1\">Provides access to actuator description text reported by the device.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.CapabilityWriteCallback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.CapabilityWriteCallback.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.CapabilityWriteCallback",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.CapabilityWriteCallback.yml\" sourcestartlinenumber=\"1\">Writes a capability command through a channel/device command mapper.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ClosedLoopController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ClosedLoopController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ClosedLoopController",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ClosedLoopController.yml\" sourcestartlinenumber=\"1\">Capability for enabling/disabling closed-loop control.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.DataRecorder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.DataRecorder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.DataRecorder",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.DataRecorder.yml\" sourcestartlinenumber=\"1\">Base capability for device-integrated data recorder acquisition.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Display.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Display.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Display",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Display.yml\" sourcestartlinenumber=\"1\">Capability for configuring and reading device display brightness.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ErrorLowPassFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ErrorLowPassFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ErrorLowPassFilter",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ErrorLowPassFilter.yml\" sourcestartlinenumber=\"1\">Capability for configuring low-pass filtering of control error.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.FactoryReset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.FactoryReset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.FactoryReset",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.FactoryReset.yml\" sourcestartlinenumber=\"1\">Capability that triggers device factory reset.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Fan.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Fan.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Fan",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Fan.yml\" sourcestartlinenumber=\"1\">Capability for controlling and querying cooling fan state.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.InputVoltage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.InputVoltage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.InputVoltage",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.InputVoltage.yml\" sourcestartlinenumber=\"1\">Read-only capability for the measured input modulation voltage.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.InputVoltageRange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.InputVoltageRange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.InputVoltageRange",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.InputVoltageRange.yml\" sourcestartlinenumber=\"1\">Read-only capability for supported input voltage range.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Limits.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Limits.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Limits",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Limits.yml\" sourcestartlinenumber=\"1\">Read-only capability for querying lower and upper admissible limits.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Linearization.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Linearization.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Linearization",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Linearization.yml\" sourcestartlinenumber=\"1\">Capability for enabling or disabling linearization mode.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.LowPassFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.LowPassFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.LowPassFilter",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.LowPassFilter.yml\" sourcestartlinenumber=\"1\">Capability for configuring output low-pass filtering.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ModulationSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ModulationSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ModulationSource",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ModulationSource.yml\" sourcestartlinenumber=\"1\">Capability for selecting and querying modulation source.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.MonitorOutput.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.MonitorOutput.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.MonitorOutput",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.MonitorOutput.yml\" sourcestartlinenumber=\"1\">Capability for selecting and querying monitor output source.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.MultiPosition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.MultiPosition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.MultiPosition",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.MultiPosition.yml\" sourcestartlinenumber=\"1\">Capability for synchronous multi-channel position readback.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.MultiSetpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.MultiSetpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.MultiSetpoint",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.MultiSetpoint.yml\" sourcestartlinenumber=\"1\">Capability for synchronous multi-channel setpoint writes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.NotchFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.NotchFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.NotchFilter",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.NotchFilter.yml\" sourcestartlinenumber=\"1\">Capability for configuring notch filter behavior.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.OutputVoltage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.OutputVoltage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.OutputVoltage",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.OutputVoltage.yml\" sourcestartlinenumber=\"1\">Read-only capability for actuator output voltage.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.OutputVoltageRange.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.OutputVoltageRange.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.OutputVoltageRange",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.OutputVoltageRange.yml\" sourcestartlinenumber=\"1\">Read-only capability for configured output voltage range.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.PIDController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.PIDController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.PIDController",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.PIDController.yml\" sourcestartlinenumber=\"1\">Capability for configuring PID controller gains and filter constant.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.PiezoCapability.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.PiezoCapability.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.PiezoCapability",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.PiezoCapability.yml\" sourcestartlinenumber=\"1\">Base class for channel capabilities.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Position.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Position.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Position",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Position.yml\" sourcestartlinenumber=\"1\">Read-only capability for current actuator position.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.PreControlFactor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.PreControlFactor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.PreControlFactor",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.PreControlFactor.yml\" sourcestartlinenumber=\"1\">Capability for pre-control/feed-forward factor tuning.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ProgressCallback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ProgressCallback.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ProgressCallback",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ProgressCallback.yml\" sourcestartlinenumber=\"1\">Reports progress for long-running capability reads.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Report.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Report.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Report",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Report.yml\" sourcestartlinenumber=\"1\">Capability for reading textual device report output.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.ServoRate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.ServoRate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.ServoRate",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.ServoRate.yml\" sourcestartlinenumber=\"1\">Capability for configuring servo loop rate.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Setpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Setpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Setpoint",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Setpoint.yml\" sourcestartlinenumber=\"1\">Write capability for target setpoint control.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.SlewRate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.SlewRate.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.SlewRate",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.SlewRate.yml\" sourcestartlinenumber=\"1\">Capability for configuring and reading slew rate limiting.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.StaticWaveformGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.StaticWaveformGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.StaticWaveformGenerator",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.StaticWaveformGenerator.yml\" sourcestartlinenumber=\"1\">Configures parameters for a specific static waveform type.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Status-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Status-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Status<TStatusRegister>",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Status-1.yml\" sourcestartlinenumber=\"1\">Capability for reading and constructing typed status register objects.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.StatusRegister.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.StatusRegister.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.StatusRegister",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.StatusRegister.yml\" sourcestartlinenumber=\"1\">Base class for parsed status register wrappers.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Temperature.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Temperature.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Temperature",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Temperature.yml\" sourcestartlinenumber=\"1\">Read-only capability for controller or sensor temperature.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.TriggerDataSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.TriggerDataSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.TriggerDataSource",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.TriggerDataSource.yml\" sourcestartlinenumber=\"1\">Data source used for trigger thresholding.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.TriggerEdge.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.TriggerEdge.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.TriggerEdge",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.TriggerEdge.yml\" sourcestartlinenumber=\"1\">Trigger polarity for trigger-out signal generation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.TriggerOut.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.TriggerOut.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.TriggerOut",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.TriggerOut.yml\" sourcestartlinenumber=\"1\">Capability for configuring trigger-out generation.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.Unit.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.Unit.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.Unit",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.Unit.yml\" sourcestartlinenumber=\"1\">Capability for querying measurement units of a specific device mode/domain.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.WaveformGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.WaveformGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities.WaveformGenerator",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Capabilities.WaveformGenerator.yml\" sourcestartlinenumber=\"1\">Base capability for enabling/disabling waveform generation output.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Capabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Capabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Capabilities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ChannelWriteCallback.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ChannelWriteCallback.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ChannelWriteCallback",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ChannelWriteCallback.yml\" sourcestartlinenumber=\"1\">Writes a command for a specific channel and returns parsed response values.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.CommandCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.CommandCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.CommandCache",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.CommandCache.yml\" sourcestartlinenumber=\"1\">Stores cached command responses for read-only or cacheable device commands.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.CommandParameterCountExceeded.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.CommandParameterCountExceeded.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.CommandParameterCountExceeded",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.CommandParameterCountExceeded.yml\" sourcestartlinenumber=\"1\">Raised when more parameters are provided than supported by the command.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.DeviceError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.DeviceError.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.DeviceError",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.DeviceError.yml\" sourcestartlinenumber=\"1\">Base exception for device-level protocol and command errors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.DeviceInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.DeviceInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.DeviceInfo",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.DeviceInfo.yml\" sourcestartlinenumber=\"1\">Snapshot of high-level device metadata.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ErrorCode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ErrorCode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ErrorCode",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ErrorCode.yml\" sourcestartlinenumber=\"1\">Numeric error codes reported by the device firmware.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ErrorCodeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ErrorCodeExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ErrorCodeExtensions",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ErrorCodeExtensions.yml\" sourcestartlinenumber=\"1\">Extension helpers for converting numeric error codes into typed exceptions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ErrorNotSpecified.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ErrorNotSpecified.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ErrorNotSpecified",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ErrorNotSpecified.yml\" sourcestartlinenumber=\"1\">Represents an unspecified or unmapped device error.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Overload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Overload.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Overload",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Overload.yml\" sourcestartlinenumber=\"1\">Raised when control loop or actuator is overloaded.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ParameterLockedOrReadOnly.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ParameterLockedOrReadOnly.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ParameterLockedOrReadOnly",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ParameterLockedOrReadOnly.yml\" sourcestartlinenumber=\"1\">Raised when writing a locked or read-only parameter.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ParameterMissing.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ParameterMissing.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ParameterMissing",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ParameterMissing.yml\" sourcestartlinenumber=\"1\">Raised when required command arguments are missing.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ParameterTooHigh.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ParameterTooHigh.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ParameterTooHigh",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ParameterTooHigh.yml\" sourcestartlinenumber=\"1\">Raised when a parameter is above the maximum allowed value.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.ParameterTooLow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.ParameterTooLow.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.ParameterTooLow",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.ParameterTooLow.yml\" sourcestartlinenumber=\"1\">Raised when a parameter is below the minimum allowed value.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.PiezoChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.PiezoChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.PiezoChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.PiezoChannel.yml\" sourcestartlinenumber=\"1\">Base class for per-channel capability access.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.PiezoDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.PiezoDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.PiezoDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.PiezoDevice.yml\" sourcestartlinenumber=\"1\">Base class for all supported piezo amplifier devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.SensorType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.SensorType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.SensorType",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.SensorType.yml\" sourcestartlinenumber=\"1\">Sensor technologies supported by piezo devices in this library.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.Underload.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.Underload.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.Underload",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.Underload.yml\" sourcestartlinenumber=\"1\">Raised when control loop or actuator is under-driven.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.UnknownChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.UnknownChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.UnknownChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.UnknownChannel.yml\" sourcestartlinenumber=\"1\">Raised when the requested channel does not exist on the device.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.UnknownCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.UnknownCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base.UnknownCommand",
+      "Summary": "<p sourcefile=\"api/PsjLib.Base.UnknownCommand.yml\" sourcestartlinenumber=\"1\">Raised when a command is not recognized by the device firmware.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Base.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Base.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Base",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.yml\" sourcestartlinenumber=\"1\">d-Drive closed-loop capability with status-register based readback.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.yml\" sourcestartlinenumber=\"1\">d-Drive recorder implementation with fixed memory configuration and hex sample decoding.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorderChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorderChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveDataRecorderChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorderChannel.yml\" sourcestartlinenumber=\"1\">d-Drive data recorder channel selectors.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.yml\" sourcestartlinenumber=\"1\">d-Drive modulation source options.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.yml\" sourcestartlinenumber=\"1\">d-Drive monitor output source selection.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveScanType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveScanType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveScanType",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveScanType.yml\" sourcestartlinenumber=\"1\">Scan sequence presets for d-Drive waveform scans.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveSetpoint",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.yml\" sourcestartlinenumber=\"1\">d-Drive setpoint capability that maintains a local cached value.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.yml\" sourcestartlinenumber=\"1\">Decodes d-Drive status register fields into typed properties.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.yml\" sourcestartlinenumber=\"1\">d-Drive trigger output capability with additional offset parameter.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.yml\" sourcestartlinenumber=\"1\">d-Drive waveform generator capability aggregating waveform-specific parameter groups.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGeneratorStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGeneratorStatus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveWaveformGeneratorStatus",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGeneratorStatus.yml\" sourcestartlinenumber=\"1\">Status bits describing active waveform generator mode.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities.DDriveWaveformType",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformType.yml\" sourcestartlinenumber=\"1\">d-Drive waveform type selector.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.Capabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.Capabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.Capabilities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.DDriveChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.DDriveChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.DDriveChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.DDriveChannel.yml\" sourcestartlinenumber=\"1\">Typed channel class for multi-channel d-Drive devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.DDriveDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.DDriveDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.DDriveDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.DDriveDevice.yml\" sourcestartlinenumber=\"1\">Concrete implementation for d-Drive multi-channel devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.DDriveFamilyChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.DDriveFamilyChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.DDriveFamilyChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.DDriveFamilyChannel.yml\" sourcestartlinenumber=\"1\">Channel implementation for d-Drive family devices with pre-wired capability objects.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.DDriveFamilyDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.DDriveFamilyDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.DDriveFamilyDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.DDriveFamilyDevice.yml\" sourcestartlinenumber=\"1\">Base class for piezosystem jena d-Drive family devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.PSJ30DVChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.PSJ30DVChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.PSJ30DVChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.PSJ30DVChannel.yml\" sourcestartlinenumber=\"1\">Typed single-channel class for PSJ 30DV devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.PSJ30DVDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.PSJ30DVDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily.PSJ30DVDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.DDriveFamily.PSJ30DVDevice.yml\" sourcestartlinenumber=\"1\">Concrete implementation for PSJ 30DV single-channel devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.DDriveFamily.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.DDriveFamily.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.DDriveFamily",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.LibraryVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.LibraryVersion.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.LibraryVersion",
+      "Summary": "<p sourcefile=\"api/PsjLib.LibraryVersion.yml\" sourcestartlinenumber=\"1\">Provides version metadata for the managed <code>PsjLib</code> package.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVCLEKnob.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVCLEKnob.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVCLEKnob",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVCLEKnob.yml\" sourcestartlinenumber=\"1\">NV knob capability variant that includes closed-loop step configuration.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVDisplay.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVDisplay.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVDisplay",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVDisplay.yml\" sourcestartlinenumber=\"1\">NV-family display capability with brightness scaling to NV register range.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVKnob.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVKnob.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVKnob",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVKnob.yml\" sourcestartlinenumber=\"1\">Capability for configuring NV-series front-panel encoder knob behavior.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVKnobMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVKnobMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVKnobMode",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVKnobMode.yml\" sourcestartlinenumber=\"1\">NV encoder knob operating modes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVModulationSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVModulationSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVModulationSource",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVModulationSource.yml\" sourcestartlinenumber=\"1\">NV-family modulation source capability with client-side readback cache.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVModulationSourceTypes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVModulationSourceTypes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVModulationSourceTypes",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVModulationSourceTypes.yml\" sourcestartlinenumber=\"1\">NV-family modulation source options.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVMonitorOutput",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVMonitorOutput.yml\" sourcestartlinenumber=\"1\">NV-family monitor output capability with client-side readback cache.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVMonitorOutputSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVMonitorOutputSource.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVMonitorOutputSource",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVMonitorOutputSource.yml\" sourcestartlinenumber=\"1\">NV-family monitor output routing sources.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVSetpoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVSetpoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVSetpoint",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVSetpoint.yml\" sourcestartlinenumber=\"1\">NV-family setpoint capability with client-side readback cache.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.NVStatusRegister.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.NVStatusRegister.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities.NVStatusRegister",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.Capabilities.NVStatusRegister.yml\" sourcestartlinenumber=\"1\">NV-family status register decoder for per-channel error/status flags.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.Capabilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.Capabilities.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.Capabilities",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403.NV403Channel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403.NV403Channel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403.NV403Channel",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NV403.NV403Channel.yml\" sourcestartlinenumber=\"1\">Open-loop channel implementation for NV40/3 devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403.NV403Device.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403.NV403Device.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403.NV403Device",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NV403.NV403Device.yml\" sourcestartlinenumber=\"1\">Device implementation for NV40/3 open-loop three-channel amplifier.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403CLE.NV403CLEChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403CLE.NV403CLEChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403CLE.NV403CLEChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NV403CLE.NV403CLEChannel.yml\" sourcestartlinenumber=\"1\">Closed-loop channel implementation for NV40/3CLE devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403CLE.NV403CLEDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NV403CLE.NV403CLEDevice.yml\" sourcestartlinenumber=\"1\">Device implementation for NV40/3CLE closed-loop three-channel amplifier.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NV403CLE.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NV403CLE.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NV403CLE",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NVFamilyChannel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NVFamilyChannel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NVFamilyChannel",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NVFamilyChannel.yml\" sourcestartlinenumber=\"1\">Base channel implementation for NV-series devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.NVFamilyDevice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.NVFamilyDevice.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily.NVFamilyDevice",
+      "Summary": "<p sourcefile=\"api/PsjLib.NVFamily.NVFamilyDevice.yml\" sourcestartlinenumber=\"1\">Base class for NV-series devices.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.NVFamily.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.NVFamily.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.NVFamily",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.DeviceUnavailableException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.DeviceUnavailableException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.DeviceUnavailableException",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.DeviceUnavailableException.yml\" sourcestartlinenumber=\"1\">Indicates that a target device is not reachable or no longer available.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.DiscoverFlags.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.DiscoverFlags.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.DiscoverFlags",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.DiscoverFlags.yml\" sourcestartlinenumber=\"1\">Bit flags controlling discovery scope and behavior.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.ProtocolException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.ProtocolException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.ProtocolException",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.ProtocolException.yml\" sourcestartlinenumber=\"1\">Base exception for transport-layer failures.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.TimeoutException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.TimeoutException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.TimeoutException",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.TimeoutException.yml\" sourcestartlinenumber=\"1\">Indicates that a transport read/write operation timed out.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.TransportProtocolInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.TransportProtocolInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.TransportProtocolInfo",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.TransportProtocolInfo.yml\" sourcestartlinenumber=\"1\">Describes a configured transport endpoint.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.TransportType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.TransportType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport.TransportType",
+      "Summary": "<p sourcefile=\"api/PsjLib.Transport.TransportType.yml\" sourcestartlinenumber=\"1\">Transport backends supported by this library.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.Transport.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.Transport.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib.Transport",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/PsjLib.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/PsjLib.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "PsjLib",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/api.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/base_capabilities.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/base_capabilities.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/connecting.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/connecting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/d_drive.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/d_drive.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/developer_guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/developer_guide.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/examples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting_started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting_started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "docs/images/psj-lib-header.png",
+      "output": {
+        "resource": {
+          "relative_path": "docs/images/psj-lib-header.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/installation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/nv_series.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/nv_series.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/favicon.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/favicon.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/piezosystem_logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/piezosystem_logo.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/piezosystem_logo_white.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/piezosystem_logo_white.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "index.html",
+      "output": {
+        "resource": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

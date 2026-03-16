@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Developer Guide | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Developer Guide | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/developer_guide.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="developer-guide">Developer Guide</h1>
+
+<p>This guide is for developers who want to extend PsjLib or add support
+for new piezosystem jena devices.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<h3 id="library-structure">Library Structure</h3>
+<p>PsjLib follows a modular, capability-based architecture:</p>
+<pre><code class="lang-text">PsjLib/
+├── PsjLib.cs
+└── Devices/
+    ├── Base/
+    │   ├── PiezoDevice.cs
+    │   ├── PiezoChannel.cs
+    │   ├── DeviceFactory.cs
+    │   ├── CommandCache.cs
+    │   ├── Exceptions.cs
+    │   └── Capabilities/
+    ├── DDriveFamily/
+    │   ├── DDriveFamilyDevice.cs
+    │   ├── DDriveFamilyChannel.cs
+    │   ├── DDrive/
+    │   ├── PSJ30DV/
+    │   └── Capabilities/
+    ├── NVFamily/
+    │   ├── NVFamilyDevice.cs
+    │   ├── NVFamilyChannel.cs
+    │   ├── NV403/
+    │   ├── NV403CLE/
+    │   └── Capabilities/
+    └── TransportProtocol/
+</code></pre>
+<h3 id="design-principles">Design Principles</h3>
+<ol>
+<li><strong>Capability-Based</strong>: Features are composed as focused capability
+classes</li>
+<li><strong>Async-First</strong>: Device I/O uses <code>Task</code>-based async methods</li>
+<li><strong>Type-Safe</strong>: Strongly typed devices, channels, capabilities, and
+enums</li>
+<li><strong>Extensible</strong>: New device models can be integrated through derived
+classes and registry wiring</li>
+<li><strong>Documented</strong>: XML doc comments and generated API docs</li>
+</ol>
+<h2 id="adding-new-device-types">Adding New Device Types</h2>
+<h3 id="comprehensive-guide">Comprehensive Guide</h3>
+<p>For complete implementation guidance, use existing family/device classes
+as references:</p>
+<ul>
+<li><a href="../api/PsjLib.Base.PiezoDevice.html">PiezoDevice</a></li>
+<li><a href="../api/PsjLib.DDriveFamily.DDriveFamilyDevice.html">DDriveFamilyDevice</a></li>
+<li><a href="../api/PsjLib.NVFamily.NVFamilyDevice.html">NVFamilyDevice</a></li>
+</ul>
+<h3 id="quick-start-new-device">Quick Start: New Device</h3>
+<p>Here's the minimal sequence to add a new model.</p>
+<p><strong>Step 1: Create Device Class</strong></p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.Transport;
+
+namespace PsjLib.MyFamily;
+
+public sealed class MyDevice(TransportType transportType, string identifier)
+    : PiezoDevice(transportType, identifier)
+{
+    static MyDevice()
+    {
+        DeviceModelRegistry.Registry[&quot;MY-DEVICE-ID&quot;] =
+            static (transport, id) =&gt; new MyDevice(transport, id);
+    }
+
+    public override string? DeviceId =&gt; &quot;MY-DEVICE-ID&quot;;
+
+    protected override async Task&lt;string?&gt; IsDeviceTypeAsync(TransportProtocol transport)
+    {
+        // Probe model identifier over transport
+        return await Task.FromResult(DeviceId).ConfigureAwait(false);
+    }
+
+    protected override Task DiscoverChannelsAsync()
+    {
+        ChannelsInternal.Clear();
+        ChannelsInternal[0] = new MyChannel(0, WriteChannelAsync);
+        return Task.CompletedTask;
+    }
+}
+</code></pre>
+<p><strong>Step 2: Create Channel Class</strong></p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.Base.Capabilities;
+
+namespace PsjLib.MyFamily;
+
+public sealed class MyChannel : PiezoChannel
+{
+    public MyChannel(int id, ChannelWriteCallback writeCallback)
+        : base(id, writeCallback)
+    {
+        Position = new Position(CapabilityWriteAsync, new Dictionary&lt;string, string&gt;
+        {
+            [Position.CmdPosition] = &quot;measure&quot;,
+        });
+    }
+
+    public Position Position { get; }
+}
+</code></pre>
+<p><strong>Step 3: Register Device</strong></p>
+<p>Registration occurs in static constructor via
+<code>DeviceModelRegistry.Registry[...] = ...</code>. The factory can then create
+instances from discovered model IDs.</p>
+<p><strong>Step 4: Test Discovery</strong></p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+
+var devices = await PiezoDevice.DiscoverDevicesAsync&lt;PiezoDevice&gt;().ConfigureAwait(false);
+foreach (var device in devices)
+{
+    Console.WriteLine(device.DeviceInfo);
+}
+</code></pre>
+<h2 id="creating-custom-capabilities">Creating Custom Capabilities</h2>
+<h3 id="base-capability-class">Base Capability Class</h3>
+<p>All capabilities derive from <a href="../api/PsjLib.Base.Capabilities.PiezoCapability.html">PiezoCapability</a>.</p>
+<pre><code class="lang-csharp">using PsjLib.Base.Capabilities;
+
+public sealed class MyCustomCapability(
+    CapabilityWriteCallback writeCb,
+    IReadOnlyDictionary&lt;string, string&gt; commands)
+    : PiezoCapability(writeCb, commands)
+{
+    public const string CmdValue = &quot;MY_VALUE&quot;;
+
+    public async Task&lt;double&gt; GetValueAsync()
+        =&gt; double.Parse((await WriteAsync(CmdValue).ConfigureAwait(false))[0],
+            System.Globalization.CultureInfo.InvariantCulture);
+
+    public async Task SetValueAsync(double value)
+        =&gt; _ = await WriteAsync(CmdValue, [value]).ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="capability-descriptor-pattern">Capability Descriptor Pattern</h3>
+<p>In this repository, channels instantiate capabilities in their
+constructors and expose them as read-only properties.</p>
+<pre><code class="lang-csharp">public sealed class MyChannel : PiezoChannel
+{
+    public MyChannel(int id, ChannelWriteCallback writeCallback)
+        : base(id, writeCallback)
+    {
+        Custom = new MyCustomCapability(CapabilityWriteAsync, new Dictionary&lt;string, string&gt;
+        {
+            [MyCustomCapability.CmdValue] = &quot;myvalue&quot;,
+        });
+    }
+
+    public MyCustomCapability Custom { get; }
+}
+</code></pre>
+<h3 id="status-register-pattern">Status Register Pattern</h3>
+<p>Use <code>Status&lt;TRegister&gt;</code> with a strongly typed register parser.</p>
+<pre><code class="lang-csharp">using PsjLib.Base.Capabilities;
+
+public sealed record MyStatusRegister(IReadOnlyList&lt;string&gt; Raw);
+
+public sealed class MyStatusCapability(
+    CapabilityWriteCallback writeCb,
+    IReadOnlyDictionary&lt;string, string&gt; commands)
+    : Status&lt;MyStatusRegister&gt;(writeCb, commands)
+{
+    protected override MyStatusRegister ParseStatus(IReadOnlyList&lt;string&gt; raw)
+        =&gt; new(raw);
+}
+</code></pre>
+<h2 id="documentation-standards">Documentation Standards</h2>
+<h3 id="docstring-format">Docstring Format</h3>
+<p>Use XML doc comments for public APIs.</p>
+<pre><code class="lang-csharp">/// &lt;summary&gt;
+/// Moves channel to a target setpoint.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;target&quot;&gt;Target value in device units.&lt;/param&gt;
+/// &lt;returns&gt;Completion task.&lt;/returns&gt;
+public async Task MoveAsync(double target)
+{
+    await _channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="type-hints">Type Hints</h3>
+<p>Use explicit C# typing (<code>Task&lt;T&gt;</code>, records, enums, generics).</p>
+<pre><code class="lang-csharp">public async Task&lt;IReadOnlyList&lt;double&gt;&gt; ReadSamplesAsync(int count)
+{
+    // ...
+    return new List&lt;double&gt;(count);
+}
+</code></pre>
+<h2 id="contributing-guidelines">Contributing Guidelines</h2>
+<h3 id="code-style">Code Style</h3>
+<p>Follow existing repository conventions:</p>
+<ul>
+<li><code>PascalCase</code> for public members</li>
+<li><code>camelCase</code> for locals/parameters</li>
+<li><code>async</code> methods end with <code>Async</code></li>
+<li><code>ConfigureAwait(false)</code> in library code</li>
+<li>Keep changes scoped and minimal</li>
+</ul>
+<h3 id="pull-request-process">Pull Request Process</h3>
+<ol>
+<li>Fork repository</li>
+<li>Create feature branch</li>
+<li>Implement changes + tests where appropriate</li>
+<li>Update docs</li>
+<li>Submit PR with clear summary</li>
+</ol>
+<h3 id="version-control">Version Control</h3>
+<p>Use semantic versioning:</p>
+<ul>
+<li><strong>Major</strong> (<code>X.0.0</code>): breaking changes</li>
+<li><strong>Minor</strong> (<code>0.X.0</code>): backward-compatible features</li>
+<li><strong>Patch</strong> (<code>0.0.X</code>): backward-compatible fixes</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<h3 id="reference-documentation">Reference Documentation</h3>
+<ul>
+<li>API Reference: <a href="api.html">API Reference</a></li>
+<li>Examples: <a href="examples.html">Examples</a></li>
+<li>Device-specific docs: <a href="d_drive.html">d-Drive</a>, <a href="nv_series.html">NV Series</a></li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li>GitHub: <a href="https://github.com/piezosystemjena/psj-lib-cs">https://github.com/piezosystemjena/psj-lib-cs</a></li>
+<li>Issues: bug reports and feature requests</li>
+</ul>
+<h3 id="getting-help">Getting Help</h3>
+<p>If you need help implementing support for a new model:</p>
+<ol>
+<li>Study <code>DDriveFamily</code> and <code>NVFamily</code> implementations</li>
+<li>Reuse existing capability classes where possible</li>
+<li>Add model-specific capabilities only where protocol differs</li>
+<li>Validate discovery/connect/backup/restore flows</li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>Study d-Drive and NV implementations as templates</li>
+<li>Review capability usage in <code>examples/*.cs</code></li>
+<li>Cross-check all exposed public types in <a href="api.html">API Reference</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

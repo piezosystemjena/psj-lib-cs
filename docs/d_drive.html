@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>d-Drive and 30DV50/300 | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="d-Drive and 30DV50/300 | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/d_drive.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="d-drive-and-30dv50300">d-Drive and 30DV50/300</h1>
+
+<p>This page covers the d-Drive modular amplifier family, its features, and
+how to use it with PsjLib.</p>
+<h1 id="overview">Overview</h1>
+<p>The <strong>d-Drive</strong> is piezosystem jena's modular piezo amplifier series,
+designed for precision nanopositioning and high-dynamic control
+applications. Each d-Drive unit can contain 1-6 independent amplifier
+channels in a compact enclosure.</p>
+<p>The <strong>30DV50/300</strong> is a single-channel amplifier that shares the same
+command set and capability model as d-Drive. It is ideal for compact,
+single-axis setups.</p>
+<h1 id="hardware-specifications">Hardware Specifications</h1>
+<h2 id="digital-control-system">Digital Control System</h2>
+<ul>
+<li><strong>Resolution</strong>: 20-bit DAC and ADC (1,048,576 steps)</li>
+<li><strong>Sample Rate</strong>: 50 kHz (20 µs control loop period)</li>
+<li><strong>Control Loop</strong>: Digital PID with feedforward compensation (PCF)</li>
+</ul>
+<h1 id="channel-capabilities">Channel Capabilities</h1>
+<p>Each d-Drive channel provides comprehensive control capabilities:</p>
+<h2 id="status-and-monitoring">Status and Monitoring</h2>
+<ul>
+<li><strong>Status Register</strong>: Real-time hardware state flags</li>
+<li><strong>Temperature</strong>: Internal amplifier temperature monitoring</li>
+<li><strong>Actuator Description</strong>: Connected piezo description readout</li>
+<li><strong>Fan Control</strong>: Active cooling fan management</li>
+</ul>
+<h2 id="position-control">Position Control</h2>
+<ul>
+<li><strong>Setpoint</strong>: Voltage and position target setting</li>
+<li><strong>Position</strong>: Actuator position readback</li>
+<li><strong>Closed-Loop Controller</strong>: Enable/disable feedback control</li>
+<li><strong>Slew Rate</strong>: Maximum rate-of-change limiting</li>
+</ul>
+<h2 id="control-system">Control System</h2>
+<ul>
+<li><strong>PID Controller</strong>: Proportional-Integral-Derivative tuning</li>
+<li><strong>Pre-Control Factor (PCF)</strong>: Feedforward compensation</li>
+<li><strong>Notch Filter</strong>: Resonance suppression</li>
+<li><strong>Low-Pass Filter</strong>: Signal noise reduction</li>
+<li><strong>Error LPF</strong>: PID error signal filtering</li>
+</ul>
+<h2 id="signal-generation">Signal Generation</h2>
+<ul>
+<li><strong>Waveform Generator</strong>: Function generation (sine, triangle, rectangle,
+noise, sweep)</li>
+<li><strong>Modulation Source</strong>: External or internal signal modulation</li>
+<li><strong>Monitor Output</strong>: Configurable analog output routing</li>
+</ul>
+<h2 id="data-acquisition">Data Acquisition</h2>
+<ul>
+<li><strong>Data Recorder</strong>: Two-channel data capture (500k samples)</li>
+<li><strong>Trigger Out</strong>: Hardware trigger generation (TTL output)</li>
+</ul>
+<h1 id="accessing-capabilities">Accessing Capabilities</h1>
+<p>All capabilities are accessed as channel properties. d-Drive channels
+use <a href="../api/PsjLib.DDriveFamily.DDriveChannel.html">DDriveChannel</a> (derived from
+<a href="../api/PsjLib.DDriveFamily.DDriveFamilyChannel.html">DDriveFamilyChannel</a>).</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+    var position = await channel.Position.GetAsync().ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="using-psj-30dv-series">Using PSJ 30DV series</h2>
+<p>The 30DV50/300 exposes a single channel (ID 0) with the same
+capabilities as a d-Drive channel:</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new PSJ30DVDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    var channel = device.Channels[0];
+    await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    await channel.Setpoint.SetAsync(10.0).ConfigureAwait(false);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="channel-capabilities-reference">Channel Capabilities Reference</h2>
+<p>All d-Drive channel capabilities with API references:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>API Reference</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>StatusRegister</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.Status-1.html">Status<tregister></tregister></a>, <a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveStatusRegister.html">DDriveStatusRegister</a></td>
+<td>Hardware status with d-Drive-specific flags</td>
+</tr>
+<tr>
+<td><code>ActuatorDescription</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.ActuatorDescription.html">ActuatorDescription</a></td>
+<td>Actuator identification and specifications</td>
+</tr>
+<tr>
+<td><code>Setpoint</code></td>
+<td><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveSetpoint.html">DDriveSetpoint</a></td>
+<td>Target position/voltage setpoint (cached readback)</td>
+</tr>
+<tr>
+<td><code>Position</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.Position.html">Position</a></td>
+<td>Actual position readback</td>
+</tr>
+<tr>
+<td><code>Temperature</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.Temperature.html">Temperature</a></td>
+<td>Amplifier temperature</td>
+</tr>
+<tr>
+<td><code>Fan</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.Fan.html">Fan</a></td>
+<td>Cooling fan enable/disable</td>
+</tr>
+<tr>
+<td><code>ClosedLoopController</code></td>
+<td><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveClosedLoopController.html">DDriveClosedLoopController</a></td>
+<td>Feedback control enable/disable</td>
+</tr>
+<tr>
+<td><code>SlewRate</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.SlewRate.html">SlewRate</a></td>
+<td>Maximum rate-of-change limiting</td>
+</tr>
+<tr>
+<td><code>Pcf</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.PreControlFactor.html">PreControlFactor</a></td>
+<td>Feedforward compensation</td>
+</tr>
+<tr>
+<td><code>PidController</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.PIDController.html">PIDController</a></td>
+<td>PID configuration (P, I, D, Tf)</td>
+</tr>
+<tr>
+<td><code>Notch</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.NotchFilter.html">NotchFilter</a></td>
+<td>Notch filter for resonance suppression</td>
+</tr>
+<tr>
+<td><code>Lpf</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.LowPassFilter.html">LowPassFilter</a></td>
+<td>Low-pass filter</td>
+</tr>
+<tr>
+<td><code>ErrorLpf</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.ErrorLowPassFilter.html">ErrorLowPassFilter</a></td>
+<td>Error-signal low-pass filter</td>
+</tr>
+<tr>
+<td><code>ModulationSource</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.ModulationSource.html">ModulationSource</a></td>
+<td>Modulation source selection (<a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveModulationSourceTypes.html">DDriveModulationSourceTypes</a>)</td>
+</tr>
+<tr>
+<td><code>MonitorOutput</code></td>
+<td><a href="../api/PsjLib.Base.Capabilities.MonitorOutput.html">MonitorOutput</a></td>
+<td>Analog monitor source (<a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveMonitorOutputSource.html">DDriveMonitorOutputSource</a>)</td>
+</tr>
+<tr>
+<td><code>WaveformGenerator</code></td>
+<td><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveWaveformGenerator.html">DDriveWaveformGenerator</a></td>
+<td>Multi-waveform generator and scan modes</td>
+</tr>
+<tr>
+<td><code>DataRecorder</code></td>
+<td><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveDataRecorder.html">DDriveDataRecorder</a></td>
+<td>Two-channel recorder (position/voltage)</td>
+</tr>
+<tr>
+<td><code>TriggerOut</code></td>
+<td><a href="../api/PsjLib.DDriveFamily.Capabilities.DDriveTriggerOut.html">DDriveTriggerOut</a></td>
+<td>Trigger output with offset support</td>
+</tr>
+</tbody>
+</table>
+<h2 id="d-drive-status-register">d-Drive Status Register</h2>
+<p><code>DDriveStatusRegister</code> provides d-Drive-specific hardware state:</p>
+<pre><code class="lang-csharp">var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+Console.WriteLine($&quot;Actuator plugged: {status.ActorPlugged}&quot;);
+Console.WriteLine($&quot;Sensor type: {status.SensorType}&quot;);
+Console.WriteLine($&quot;Voltage enabled: {status.PiezoVoltageEnabled}&quot;);
+Console.WriteLine($&quot;Closed-loop: {status.ClosedLoop}&quot;);
+Console.WriteLine($&quot;Active waveform: {status.WaveformGeneratorStatus}&quot;);
+Console.WriteLine($&quot;Notch filter: {status.NotchFilterActive}&quot;);
+Console.WriteLine($&quot;Low-pass filter: {status.LowPassFilterActive}&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Status values are parsed from firmware register bits and are read-only.</li>
+<li>Flag naming mirrors the C# API model for predictable diagnostics code.</li>
+</ul>
+<h2 id="d-drive-waveform-generator">d-Drive Waveform Generator</h2>
+<p><code>DDriveWaveformGenerator</code> supports <code>DDriveWaveformType.None</code>,
+<code>Sine</code>, <code>Triangle</code>, <code>Rectangle</code>, <code>Noise</code>, and <code>Sweep</code>.</p>
+<p><strong>Basic Usage:</strong></p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+var wfg = channel.WaveformGenerator;
+await wfg.Sine.SetAsync(amplitude: 20.0, offset: 50.0, frequency: 10.0).ConfigureAwait(false);
+await wfg.SetWaveformTypeAsync(DDriveWaveformType.Sine).ConfigureAwait(false);
+await wfg.SetWaveformTypeAsync(DDriveWaveformType.None).ConfigureAwait(false);
+</code></pre>
+<p><strong>Automated Scan Function:</strong></p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+await wfg.StartScanAsync(DDriveScanType.TriangleOnce).ConfigureAwait(false);
+while (await wfg.IsScanRunningAsync().ConfigureAwait(false))
+{
+    await Task.Delay(100).ConfigureAwait(false);
+}
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Always set waveform parameters before activating waveform type.</li>
+<li>Use <code>DDriveWaveformType.None</code> to stop generator output cleanly.</li>
+</ul>
+<h2 id="d-drive-data-recorder">d-Drive Data Recorder</h2>
+<p><code>DDriveDataRecorder</code> records two channels simultaneously.</p>
+<p><strong>Basic Usage:</strong></p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+var recorder = channel.DataRecorder;
+await recorder.SetAsync(memoryLength: 50000, stride: 1).ConfigureAwait(false);
+
+var positionData = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Position,
+    50000).ConfigureAwait(false);
+var voltageData = await recorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Voltage,
+    50000).ConfigureAwait(false);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Recorder channel mapping is fixed by firmware (position/voltage).</li>
+<li>Choose <code>memoryLength</code>/<code>stride</code> based on required capture duration.</li>
+</ul>
+<p><strong>d-Drive Data Format:</strong></p>
+<ul>
+<li><strong>Position channel</strong>: Percent of full closed-loop range</li>
+<li><strong>Voltage channel</strong>: Output voltage in volts</li>
+</ul>
+<h2 id="d-drive-closed-loop-controller">d-Drive Closed-Loop Controller</h2>
+<p><code>DDriveClosedLoopController</code> extends base closed-loop handling and reads
+status from the d-Drive status register.</p>
+<pre><code class="lang-csharp">await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+var isEnabled = await channel.ClosedLoopController.GetEnabledAsync().ConfigureAwait(false);
+var samplePeriodUs = channel.ClosedLoopController.SamplePeriod; // 20 µs
+var sampleRateHz = channel.ClosedLoopController.SampleRate;     // 50 kHz
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Closed-loop state is obtained from the d-Drive status register.</li>
+<li>Control-loop timing is fixed by hardware and exposed as read-only properties.</li>
+</ul>
+<h2 id="d-drive-setpoint">d-Drive Setpoint</h2>
+<p><code>DDriveSetpoint.GetAsync()</code> returns the cached setpoint value.</p>
+<pre><code class="lang-csharp">await channel.Setpoint.SetAsync(50.0).ConfigureAwait(false);
+var target = await channel.Setpoint.GetAsync().ConfigureAwait(false);  // cached
+var actual = await channel.Position.GetAsync().ConfigureAwait(false);   // measured
+var error = target - actual;
+Console.WriteLine($&quot;Position error: {error:F3} µm&quot;);
+</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><code>GetAsync()</code> returns the client-side cached setpoint.</li>
+<li>Use <code>Position.GetAsync()</code> for measured hardware feedback.</li>
+</ul>
+<h1 id="multi-channel-coordination">Multi-Channel Coordination</h1>
+<p>d-Drive devices support 1-6 channels. Use parallel operations to keep
+control loops aligned across channels.</p>
+<pre><code class="lang-csharp">await Task.WhenAll(device.Channels.Values.Select(ch =&gt;
+    ch.ClosedLoopController.SetAsync(true))).ConfigureAwait(false);
+
+var targets = new[] { 30.0, 50.0, 70.0 };
+await Task.WhenAll(device.Channels.Values.Zip(targets).Select(x =&gt;
+    x.First.Setpoint.SetAsync(x.Second))).ConfigureAwait(false);
+</code></pre>
+<h1 id="next-steps">Next Steps</h1>
+<p>Explore detailed capability documentation:</p>
+<ul>
+<li><strong>Getting Started</strong>: <a href="getting_started.html">Getting Started</a> - Basic device control and
+position feedback</li>
+<li><strong>Base Capabilities</strong>: <a href="base_capabilities.html">Base Capabilities</a> - Control system,
+filtering, data acquisition, and signal generation</li>
+<li><strong>Examples</strong>: <a href="examples.html">Examples</a> - Real-world use cases and complete
+applications</li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Examples | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Examples | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/examples.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="examples">Examples</h1>
+
+<p>This page demonstrates common use cases with complete, working examples.</p>
+<h2 id="example-scripts">Example Scripts</h2>
+<p>All examples are available in the <code>examples/</code> directory.</p>
+<h3 id="01---device-discovery-and-connection">01 - Device Discovery and Connection</h3>
+<p>Demonstrates device discovery, connection, and basic information
+retrieval.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Discovering devices on selected interfaces</li>
+<li>Connecting to a discovered device</li>
+<li>Displaying <code>DeviceInfo</code></li>
+<li>Listing available channels</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/01_device_discovery_and_connection.cs</code></p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+// Search for D-Drive devices on serial interfaces.
+var devices = await PiezoDevice
+    .DiscoverDevicesAsync&lt;DDriveDevice&gt;(DiscoverFlags.DetectSerial)
+    .ConfigureAwait(false);
+
+// Print discovered device metadata.
+foreach (var found in devices)
+{
+    Console.WriteLine(found.DeviceInfo);
+}
+</code></pre>
+<h3 id="02---simple-position-control">02 - Simple Position Control</h3>
+<p>Basic position control with open-loop and closed-loop modes.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Reading status/position</li>
+<li>Setting target positions</li>
+<li>Open-loop vs closed-loop control</li>
+<li>Position error checking</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/02_simple_position_control.cs</code></p>
+<pre><code class="lang-csharp">// Enable closed-loop control so setpoints are tracked by position feedback.
+await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+
+// Define target positions in micrometers.
+var targets = new[] { 30.0, 50.0, 70.0 };
+
+// Move to each target and verify the resulting position error.
+foreach (var target in targets)
+{
+    await channel.Setpoint.SetAsync(target).ConfigureAwait(false);
+
+    // Wait briefly for the system to settle.
+    await Task.Delay(1000).ConfigureAwait(false);
+
+    var actual = await channel.Position.GetAsync().ConfigureAwait(false);
+    var error = Math.Abs(actual - target);
+    Console.WriteLine($&quot;Target: {target:F1} µm, Actual: {actual:F2} µm, Error: {error:F3} µm&quot;);
+}
+</code></pre>
+<h3 id="03---pid-tuning">03 - PID Tuning</h3>
+<p>Configure and test PID controller parameters.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Setting P, I, D values</li>
+<li>Reading current PID configuration</li>
+<li>Testing simple step response workflow</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/03_pid_tuning.cs</code></p>
+<pre><code class="lang-csharp">// Apply new PID gains.
+await channel.PidController.SetAsync(p: 0.5, i: 0.1, d: 0.05).ConfigureAwait(false);
+
+// Read back the active PID gains from the device.
+var p = await channel.PidController.GetPAsync().ConfigureAwait(false);
+var i = await channel.PidController.GetIAsync().ConfigureAwait(false);
+var d = await channel.PidController.GetDAsync().ConfigureAwait(false);
+
+// Log the configuration for verification.
+Console.WriteLine($&quot;PID Parameters: P={p:F3}, I={i:F3}, D={d:F3}&quot;);
+</code></pre>
+<h3 id="04---data-recorder-capture">04 - Data Recorder Capture</h3>
+<p>Record position and voltage data and export CSV.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Configuring memory length and stride</li>
+<li>Retrieving recorder data with progress callback</li>
+<li>Saving data to CSV</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/04_data_recorder_capture.cs</code></p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+// Configure recorder memory and sampling stride.
+await channel.DataRecorder.SetAsync(memoryLength: 1000, stride: 1).ConfigureAwait(false);
+
+// Read the full position trace from recorder channel memory.
+var positionData = await channel.DataRecorder.GetAllDataAsync(
+    DDriveDataRecorderChannel.Position,
+    1000).ConfigureAwait(false);
+</code></pre>
+<h3 id="05---waveform-generation-basics">05 - Waveform Generation Basics</h3>
+<p>Generate periodic waveforms for scanning and testing.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Configuring sine/triangle/sweep waveforms</li>
+<li>Switching active waveform types</li>
+<li>Stopping waveform output</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/05_waveform_generation_basics.cs</code></p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily.Capabilities;
+
+// Configure sine waveform output parameters.
+await channel.WaveformGenerator.Sine
+    .SetAsync(amplitude: 20.0, offset: 20.0, frequency: 5.0)
+    .ConfigureAwait(false);
+
+// Activate sine waveform mode.
+await channel.WaveformGenerator
+    .SetWaveformTypeAsync(DDriveWaveformType.Sine)
+    .ConfigureAwait(false);
+</code></pre>
+<h3 id="06---filter-configuration">06 - Filter Configuration</h3>
+<p>Configure notch filter, LPF, and error LPF for stable control.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Enabling/configuring notch filter</li>
+<li>Setting low-pass cutoff</li>
+<li>Error low-pass filter setup</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/06_filter_configuration.cs</code></p>
+<pre><code class="lang-csharp">// Enable and tune notch filter around the resonance.
+await channel.Notch.SetAsync(enabled: true, frequency: 500.0, bandwidth: 50.0).ConfigureAwait(false);
+
+// Enable low-pass filtering on the control path.
+await channel.Lpf.SetAsync(enabled: true, cutoffFrequency: 100.0).ConfigureAwait(false);
+
+// Smooth control error with a second-order low-pass filter.
+await channel.ErrorLpf.SetAsync(cutoffFrequency: 200.0, order: 2).ConfigureAwait(false);
+</code></pre>
+<h3 id="07---backup-and-restore-configuration">07 - Backup and Restore Configuration</h3>
+<p>Save and restore device configuration.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Backing up device/channel configuration</li>
+<li>Saving backup map to JSON</li>
+<li>Restoring configuration from memory/file</li>
+</ul>
+<p><strong>Code:</strong> <code>examples/07_backup_and_restore_configuration.cs</code></p>
+<pre><code class="lang-csharp">// Snapshot current device configuration.
+var backup = await device.BackupAsync().ConfigureAwait(false);
+
+// Restore configuration from the backup map.
+await device.RestoreAsync(backup).ConfigureAwait(false);
+</code></pre>
+<h3 id="08---nv403cle-capabilities-overview">08 - NV403CLE Capabilities Overview</h3>
+<p>Demonstrates key NV403CLE capabilities in one workflow.</p>
+<p><strong>What You'll Learn:</strong></p>
+<ul>
+<li>Backing up configuration and restoring at end</li>
+<li>Setting modulation source to serial for all channels</li>
+<li>Reading/writing display brightness</li>
+<li>Toggling closed-loop control</li>
+<li>Reading open-loop/closed-loop units and limits</li>
+<li>Using <code>MultiSetpoint</code> and <code>MultiPosition</code></li>
+</ul>
+<p><strong>Code:</strong> <code>examples/08_nv403cle_capabilities_overview.cs</code></p>
+<pre><code class="lang-csharp">using PsjLib.NVFamily.Capabilities;
+using PsjLib.NVFamily.NV403CLE;
+using PsjLib.Transport;
+
+// Connect to NV403CLE over serial.
+var device = new NV403CLEDevice(TransportType.Serial, &quot;COM10&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+
+// Save current configuration so we can restore it later.
+var backup = await device.BackupAsync().ConfigureAwait(false);
+
+try
+{
+    // Route modulation control to serial commands on all channels.
+    foreach (var ch in device.Channels.Values)
+    {
+        await ch.ModulationSource.SetAsync(NVModulationSourceTypes.Serial).ConfigureAwait(false);
+    }
+
+    // Apply setpoints to all channels in one command.
+    await device.MultiSetpoint.SetAsync(new[] { 10.0, 20.0, 30.0 }).ConfigureAwait(false);
+
+    // Read back all channel positions.
+    var positions = await device.MultiPosition.GetAsync().ConfigureAwait(false);
+}
+finally
+{
+    // Always restore original state and close the connection.
+    await device.RestoreAsync(backup).ConfigureAwait(false);
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="connection-pattern">Connection Pattern</h3>
+<p>All examples follow this pattern:</p>
+<pre><code class="lang-csharp">// Create device instance with connection settings.
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+
+// Open transport and initialize capabilities.
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    // Access first channel and perform operations.
+    var channel = device.Channels[0];
+    // operations
+}
+finally
+{
+    // Ensure transport is closed even on errors.
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="error-handling-pattern">Error Handling Pattern</h3>
+<pre><code class="lang-csharp">using PsjLib.Base;
+
+try
+{
+    // Attempt to connect to the device.
+    await device.ConnectAsync().ConfigureAwait(false);
+}
+catch (DeviceError ex)
+{
+    // Handle library-specific device exceptions.
+    Console.WriteLine($&quot;Device error: {ex.Message}&quot;);
+}
+finally
+{
+    // Always release the connection.
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="running-examples">Running Examples</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ol>
+<li><p>Build the solution:</p>
+<pre><code class="lang-bash">dotnet build
+</code></pre>
+</li>
+<li><p>Connect your device via USB or Ethernet.</p>
+</li>
+<li><p>Update COM port/IP in the selected example if needed.</p>
+</li>
+</ol>
+<h3 id="running-an-example">Running an Example</h3>
+<pre><code class="lang-bash">dotnet run --project examples/Examples.csproj -- 01
+</code></pre>
+<h3 id="modifying-examples">Modifying Examples</h3>
+<ol>
+<li>Open the corresponding <code>.cs</code> file in <code>examples/</code></li>
+<li>Adjust connection settings and parameters</li>
+<li>Run again with <code>dotnet run --project examples/Examples.csproj -- XX</code></li>
+</ol>
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li>Review full API documentation: <a href="api.html">API Reference</a></li>
+<li>Read developer guide: <a href="developer_guide.html">Developer Guide</a></li>
+<li>Explore device-specific docs: <a href="d_drive.html">d-Drive</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

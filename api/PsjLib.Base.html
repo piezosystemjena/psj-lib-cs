@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Namespace PsjLib.Base | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Namespace PsjLib.Base | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="PsjLib.Base">
+
+  <h1 id="PsjLib_Base" data-uid="PsjLib.Base" class="text-break">Namespace PsjLib.Base</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+
+    <h3 id="classes">
+Classes
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ActuatorNotConnected.html">ActuatorNotConnected</a></dt>
+      <dd><p>Raised when no actuator is connected or recognized for the channel.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.AdmissibleParameterRangeExceeded.html">AdmissibleParameterRangeExceeded</a></dt>
+      <dd><p>Raised when at least one command parameter is outside admissible range.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.CommandCache.html">CommandCache</a></dt>
+      <dd><p>Stores cached command responses for read-only or cacheable device commands.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.CommandParameterCountExceeded.html">CommandParameterCountExceeded</a></dt>
+      <dd><p>Raised when more parameters are provided than supported by the command.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.DeviceError.html">DeviceError</a></dt>
+      <dd><p>Base exception for device-level protocol and command errors.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.DeviceInfo.html">DeviceInfo</a></dt>
+      <dd><p>Snapshot of high-level device metadata.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ErrorCodeExtensions.html">ErrorCodeExtensions</a></dt>
+      <dd><p>Extension helpers for converting numeric error codes into typed exceptions.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ErrorNotSpecified.html">ErrorNotSpecified</a></dt>
+      <dd><p>Represents an unspecified or unmapped device error.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.Overload.html">Overload</a></dt>
+      <dd><p>Raised when control loop or actuator is overloaded.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ParameterLockedOrReadOnly.html">ParameterLockedOrReadOnly</a></dt>
+      <dd><p>Raised when writing a locked or read-only parameter.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ParameterMissing.html">ParameterMissing</a></dt>
+      <dd><p>Raised when required command arguments are missing.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ParameterTooHigh.html">ParameterTooHigh</a></dt>
+      <dd><p>Raised when a parameter is above the maximum allowed value.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ParameterTooLow.html">ParameterTooLow</a></dt>
+      <dd><p>Raised when a parameter is below the minimum allowed value.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.PiezoChannel.html">PiezoChannel</a></dt>
+      <dd><p>Base class for per-channel capability access.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.PiezoDevice.html">PiezoDevice</a></dt>
+      <dd><p>Base class for all supported piezo amplifier devices.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.Underload.html">Underload</a></dt>
+      <dd><p>Raised when control loop or actuator is under-driven.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.UnknownChannel.html">UnknownChannel</a></dt>
+      <dd><p>Raised when the requested channel does not exist on the device.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.UnknownCommand.html">UnknownCommand</a></dt>
+      <dd><p>Raised when a command is not recognized by the device firmware.</p>
+</dd>
+    </dl>
+    <h3 id="enums">
+Enums
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ActorType.html">ActorType</a></dt>
+      <dd><p>Actuator families that may be connected to a controller channel.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ErrorCode.html">ErrorCode</a></dt>
+      <dd><p>Numeric error codes reported by the device firmware.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.SensorType.html">SensorType</a></dt>
+      <dd><p>Sensor technologies supported by piezo devices in this library.</p>
+</dd>
+    </dl>
+    <h3 id="delegates">
+Delegates
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="PsjLib.Base.ChannelWriteCallback.html">ChannelWriteCallback</a></dt>
+      <dd><p>Writes a command for a specific channel and returns parsed response values.</p>
+</dd>
+    </dl>
+
+
+</article>
+
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

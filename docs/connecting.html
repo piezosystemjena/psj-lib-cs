@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Connecting to Devices | PsjLib C# Library </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Connecting to Devices | PsjLib C# Library ">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/piezosystemjena/psj-lib-cs/blob/v1.0.1/docs/docs/connecting.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/favicon.png" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="connecting-to-devices">Connecting to Devices</h1>
+
+<p>This guide explains how to discover and connect to piezosystem jena
+devices using PsjLib.</p>
+<h2 id="connection-overview">Connection Overview</h2>
+<p>PsjLib supports two connection methods:</p>
+<ul>
+<li><strong>Serial (USB)</strong>: Direct USB connection using virtual COM port</li>
+<li><strong>Telnet (Ethernet)</strong>: Network connection via Telnet protocol</li>
+</ul>
+<p>The same high-level API is used regardless of transport type, allowing
+seamless switching between connection methods.</p>
+<p>Final connectivity support depends on the specific device model.</p>
+<h2 id="quick-start">Quick Start</h2>
+<p>The fastest way to connect:</p>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;); // Windows
+// var device = new DDriveDevice(TransportType.Serial, &quot;/dev/ttyUSB0&quot;); // Linux
+
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($&quot;Connected to {device.DeviceId}&quot;);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="device-discovery">Device Discovery</h2>
+<h3 id="automatic-device-discovery">Automatic Device Discovery</h3>
+<p><code>DiscoverDevicesAsync&lt;TDevice&gt;()</code> automatically finds connected devices:</p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+// Discover all connected d-Drive amplifiers
+var devices = await PiezoDevice.DiscoverDevicesAsync&lt;DDriveDevice&gt;(
+    DiscoverFlags.AllInterfaces).ConfigureAwait(false);
+
+foreach (var discovered in devices)
+{
+    var info = discovered.DeviceInfo;
+    Console.WriteLine($&quot;Device: {info.DeviceId}&quot;);
+    Console.WriteLine($&quot;Identifier: {info.TransportInfo.Identifier}&quot;);
+    Console.WriteLine($&quot;Type: {info.TransportInfo.Transport}&quot;);
+    Console.WriteLine(&quot;---&quot;);
+}
+</code></pre>
+<p><strong>Example Output:</strong></p>
+<pre><code class="lang-text">Device: d-Drive
+Address: COM3
+Type: Serial
+---
+</code></pre>
+<h3 id="using-discovery-with-connection">Using Discovery with Connection</h3>
+<p>Complete discovery and connection example:</p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.DDriveFamily;
+
+var devices = await PiezoDevice.DiscoverDevicesAsync&lt;DDriveDevice&gt;().ConfigureAwait(false);
+if (devices.Count == 0)
+{
+    Console.WriteLine(&quot;No devices found&quot;);
+    return;
+}
+
+var device = devices[0];
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($&quot;Connected to {device.DeviceId}&quot;);
+    Console.WriteLine($&quot;Available channels: {device.Channels.Count}&quot;);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="serial-connection">Serial Connection</h2>
+<h3 id="serial-port-identification">Serial Port Identification</h3>
+<p><strong>Windows:</strong></p>
+<p>Ports are named <code>COM1</code>, <code>COM2</code>, <code>COM3</code>, etc.</p>
+<p>Check Device Manager → Ports (COM &amp; LPT) to find your device.</p>
+<p><strong>Linux:</strong></p>
+<p>Ports are typically <code>/dev/ttyUSB0</code>, <code>/dev/ttyACM0</code>, etc.</p>
+<p>Use <code>ls /dev/ttyUSB* /dev/ttyACM*</code> to list ports.</p>
+<p><strong>macOS:</strong></p>
+<p>Ports appear as <code>/dev/cu.usbserial-*</code> or <code>/dev/tty.usbserial-*</code>.</p>
+<p>Use <code>ls /dev/cu.* /dev/tty.*</code> to list ports.</p>
+<h3 id="creating-a-serial-connection">Creating a Serial Connection</h3>
+<pre><code class="lang-csharp">using PsjLib.DDriveFamily;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($&quot;Connected to {device.DeviceId}&quot;);
+    foreach (var (channelId, channel) in device.Channels)
+    {
+        var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+        Console.WriteLine($&quot;Channel {channelId}: ClosedLoop={status.ClosedLoop}&quot;);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="manual-connection-management">Manual Connection Management</h3>
+<p>If you need manual control over connection lifecycle:</p>
+<pre><code class="lang-csharp">var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    Console.WriteLine(&quot;Device opened&quot;);
+    var channels = device.Channels;
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+    Console.WriteLine(&quot;Device closed&quot;);
+}
+</code></pre>
+<h3 id="serial-port-settings">Serial Port Settings</h3>
+<p>PsjLib automatically configures serial port settings. Most devices use:</p>
+<ul>
+<li><strong>Baud Rate</strong>: 115200</li>
+<li><strong>Data Bits</strong>: 8</li>
+<li><strong>Stop Bits</strong>: 1</li>
+<li><strong>Parity</strong>: None</li>
+<li><strong>Flow Control</strong>: None</li>
+</ul>
+<p>For NV-family devices, identification is performed at 19200 baud and
+transport settings are adjusted by the driver as needed.</p>
+<h2 id="connection-patterns">Connection Patterns</h2>
+<h3 id="tryfinally-pattern-recommended"><code>try/finally</code> Pattern (Recommended)</h3>
+<p>The context manager automatically handles connection lifecycle:</p>
+<pre><code class="lang-csharp">var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    foreach (var channel in device.Channels.Values)
+    {
+        await channel.ClosedLoopController.SetAsync(true).ConfigureAwait(false);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="long-running-connection">Long-Running Connection</h3>
+<p>For applications that keep device connected:</p>
+<pre><code class="lang-csharp">public sealed class ControlSystem(string port)
+{
+    private readonly DDriveDevice _device = new(TransportType.Serial, port);
+
+    public async Task StartAsync() =&gt; await _device.ConnectAsync().ConfigureAwait(false);
+    public async Task StopAsync() =&gt; await _device.CloseAsync().ConfigureAwait(false);
+
+    public async Task MoveChannelAsync(int channelId, double position)
+    {
+        var channel = _device.Channels[channelId];
+        await channel.Setpoint.SetAsync(position).ConfigureAwait(false);
+    }
+}
+</code></pre>
+<h3 id="multiple-devices">Multiple Devices</h3>
+<p>Managing multiple devices simultaneously:</p>
+<pre><code class="lang-csharp">var device1 = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+var device2 = new DDriveDevice(TransportType.Telnet, &quot;192.168.1.100&quot;);
+
+await Task.WhenAll(device1.ConnectAsync(), device2.ConnectAsync()).ConfigureAwait(false);
+try
+{
+    await Task.WhenAll(
+        device1.Channels[0].Setpoint.SetAsync(30.0),
+        device2.Channels[0].Setpoint.SetAsync(60.0)
+    ).ConfigureAwait(false);
+}
+finally
+{
+    await Task.WhenAll(device1.CloseAsync(), device2.CloseAsync()).ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="connection-failures">Connection Failures</h3>
+<p>Handle connection errors gracefully:</p>
+<pre><code class="lang-csharp">using PsjLib.Base;
+using PsjLib.Transport;
+
+var device = new DDriveDevice(TransportType.Serial, &quot;COM3&quot;);
+try
+{
+    await device.ConnectAsync().ConfigureAwait(false);
+    Console.WriteLine(&quot;Connected successfully&quot;);
+}
+catch (DeviceError ex)
+{
+    Console.WriteLine($&quot;Device error: {ex.Message}&quot;);
+}
+catch (ProtocolException ex)
+{
+    Console.WriteLine($&quot;Transport error: {ex.Message}&quot;);
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h3 id="timeout-configuration">Timeout Configuration</h3>
+<p>Set timeout for connection attempts:</p>
+<pre><code class="lang-csharp">using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+var connectTask = device.ConnectAsync();
+var completed = await Task.WhenAny(connectTask, Task.Delay(Timeout.Infinite, cts.Token)).ConfigureAwait(false);
+if (completed != connectTask)
+{
+    Console.WriteLine(&quot;Connection timeout - check device power and cables&quot;);
+}
+</code></pre>
+<h3 id="reconnection-logic">Reconnection Logic</h3>
+<p>Implement automatic reconnection:</p>
+<pre><code class="lang-csharp">async Task&lt;DDriveDevice&gt; ConnectWithRetryAsync(string port, int maxAttempts = 3)
+{
+    var device = new DDriveDevice(TransportType.Serial, port);
+    for (var attempt = 1; attempt &lt;= maxAttempts; attempt++)
+    {
+        try
+        {
+            await device.ConnectAsync().ConfigureAwait(false);
+            return device;
+        }
+        catch (Exception) when (attempt &lt; maxAttempts)
+        {
+            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+        }
+    }
+
+    throw new DeviceUnavailableException($&quot;Failed after {maxAttempts} attempts&quot;);
+}
+</code></pre>
+<h2 id="verification">Verification</h2>
+<p>After connecting, verify device is ready:</p>
+<pre><code class="lang-csharp">await device.ConnectAsync().ConfigureAwait(false);
+try
+{
+    Console.WriteLine($&quot;Device Info: {device.DeviceInfo}&quot;);
+    Console.WriteLine($&quot;Channels: {device.Channels.Count}&quot;);
+
+    foreach (var (channelId, channel) in device.Channels)
+    {
+        var status = await channel.StatusRegister.GetAsync().ConfigureAwait(false);
+        var temperature = await channel.Temperature.GetAsync().ConfigureAwait(false);
+        Console.WriteLine($&quot;Channel {channelId}:&quot;);
+        Console.WriteLine($&quot;  Closed loop: {status.ClosedLoop}&quot;);
+        Console.WriteLine($&quot;  Temperature: {temperature:F1}°C&quot;);
+    }
+}
+finally
+{
+    await device.CloseAsync().ConfigureAwait(false);
+}
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Use <code>try/finally</code></strong>: Always close devices with <code>CloseAsync()</code></li>
+<li><strong>Check Discovery</strong>: Use discovery before hardcoding ports/addresses</li>
+<li><strong>Handle Errors</strong>: Always catch and handle connection errors</li>
+<li><strong>Verify Connection</strong>: Read device info after connecting</li>
+<li><strong>Clean Shutdown</strong>: Ensure <code>CloseAsync()</code> is called</li>
+<li><strong>Network Stability</strong>: Use Telnet for permanent installations,
+Serial for development</li>
+<li><strong>Timeout Protection</strong>: Set reasonable timeouts for all operations</li>
+<li><strong>Single Connection</strong>: Don't open multiple connections to same
+device</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="device-not-found">&quot;Device Not Found&quot;</h3>
+<p><strong>Symptom</strong>: Discovery returns empty list</p>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check device is powered on</li>
+<li>Verify cable connections</li>
+<li>Check correct transport type (Serial vs Telnet)</li>
+<li>Try manual port/address specification</li>
+<li>Verify drivers installed (Serial)</li>
+<li>Check network connectivity (Telnet)</li>
+</ul>
+<h3 id="permission-denied-linux-serial">&quot;Permission Denied&quot; (Linux Serial)</h3>
+<p><strong>Symptom</strong>: Cannot open serial port</p>
+<p><strong>Solution</strong>: Add user to dialout group:</p>
+<pre><code class="lang-bash">sudo usermod -a -G dialout $USER
+# Log out and back in
+</code></pre>
+<h3 id="connection-timeout">&quot;Connection Timeout&quot;</h3>
+<p><strong>Symptom</strong>: Connection attempts timeout</p>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Verify device is not already connected by another application</li>
+<li>Check baud rate (should be auto-detected)</li>
+<li>Try power cycling the device</li>
+<li>For Telnet: verify IP address and network connectivity</li>
+</ul>
+<h3 id="port-already-in-use">&quot;Port Already in Use&quot;</h3>
+<p><strong>Symptom</strong>: Serial port locked by another application</p>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Close any other applications using the device</li>
+<li>Check for zombie processes: <code>lsof | grep ttyUSB</code> (Linux)</li>
+<li>Disconnect and reconnect USB cable</li>
+<li>Restart computer as last resort</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you can connect to devices:</p>
+<ul>
+<li>Learn basic operations: <a href="getting_started.html">Getting Started</a></li>
+<li>Explore d-Drive features: <a href="d_drive.html">d-Drive</a></li>
+<li>See working examples: <a href="examples.html">Examples</a></li>
+</ul>
+
+</article>
+
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          piezosystem jena GmbH
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
