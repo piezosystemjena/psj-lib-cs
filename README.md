@@ -4,7 +4,7 @@
 
 [![.NET](https://img.shields.io/badge/.NET-8.0+-512BD4)](https://dotnet.microsoft.com/)
 [![Language](https://img.shields.io/badge/language-C%23-239120)](https://learn.microsoft.com/dotnet/csharp/)
-[![Docs](https://img.shields.io/badge/docs-docfx-success)](docs/)
+[![Docs](https://img.shields.io/badge/docs-docfx-success)](https://piezosystemjena.github.io/psj-lib-cs/)
 
 A comprehensive C#/.NET library for controlling piezoelectric amplifiers and control devices manufactured by [piezosystem jena GmbH](https://www.piezosystem.com).
 
