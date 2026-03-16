@@ -1,4 +1,4 @@
-![header](https://github.com/piezosystemjena/psj-lib-cs/blob/main/docs/images/piezosystem_logo.svg)
+![header](https://raw.githubusercontent.com/piezosystemjena/psj-lib-cs/refs/heads/main/docs/images/piezosystem_logo.svg)
 
 # PsjLib C# Library
 
